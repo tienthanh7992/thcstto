@@ -12,7 +12,10 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="../../static/css/core.css" th:href="@{/css/core.css}"
 	rel="stylesheet" media="screen" />
+<link href="../../static/css/table.css" th:href="@{/css/table.css}"
+	rel="stylesheet" media="screen" />
 </head>
+
 <body>
 	<div class="container">
 		<div class="row">
@@ -45,11 +48,633 @@
 				môn:.........................</h6>
 			<h6>- Vị trí việc làm và nhiệm vụ được phân
 				công............................................</h6>
-			<hr class="style3" style="width: 395px"/>
+			<hr class="style3" style="width: 395px" />
 		</div>
 	</div>
 
-	<div class="container text-center">
-		
+<!-- 	<div class="container text-center tbl-head"> -->
+<!-- 		<div class="row tb-border"> -->
+<!-- 			<div class="col-sm-1 hieght-81 vertical-center text-center">STT</div> -->
+<!-- 			<div class="col-sm-4 hieght-81 vertical-center">Nội dung đánh -->
+<!-- 				giá</div> -->
+<!-- 			<div class="col-sm-1 hieght-81 vertical-center">Điểm tối đa</div> -->
+<!-- 			<div class="col-sm-6"> -->
+<!-- 				<div class="row border-bottom">Kết quả đánh giá</div> -->
+<!-- 				<div class="row"> -->
+<!-- 					<div class="col-sm-8 border-right vertical-center" -->
+<!-- 						style="height: 60px;">Tồn tại, hạn chế</div> -->
+<!-- 					<div class="col-sm-2 border-right" style="height: 60px;">Điểm -->
+<!-- 						tự chấm</div> -->
+<!-- 					<div class="col-sm-2">Hiệu trưởng chấm</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<div class="row tb-border tbl-content row-eq-height"> -->
+<!-- 			<div class="col-sm-1 border-right">A</div> -->
+<!-- 			<div class="col-sm-4 border-right break-word">Baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div> -->
+<!-- 			<div class="col-sm-1 border-right">C</div> -->
+<!-- 			<div class="col-sm-6"> -->
+<!-- 				<div class="row row-eq-height"> -->
+<!-- 					<div class="col-sm-8 border-right" style="display: contents;"> -->
+<!-- 						<input type="text" class="wide" /> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-2 border-right" style="display: contents;"> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-sm-2"> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+
+<!-- 	</div> -->
+	
+	<div class="container tg-wrap">
+		<table class="tg">
+			<tr align="center">
+				<th rowspan="2" class="header">TT</th>
+				<th rowspan="2" class="header">Nội dung đánh giá</th>
+				<th rowspan="2" class="header">Điểm tối đa</th>
+				<th colspan="3" class="header">Kết quả đánh giá</th>
+			</tr>
+			<tr>
+				<th class="header">Tồn tại, hạn chế</th>
+				<th class="header">Điểm tự chấm</th>
+				<th class="header">Hiệu trưởng chấm</th>
+			</tr>
+			<tr>
+				<td class="tg-0pky">I</td>
+				<td class="tg-0pky">Ý THỨC TỔ CHỨC KỶ LUẬT</td>
+				<td>
+					<select>
+						<option id="ISIN0" disabled selected>--select--</option>
+		                <option id="ISIN1">1</option>
+		                <option id="ISIN2">2</option>
+		                <option id="ISIN3">3</option>
+		                <option id="ISIN4">4</option>
+		                <option id="ISIN4">5</option>
+		            </select>
+				</td>
+				<td><input type="text" style="width:100%;height: 100%;" /></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1</td>
+				<td class="tg-0pky">Chấp hành tốt đường lối, chủ trương của
+					Đảng, chính sách pháp luật của nhà nước.</td>
+				<td class="tg-dvpl">5</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.1</td>
+				<td class="tg-0pky">Gương mẫu chấp hành tốt đường lối, chủ
+					trương của Đảng, chính sách pháp luật của nhà nước</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.2</td>
+				<td class="tg-0pky">Có phẩm chất đạo đức tốt, có tinh thần nêu
+					gương, tận tụy, trung thực trong công việc, sẵn sàng nhận nhiệm vụ.
+					Có thái độ phục vụ nhân dân đúng mực; không hách dịch, cửa quyền,
+					phiền hà, tiêu cực trong thực hiện công vụ.</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.3</td>
+				<td class="tg-0pky">Có tinh thần đoàn kết, thực hiện nguyên tắc
+					tập trung dân chủ trong đơn vị</td>
+				<td class="tg-0pky">1</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky">Chấp hành nghiêm giờ làm việc, nội quy, quy
+					chế, quy định của cơ quan, đơn vị gồm:</td>
+				<td class="tg-0pky">15</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.1</td>
+				<td class="tg-0pky">Thực hiện tốt văn hoá công sở; giao tiếp
+					thân thiện, lịch sự, ngôn ngữ chuẩn mực, rõ ràng. Mặc trang phục
+					lịch sự, phù hợp với hoàn cảnh, tính chất công việc, đúng quy định
+					của cơ quan.</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.2</td>
+				<td class="tg-0pky">Chấp hành kỷ luật, kỷ cương hành chính và
+					các văn bản của Huyện ủy - UBND Huyện áp dụng đối với CBCCVC, LĐHĐ
+					huyện, xã;</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">Sử dụng hiệu quả thời gian làm việc. Chấp
+					hành quy định ra, vào cơ quan; quản lý bảo vệ tài sản, trang thiết
+					bị của cơ quan. Đeo thẻ chức danh trong giờ làm việc. Sắp xếp, bài
+					trí chỗ làm việc gọn gàng, ngăn nắp, sạch sẽ.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.3</td>
+				<td class="tg-0pky">Xây dựng hình ảnh, giữ gìn uy tín cho bản
+					thân, cơ quan, đơn vị và đồng nghiệp.</td>
+				<td class="tg-0pky">1</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.4</td>
+				<td class="tg-0pky">Giữ gìn bí mật nhà nước trong cơ quan, đơn
+					vị và thực hiện nghiêm kỷ luật phát ngôn.</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.5</td>
+				<td class="tg-0pky">Thực hiện ngày giờ công theo qui định</td>
+				<td class="tg-0pky">8</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">Nội dung bị trừ điểm:</td>
+				<td class="tg-0pky">Mỗi nội dung vi phạm trừ 0,5đ. Riêng ngày
+					công trừ theo tiêu chí.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Có phản ảnh, kiến nghị của phụ huynh học
+					sinh, của nhân dân và đồng nghiệp về thái độ giao tiếp, ứng xử
+					thiếu lịch sự với đồng nghiệp hoặc với học sinh (và xác minh sự
+					việc là đúng);</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Mặc trang phục không phù hợp môi trường
+					sư phạm.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Thực hiện ngày giờ công không theo theo
+					qui định.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Tuyên truyền các thông tin thiếu chính
+					xác trên mạng xã hội hoặc có hành vi (lời nói, việc làm) gây ảnh
+					hưởng tới uy tín của địa phương, ngành, nhà trường và đồng nghiệp;</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Có hành vi (lời nói, việc làm, phát ngôn)
+					gây ảnh hưởng tới uy tín của bản thân, đồng nghiệp, nhà trường.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">.....</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">II</td>
+				<td class="tg-0pky">KẾT QUẢ THỰC HIỆN NHIỆM VỤ</td>
+				<td class="tg-0pky">70</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1</td>
+				<td class="tg-0pky">Năng lực và kỹ năng lãnh đạo, điều hành</td>
+				<td class="tg-0pky">20</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.1</td>
+				<td class="tg-0pky">Chủ động nghiên cứu, cập nhật kịp thời các
+					kiến thức pháp luật, các kiến thức, kỹ năng về chuyên môn nghiệp
+					vụ; tham mưu cho Hiệu trưởng các giải pháp nâng cao chất lượng dạy
+					và học đáp ứng với yêu cầu đổi mới đạt hiệu quả, chất lượng.</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.2</td>
+				<td class="tg-0pky">Tham mưu có hiệu quả trong việc xây dựng
+					các kế hoạch công tác, lịch công tác của cá nhân, bộ phận phụ trách
+					đảm bảo tiến độ</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.3</td>
+				<td class="tg-0pky">Kiểm soát việc thực hiện của các tổ chuyên
+					môn thuộc lĩnh vực được phân công phụ trách đảm bảo kịp thời, không
+					bỏ sót công việc. Giải quyết công việc đúng quy trình quy định.</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.4</td>
+				<td class="tg-0pky">Tham mưu phân công nhiệm vụ cho giáo viên,
+					nhân viên thuộc bộ phận phụ trách đảm bảo rõ người, rõ nội dung,
+					tiến độ thực hiện.</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.5</td>
+				<td class="tg-0pky">Thường xuyên kiểm tra việc thực hiện chuyên
+					môn của GV, NV đảm bảo quy định. Có khả năng bao quát, đôn đốc việc
+					thực hiện nhiệm vụ của GV, NV; giải quyết kịp thời những khó khăn,
+					vướng mắc theo thẩm quyền được giao</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.6</td>
+				<td class="tg-0pky">Có năng lực tập hợp GV, NV xây dựng nhà
+					trường đoàn kết, thống nhất.</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.7</td>
+				<td class="tg-0pky">Phối hợp với GV, NV thiết lập mối quan hệ
+					tốt với phụ huynh học sinh, các tổ chức, cá nhân, đoàn thể có liên
+					quan đến trong thực hiện nhiệm vụ</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.8</td>
+				<td class="tg-0pky">Sử dụng thành thạo ứng dụng CNTT đáp ứng
+					yêu cầu quản lý, điều hành, giải quyết công việc</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.9</td>
+				<td class="tg-0pky">Quản lý, điều hành cổng thông tin điện tử,
+					trang Web, kho học liệu, các trang thiết bị thông minh.. của trường
+					đạt hiệu quả;</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1.1</td>
+				<td class="tg-0pky">Tham mưu tổ chức, chủ trì, điều hành cuộc
+					họp hiệu quả.</td>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">Nội dung bị trừ điểm:</td>
+				<td class="tg-0pky">Mỗi nội dung vi phạm trừ 0,5đ.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Chưa kịp thời cập nhật kiến thức chuyên
+					môn, phương pháp đổi mới trong thực hiện nhiệm vụ;</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Xây dựng lịch công tác tuần, lịch báo
+					giảng chưa khớp với sổ ghi đầu bài hoặc chưa hợp lý về nội dung
+					hoặc còn bỏ sót nhiệm vụ;</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Còn công việc bị bỏ sót hoặc bỏ chương
+					trình giảng dạy chưa thực hiện;</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Lên lớp không có giáo án, soạn bải không
+					theo phân phối chương trình, các loại hồ sơ, sổ sách nội dung không
+					đảm bảo.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Giải quyết công việc không đúng quy
+					trình.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Không báo cáo BGH kịp thời các nội dung
+					còn vướng mắc xảy ra, không xử lý kịp thời, dứt điểm tình trạng học
+					sinh mâu thuẫn, mất đoàn kết dẫn đến xích mích;</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Chưa chủ động đề xuất giải pháp thực hiện
+					nhiệm vụ được giao hoặc không báo cáo lãnh đạo kịp thời những khó
+					khăn, vướng mắc làm ảnh hưởng tới kết quả, chất lượng công việc</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Hàng tháng chậm đánh giá kết quả thực
+					hiện nhiệm vụ theo quy định</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Phối hợp với phụ huynh học sinh, đồng
+					nghiệp và các tổ chức liên quan trong giải quyết công việc không
+					hiệu quả, tạo căng thẳng, bức xúc</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Chưa sử dụng thành thạo CNTT hoặc chưa
+					ứng dụng CNTT trong đổi mới PPDH.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">+ Báo cáo số liệu, tài liệu bị sai sót về
+					nội dung, hình thức.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky">Thực hiện nhiệm vụ theo kế hoạch, lịch công
+					tác đảm bảo tiến độ, chất lượng</td>
+				<td class="tg-0pky">50</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">(theo tiêu chí thi đua)</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.1</td>
+				<td class="tg-0pky">Hoàn thành từ 90%-100% công việc theo kế
+					hoạch, lịch công tác đảm bảo tiến độ và chất lượng</td>
+				<td class="tg-0pky">45-&lt;50</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.2</td>
+				<td class="tg-0pky">Hoàn thành từ 80%-&lt;90% công việc theo kế
+					hoạch, lịch công tác đảm bảo tiến độ và chất lượng</td>
+				<td class="tg-0pky">40-&lt;45</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.3</td>
+				<td class="tg-0pky">Hoàn thành từ 70%-&lt;80% công việc theo kế
+					hoạch, lịch công tác đảm bảo tiến độ và chất lượng</td>
+				<td class="tg-0pky">35-&lt;40</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2.4</td>
+				<td class="tg-0pky">Hoàn thành dưới 70% công việc theo kế
+					hoạch, lịch công tác đảm bảo tiến độ và chất lượng</td>
+				<td class="tg-0pky">&lt;35</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">Nội dung bị trừ điểm:</td>
+				<td class="tg-0pky">Điểm trừ theo tiêu chí thi đua</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">- Không thực hiện nhiệm vụ theo đúng lịch
+					công tác mà không có lý do...</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">- Không hoàn thành công việc đúng tiến độ
+					và chất lượng công việc không theo đúng yêu cầu của nhà trường.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">- Không kịp thời xử lý, giải quyết dứt điểm
+					các khiếu nại, kiến nghị của phụ huynh học sinh làm ảnh hưởng đến
+					uy tín của nhà trường.</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">- Không báo cáo kịp thời với BGH các khó
+					khăn, vướng mắc làm ảnh hưởng đến kết quả giải quyết công việc, đến
+					uy tín của nhà trường....</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">III</td>
+				<td class="tg-0pky">ĐIỂM THƯỞNG</td>
+				<td class="tg-0pky">10</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">(theo tiêu chí thi đua)</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">1</td>
+				<td class="tg-0pky">Tham mưu, đề xuất giải pháp, mô hình mới
+					đảm bảo chất lượng và tiến độ, được cấp có thẩm quyền phê duyệt</td>
+				<td class="tg-0pky">4</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">2</td>
+				<td class="tg-0pky">Tham mưu có hiệu quả đối với các nhiệm vụ
+					mới, khó, phức tạp theo phân công được lãnh đạo cơ quan, đơn vị ghi
+					nhận</td>
+				<td class="tg-0pky">3</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky">3</td>
+				<td class="tg-0pky">Chủ động, sáng tạo, khoa học, cải tiến
+					phương pháp làm việc, nâng cao hiệu quả công việc, có thành tích
+					nổi bật</td>
+				<td class="tg-0pky">3</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+			<tr>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky">Tổng điểm</td>
+				<td class="tg-0pky">100</td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+				<td class="tg-0pky"></td>
+			</tr>
+		</table>
 	</div>
 </body>
