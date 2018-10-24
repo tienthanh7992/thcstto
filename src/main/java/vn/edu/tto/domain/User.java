@@ -71,4 +71,10 @@ public class User {
     public void setRole(Long role) {
         this.role = role;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", position=" + position + ", role=" + role + "]";
+	}
 }
