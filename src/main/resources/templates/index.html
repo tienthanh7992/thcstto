@@ -16,26 +16,26 @@
 	rel="stylesheet" media="screen" />
 </head>
 
-<body>
+<body th:with="zindex=${100}">
 
-<!-- 	<nav class="navbar navbar-default"> -->
-<!-- 		<div class="container-fluid"> -->
-<!-- 			<div class="navbar-header"> -->
-<!-- 				<a class="navbar-brand" href="#">WebSiteName</a> -->
-<!-- 			</div> -->
-<!-- 			<ul class="nav navbar-nav"> -->
-<!-- 				<li class="active"><a href="#">Home</a></li> -->
-<!-- 				<li><a href="#">Page 1</a></li> -->
-<!-- 				<li><a href="#">Page 2</a></li> -->
-<!-- 			</ul> -->
-<!-- 			<ul class="nav navbar-nav navbar-right"> -->
-<!-- 				<li><a href="#"><span class="glyphicon glyphicon-user"></span> -->
-<!-- 						Sign Up</a></li> -->
-<!-- 				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> -->
-<!-- 						Login</a></li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
-<!-- 	</nav> -->
+	<!-- 	<nav class="navbar navbar-default"> -->
+	<!-- 		<div class="container-fluid"> -->
+	<!-- 			<div class="navbar-header"> -->
+	<!-- 				<a class="navbar-brand" href="#">WebSiteName</a> -->
+	<!-- 			</div> -->
+	<!-- 			<ul class="nav navbar-nav"> -->
+	<!-- 				<li class="active"><a href="#">Home</a></li> -->
+	<!-- 				<li><a href="#">Page 1</a></li> -->
+	<!-- 				<li><a href="#">Page 2</a></li> -->
+	<!-- 			</ul> -->
+	<!-- 			<ul class="nav navbar-nav navbar-right"> -->
+	<!-- 				<li><a href="#"><span class="glyphicon glyphicon-user"></span> -->
+	<!-- 						Sign Up</a></li> -->
+	<!-- 				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> -->
+	<!-- 						Login</a></li> -->
+	<!-- 			</ul> -->
+	<!-- 		</div> -->
+	<!-- 	</nav> -->
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4 text-center">
@@ -51,8 +51,12 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-11 text-right">
-				<h6>
-					<em>Tả Thanh Oai, ngày.....tháng.....năm 2018</em>
+				<h6 style="display: inline"></h6>
+				<h6 style="display: inline">
+					<em>Tả Thanh Oai, ngày..</em> <em
+						th:text="${#dates.format(#dates.createNow(), 'dd')}"></em> <em>..tháng..</em>
+					<em th:text="${#dates.format(#dates.createNow(), 'MM')}"></em> <em>..năm
+					</em> <em th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></em>
 				</h6>
 			</div>
 		</div>
@@ -60,7 +64,12 @@
 			<h5>
 				<b>PHIẾU ĐÁNH GIÁ, XẾP LOẠI GIÁO VIÊN</b>
 			</h5>
-			<h5>Tháng: …./20....</h5>
+			<h5 style="display: inline">
+				<span>Tháng:</span>
+				<span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span>
+				<span>/</span>
+				<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+			</h5>
 		</div>
 		<div class="row text-center">
 			<h6>- Họ và tên: …………............................….Tổ chuyên
@@ -93,14 +102,14 @@
 						</td>
 						<td style="position: relative; padding: 0;">10</td>
 						<td style="position: relative; padding: 0;"><textarea
-								class="form-control" style="position: absolute; height: 100%; z-index: 100;"
-								placeholder="Nhập vào đây..."></textarea></td>
+								class="form-control"
+								style="position: absolute; height: 100%;"
+								placeholder="Nhập vào đây..." th:style="'position: absolute; height: 100%; z-index:' + ${zindex} + ';'"></textarea></td>
 						<td style="position: relative; padding: 0;"><select
 							class="form-control" style="position: absolute; height: 100%;">
 								<option value="" disabled selected>-Chọn-</option>
-								<option>100</option>
-								<option>50</option>
-								<option>10</option>
+								<option th:each="index : ${#numbers.sequence(1, 10)}"
+									th:value="${index}" th:text="${index}"></option>
 						</select></td>
 						<td style="position: relative; padding: 0;"><select
 							class="form-control" style="position: absolute; height: 100%;">
@@ -115,7 +124,8 @@
 						<td>AAA</td>
 						<td style="position: relative; padding: 0;">5</td>
 						<td style="position: relative; padding: 0;"><textarea
-								class="form-control" style="position: absolute; height: 100%; z-index: 99;"
+								class="form-control"
+								style="position: absolute; height: 100%; z-index: 99;"
 								placeholder="Nhập vào đây..."></textarea></td>
 						<td style="position: relative; padding: 0;"><select
 							class="form-control" style="position: absolute; height: 100%;">
