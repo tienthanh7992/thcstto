@@ -23,8 +23,9 @@
 				<a class="navbar-brand" href="#">HOME</a>
 			</div>
 			<ul class="nav navbar-nav navbar-center">
-                <li><a href="#" style="font-size: 24px;">TRƯỜNG TRUNG HỌC CƠ SỞ TẢ THANH OAI</a></li>
-            </ul>
+				<li><a href="#" style="font-size: 24px;">TRƯỜNG TRUNG HỌC
+						CƠ SỞ TẢ THANH OAI</a></li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
 						Đăng xuất</a></li>
@@ -73,68 +74,78 @@
 		</div>
 
 		<div class="row">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col" rowspan="2">TT</th>
-						<th scope="col" rowspan="2" class="col-sm-4">Nội dung đánh
-							giá</th>
-						<th scope="col" rowspan="2" class="col-sm-1">Điểm tối đa</th>
-						<th scope="col" colspan="2">Kết quả đánh giá</th>
-					</tr>
-					<tr>
-						<th scope="col" class="col-sm-4">Tồn tại, hạn chế</th>
-						<th scope="col" class="col-sm-1">Điểm tự chấm</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="data, rowStat: ${datas}">
-						<th:block th:switch="${data.questionRole}">
-							<th:block th:case="'TOPIC'">
-								<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
-								<td class="topic" th:text="${data.content}"></td>
-								<td class="topic" style="position: relative; padding: 0;"
-									th:text="${data.maxPoint}">10</td>
-								<td class="none"></td>
-								<td class="none"></td>
-							</th:block>
-							<th:block th:case="'SUB_TOPIC'">
-								<td class="col-sm-1 sub-topic" th:text="${data.indexStr}">1</td>
-								<td class="sub-topic" th:text="${data.content}"></td>
-								<td class="sub-topic" style="position: relative; padding: 0;"
-									th:text="${data.maxPoint}">10</td>
-								<td class="none"></td>
-								<td class="none"></td>
-							</th:block>
-							<th:block th:case="'TOTAL'">
-								<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
-								<td class="sub-topic" th:text="${data.content}"></td>
-								<td class="sub-topic" style="position: relative; padding: 0;"
-									th:text="${data.maxPoint}">10</td>
-								<td class="none"></td>
-								<td class="none"></td>
-							</th:block>
-							<th:block th:case="*">
-								<td class="col-sm-1" th:text="${data.indexStr}">1</td>
-								<td th:text="${data.content}"></td>
-								<td style="position: relative; padding: 0;"
-									th:text="${data.maxPoint}">10</td>
-								<td style="position: relative; padding: 0;"><textarea
+			<form class="form-horizontal" action="#" th:action="@{/self-check}"
+				th:object="${cheSubmitDto}" method="post">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th scope="col" rowspan="2">TT</th>
+							<th scope="col" rowspan="2" class="col-sm-4">Nội dung đánh
+								giá</th>
+							<th scope="col" rowspan="2" class="col-sm-1">Điểm tối đa</th>
+							<th scope="col" colspan="2">Kết quả đánh giá</th>
+						</tr>
+						<tr>
+							<th scope="col" class="col-sm-4">Tồn tại, hạn chế</th>
+							<th scope="col" class="col-sm-1">Điểm tự chấm</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="data, rowStat: ${datas}">
+							<th:block th:switch="${data.questionRole}">
+								<th:block th:case="'TOPIC'">
+									<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
+									<td class="topic" th:text="${data.content}"></td>
+									<td class="topic" style="position: relative; padding: 0;"
+										th:text="${data.maxPoint}">10</td>
+									<td class="none"></td>
+									<td class="none"></td>
+								</th:block>
+								<th:block th:case="'SUB_TOPIC'">
+									<td class="col-sm-1 sub-topic" th:text="${data.indexStr}">1</td>
+									<td class="sub-topic" th:text="${data.content}"></td>
+									<td class="sub-topic" style="position: relative; padding: 0;"
+										th:text="${data.maxPoint}">10</td>
+									<td class="none"></td>
+									<td class="none"></td>
+								</th:block>
+								<th:block th:case="'TOTAL'">
+									<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
+									<td class="sub-topic" th:text="${data.content}"></td>
+									<td class="sub-topic" style="position: relative; padding: 0;"
+										th:text="${data.maxPoint}">10</td>
+									<td class="none"></td>
+									<td class="none"></td>
+								</th:block>
+								<th:block th:case="*">
+									<td class="col-sm-1" th:text="${data.indexStr}">1</td>
+									<td th:text="${data.content}"></td>
+									<td style="position: relative; padding: 0;"
+										th:text="${data.maxPoint}">10</td>
+									<td style="position: relative; padding: 0;"><textarea
+											class="form-control"
+											style="position: absolute; height: 100%;"
+											placeholder="Nhập vào đây..."
+											th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
+											></textarea></td>
+									<td style="position: relative; padding: 0;"><select
 										class="form-control" style="position: absolute; height: 100%;"
-										placeholder="Nhập vào đây..."
-										th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"></textarea></td>
-								<td style="position: relative; padding: 0;"><select
-									class="form-control" style="position: absolute; height: 100%;">
-										<option value="" disabled selected>-Chọn-</option>
-										<option
-											th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
-											th:value="${point}" th:text="${point}"></option>
-								</select></td>
+										th:field="*{cheSubmit[__${rowStat.index}__].selfPoint}">
+											<option value="" disabled selected>-Chọn-</option>
+											<option
+												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
+												th:value="${point}" th:text="${point}"></option>
+									</select></td>
+								</th:block>
 							</th:block>
-						</th:block>
-					</tr>
-				</tbody>
-			</table>
+						</tr>
+						<tr>
+							<td colspan="5"><input type="submit" class="btn btn-info"
+								value="Submit Button"></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 		</div>
 	</div>
 </body>
