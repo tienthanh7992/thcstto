@@ -65,9 +65,8 @@
 				<b>PHIẾU ĐÁNH GIÁ, XẾP LOẠI GIÁO VIÊN</b>
 			</h5>
 			<h5 style="display: inline">
-				<span>Tháng:</span>
-				<span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span>
-				<span>/</span>
+				<span>Tháng:</span> <span
+					th:text="${#dates.format(#dates.createNow(), 'MM')}"></span> <span>/</span>
 				<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
 			</h5>
 		</div>
@@ -96,50 +95,28 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td class="col-sm-1">1</td>
-						<td>AAA<br> BBB<br> CCC<br> DDD<br>
-						</td>
-						<td style="position: relative; padding: 0;">10</td>
+					<tr th:each="data, rowStat: ${datas}">
+						<td class="col-sm-1" th:text="${data.indexStr}">1</td>
+						<td th:text="${data.content}"></td>
+						<td style="position: relative; padding: 0;"
+							th:text="${data.maxPoint}">10</td>
 						<td style="position: relative; padding: 0;"><textarea
-								class="form-control"
-								style="position: absolute; height: 100%;"
-								placeholder="Nhập vào đây..." th:style="'position: absolute; height: 100%; z-index:' + ${zindex} + ';'"></textarea></td>
+								class="form-control" style="position: absolute; height: 100%;"
+								placeholder="Nhập vào đây..."
+								th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"></textarea></td>
 						<td style="position: relative; padding: 0;"><select
 							class="form-control" style="position: absolute; height: 100%;">
 								<option value="" disabled selected>-Chọn-</option>
-								<option th:each="index : ${#numbers.sequence(1, 10)}"
-									th:value="${index}" th:text="${index}"></option>
+								<option
+									th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
+									th:value="${point}" th:text="${point}"></option>
 						</select></td>
 						<td style="position: relative; padding: 0;"><select
 							class="form-control" style="position: absolute; height: 100%;">
 								<option value="" disabled selected>-Chọn-</option>
-								<option>100</option>
-								<option>50</option>
-								<option>10</option>
-						</select></td>
-					</tr>
-					<tr>
-						<td class="col-sm-1">1</td>
-						<td>AAA</td>
-						<td style="position: relative; padding: 0;">5</td>
-						<td style="position: relative; padding: 0;"><textarea
-								class="form-control"
-								style="position: absolute; height: 100%; z-index: 99;"
-								placeholder="Nhập vào đây..."></textarea></td>
-						<td style="position: relative; padding: 0;"><select
-							class="form-control" style="position: absolute; height: 100%;">
-								<option value="" disabled selected>-Chọn-</option>
-								<option>100</option>
-								<option>50</option>
-								<option>10</option>
-						</select></td>
-						<td style="position: relative; padding: 0;"><select
-							class="form-control" style="position: absolute; height: 100%;">
-								<option value="" disabled selected>-Chọn-</option>
-								<option>100</option>
-								<option>50</option>
-								<option>10</option>
+								<option
+									th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
+									th:value="${point}" th:text="${point}"></option>
 						</select></td>
 					</tr>
 				</tbody>

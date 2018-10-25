@@ -28,3 +28,29 @@ select {
 option {
   text-align: center;
 }
+
+.topic {
+	font-weight: bold;
+	font-size: 17px;
+}
+
+.sub-topic {
+    font-weight: bold;
+}
+
+.total {
+	display: none;
+}
+
+.none {
+	background-color: #F0F0F0;
+}
+
+.head-font-size {
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.bold-font {
+	font-weight: bold;
+}
