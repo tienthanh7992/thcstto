@@ -54,3 +54,9 @@ option {
 .bold-font {
 	font-weight: bold;
 }
+
+.navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+}
