@@ -12,9 +12,13 @@ public class User {
     
     private String lastName;
     
-    private String position;
+    private String team;
     
-    private Long role;
+    private String position;
+
+    private Boolean isTeamLeader;
+    
+    private Long roleId;
 
     public Long getId() {
         return id;
@@ -56,6 +60,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
     public String getPosition() {
         return position;
     }
@@ -64,17 +76,26 @@ public class User {
         this.position = position;
     }
 
-    public Long getRole() {
-        return role;
+    public Boolean getIsTeamLeader() {
+        return isTeamLeader;
     }
 
-    public void setRole(Long role) {
-        this.role = role;
+    public void setIsTeamLeader(Boolean isTeamLeader) {
+        this.isTeamLeader = isTeamLeader;
     }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", position=" + position + ", role=" + role + "]";
-	}
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
+                + ", lastName=" + lastName + ", team=" + team + ", isTeamLeader=" + isTeamLeader + ", roleId=" + roleId
+                + "]";
+    }
 }
