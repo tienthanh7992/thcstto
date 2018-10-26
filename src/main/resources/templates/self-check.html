@@ -92,6 +92,7 @@
 					</thead>
 					<tbody>
 						<tr th:each="data, rowStat: ${datas}">
+						    <input type="hidden" th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'" th:value="${data.id}">
 							<th:block th:switch="${data.questionRole}">
 								<th:block th:case="'TOPIC'">
 									<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
@@ -127,11 +128,12 @@
 											style="position: absolute; height: 100%;"
 											placeholder="Nhập vào đây..."
 											th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
+											th:field="*{cheSubmit[__${rowStat.index}__].issue}"
 											></textarea></td>
 									<td style="position: relative; padding: 0;"><select
 										class="form-control" style="position: absolute; height: 100%;"
 										th:field="*{cheSubmit[__${rowStat.index}__].selfPoint}">
-											<option value="" disabled selected>-Chọn-</option>
+											<option disabled th:value="'-Chọn-'">-Chọn-</option>
 											<option
 												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
 												th:value="${point}" th:text="${point}"></option>

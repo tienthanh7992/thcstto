@@ -6,13 +6,13 @@ public class CheckPointResult {
     
     private Long userId;
     
-    private Long totalPoint;
+    private Integer totalPoint;
     
-    private Long resultType;
+    private String resultType;
     
     private String status;
     
-    private String month;
+    private Integer month;
 
     public Long getId() {
         return id;
@@ -30,19 +30,19 @@ public class CheckPointResult {
         this.userId = userId;
     }
 
-    public Long getTotalPoint() {
+    public Integer getTotalPoint() {
         return totalPoint;
     }
 
-    public void setTotalPoint(Long totalPoint) {
+    public void setTotalPoint(Integer totalPoint) {
         this.totalPoint = totalPoint;
     }
 
-    public Long getResultType() {
+    public String getResultType() {
         return resultType;
     }
 
-    public void setResultType(Long resultType) {
+    public void setResultType(String resultType) {
         this.resultType = resultType;
     }
 
@@ -54,11 +54,11 @@ public class CheckPointResult {
         this.status = status;
     }
 
-    public String getMonth() {
+    public Integer getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(Integer month) {
         this.month = month;
     }
 }

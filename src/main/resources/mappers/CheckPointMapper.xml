@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="vn.edu.tto.mapper.CheckPointMapper">
+	<insert id="insertSelfCheckPointList"
+		parameterType="java.util.List">
+		<foreach collection="list" item="element" index="index">
+			insert into
+			che_submit(user_id,question_id,issue,self_point,lead_point,principal_point,final_point,month,updated_at)
+			values(#{element.userId},#{element.questionId},#{element.issue},CAST(#{element.selfPoint}
+			AS
+			integer),#{element.leadPoint},#{element.principalPoint},#{element.finalPoint},#{element.month},CURRENT_TIMESTAMP);
+		</foreach>
+	</insert>
+
+	<insert id="insertCheckPointResult"
+		parameterType="vn.edu.tto.domain.CheckPointResult">
+		insert into
+		che_result(user_id,total_point,result_type,status,month,updated_at)
+		values(#{userId},#{totalPoint},#{resultType},#{status},#{month},CURRENT_TIMESTAMP);
+	</insert>
+</mapper>
