@@ -6,11 +6,17 @@ CREATE TABLE public.che_result
 (
     id bigint NOT NULL DEFAULT nextval('che_result_id_seq'::regclass),
     user_id bigint,
-    total_point integer,
+    self_point integer,
     result_type character(100) COLLATE pg_catalog."default",
     status character varying(100) COLLATE pg_catalog."default",
     month integer,
     updated_at timestamp without time zone,
+    leader_point integer,
+    principal_point integer,
+    leader_comment text COLLATE pg_catalog."default",
+    principal_comment text COLLATE pg_catalog."default",
+    leader_updated_at timestamp without time zone,
+    principal_updated_at timestamp without time zone,
     CONSTRAINT che_result_pkey PRIMARY KEY (id),
     CONSTRAINT che_result_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES public."user" (id) MATCH SIMPLE
@@ -24,9 +30,9 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.che_result
     OWNER to postgres;
-	
-	
--- Table: public.che_submit
+    
+    
+    -- Table: public.che_submit
 
 -- DROP TABLE public.che_submit;
 
@@ -51,9 +57,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.che_submit
     OWNER to postgres;
-	
-	
--- Table: public.question
+    
+    -- Table: public.question
 
 -- DROP TABLE public.question;
 
@@ -82,9 +87,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.question
     OWNER to postgres;
-	
-
--- Table: public.role
+    
+    -- Table: public.role
 
 -- DROP TABLE public.role;
 
@@ -103,9 +107,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.role
     OWNER to postgres;
-	
-	
--- Table: public."user"
+    
+    -- Table: public."user"
 
 -- DROP TABLE public."user";
 
