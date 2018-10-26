@@ -28,7 +28,7 @@ public interface SelfDataMapper {
     public List<SelfData> findSelfDataByUserId(@Param("userId") Long userId);
     
     
-    @Select("select q.*, ches.self_point as self_point_total, ches.principal_point as principal_point_total, ches.issue from question q" + 
+    @Select("select q.*, ches.self_point as self_point, ches.principal_point as principal_point, ches.issue from question q" + 
             " left join che_submit ches on q.id = ches.question_id and ches.\"month\" = #{month} and ches.user_id = #{userId}" + 
             " order by q.index asc")
     @Results({
@@ -37,7 +37,7 @@ public interface SelfDataMapper {
         @Result(property = "maxPoint", column = "max_point"),
         @Result(property = "isIncrease", column = "is_increase"),
         @Result(property = "questionRole", column = "question_role"),
-        @Result(property = "selfPointTotal", column = "self_point_total"),
+        @Result(property = "selfPoint", column = "self_point"),
         @Result(property = "principalPoint", column = "principal_point"),
         @Result(property = "issue", column = "issue")
     })

@@ -18,11 +18,11 @@ private Long id;
     
     private String questionRole;
     
-    private Integer selfPointTotal;
+    private Integer selfPoint;
     
-    private Integer principalPointTotal;
+    private Integer principalPoint;
     
-    private Integer issue;
+    private String issue;
 
     public Long getId() {
         return id;
@@ -88,28 +88,27 @@ private Long id;
         this.questionRole = questionRole;
     }
 
-    public Integer getSelfPointTotal() {
-        return selfPointTotal;
+    public Integer getSelfPoint() {
+        return selfPoint;
     }
 
-    public void setSelfPointTotal(Integer selfPointTotal) {
-        this.selfPointTotal = selfPointTotal;
+    public void setSelfPoint(Integer selfPoint) {
+        this.selfPoint = selfPoint;
     }
 
-    public Integer getPrincipalPointTotal() {
-        return principalPointTotal;
+    public Integer getPrincipalPoint() {
+        return principalPoint;
     }
 
-    public void setPrincipalPointTotal(Integer principalPointTotal) {
-        this.principalPointTotal = principalPointTotal;
+    public void setPrincipalPoint(Integer principalPoint) {
+        this.principalPoint = principalPoint;
     }
 
-    public Integer getIssue() {
+    public String getIssue() {
         return issue;
     }
 
-    public void setIssue(Integer issue) {
+    public void setIssue(String issue) {
         this.issue = issue;
     }
-   
 }
