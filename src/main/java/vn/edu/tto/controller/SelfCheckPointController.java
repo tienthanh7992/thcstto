@@ -10,20 +10,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import vn.edu.tto.domain.CheckPointResult;
 import vn.edu.tto.domain.CheckPointSubmit;
 import vn.edu.tto.domain.CheckPointSubmitDto;
 import vn.edu.tto.domain.Question;
+import vn.edu.tto.domain.SelfData;
+import vn.edu.tto.domain.SelfDataDetail;
 import vn.edu.tto.domain.Utils.DateUtil;
 import vn.edu.tto.domain.constant.TTOConstant;
 import vn.edu.tto.mapper.CheckPointMapper;
 import vn.edu.tto.mapper.QuestionMapper;
+import vn.edu.tto.mapper.SelfDataMapper;
 import vn.edu.tto.mapper.UserMapper;
 
 @Controller
-public class CheckPointController {
+public class SelfCheckPointController {
 
     @Autowired
     UserMapper userMapper;
@@ -33,6 +37,9 @@ public class CheckPointController {
 
     @Autowired
     CheckPointMapper checkPointMapper;
+
+    @Autowired
+    SelfDataMapper selfDataMapper;
 
     @GetMapping("/self-check")
     public String selfCheckGet(Model model) {
@@ -73,13 +80,32 @@ public class CheckPointController {
             e.printStackTrace();
         }
         checkPointResult.setUserId(getUserIdFromSession());
-        checkPointResult.setTotalPoint(totalPoint);
+        checkPointResult.setSelfPoint(totalPoint);
         checkPointResult.setResultType(getResultType(totalPoint));
         checkPointResult.setStatus(TTOConstant.CHEStatus.PENDING);
         checkPointResult.setMonth(10);
         checkPointMapper.insertCheckPointResult(checkPointResult);
         System.out.println();
         return "self-check";
+    }
+
+    @GetMapping("/self-data")
+    public String selfDataGet(Model model) {
+        List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserId(getUserIdFromSession());
+        model.addAttribute("datas", selfDatas);
+        return "self-data";
+    }
+
+    @GetMapping("/self-data-detail/{id}")
+    public String selfDataDetailGet( @PathVariable("id") Long id, Model model) {
+        CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, getUserIdFromSession());
+        if (checkPointResult != null) {
+            List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(getUserIdFromSession(), checkPointResult.getMonth());
+            model.addAttribute("datas", selfDataDetails);
+            model.addAttribute("checkPointResult", checkPointResult);
+        }
+        
+        return "self-data-detail";
     }
 
     private int getPoint(String point) {
@@ -122,5 +148,4 @@ public class CheckPointController {
         return 0;
     }
 
-    
 }

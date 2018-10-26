@@ -1,18 +1,34 @@
 package vn.edu.tto.domain;
 
+import java.sql.Timestamp;
+
 public class CheckPointResult {
 
     private Long id;
     
     private Long userId;
     
-    private Integer totalPoint;
+    private Integer selfPoint;
+    
+    private Integer leaderPoint;
+    
+    private Integer principalPoint;
     
     private String resultType;
     
     private String status;
     
     private Integer month;
+    
+    private String leaderComment;
+    
+    private String principalComment;
+    
+    private Timestamp updatedAt;
+    
+    private Timestamp leaderUpdatedAt;
+    
+    private Timestamp principalUpdateAt;
 
     public Long getId() {
         return id;
@@ -30,12 +46,28 @@ public class CheckPointResult {
         this.userId = userId;
     }
 
-    public Integer getTotalPoint() {
-        return totalPoint;
+    public Integer getSelfPoint() {
+        return selfPoint;
     }
 
-    public void setTotalPoint(Integer totalPoint) {
-        this.totalPoint = totalPoint;
+    public void setSelfPoint(Integer selfPoint) {
+        this.selfPoint = selfPoint;
+    }
+
+    public Integer getLeaderPoint() {
+        return leaderPoint;
+    }
+
+    public void setLeaderPoint(Integer leaderPoint) {
+        this.leaderPoint = leaderPoint;
+    }
+
+    public Integer getPrincipalPoint() {
+        return principalPoint;
+    }
+
+    public void setPrincipalPoint(Integer principalPoint) {
+        this.principalPoint = principalPoint;
     }
 
     public String getResultType() {
@@ -61,4 +93,45 @@ public class CheckPointResult {
     public void setMonth(Integer month) {
         this.month = month;
     }
+
+    public String getLeaderComment() {
+        return leaderComment;
+    }
+
+    public void setLeaderComment(String leaderComment) {
+        this.leaderComment = leaderComment;
+    }
+
+    public String getPrincipalComment() {
+        return principalComment;
+    }
+
+    public void setPrincipalComment(String principalComment) {
+        this.principalComment = principalComment;
+    }
+
+    public Timestamp getLeaderUpdatedAt() {
+        return leaderUpdatedAt;
+    }
+
+    public void setLeaderUpdatedAt(Timestamp leaderUpdatedAt) {
+        this.leaderUpdatedAt = leaderUpdatedAt;
+    }
+
+    public Timestamp getPrincipalUpdateAt() {
+        return principalUpdateAt;
+    }
+
+    public void setPrincipalUpdateAt(Timestamp principalUpdateAt) {
+        this.principalUpdateAt = principalUpdateAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 }
