@@ -22,21 +22,9 @@ public class LoginController {
         return "login";
     }
 
-//    @PostMapping("/login")
-//    public String login(@ModelAttribute User user, HttpServletRequest request) {
-//        User userLogin = userMapper.findUserByUserName(user.getUserName());
-//        if (userLogin != null) {
-//            HttpSession session = request.getSession();
-//            session.setAttribute("tto-auth", user.getId());
-//            System.out.println(userLogin.toString());
-//            return "redirect:/working-list/1";
-//        }
-//        return "error";
-//    }
-
     @GetMapping("/home")
     public String home(Model model) {
-        return "index";
+        return "home";
     }
     
     @GetMapping("/error")

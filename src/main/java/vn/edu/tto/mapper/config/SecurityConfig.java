@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable().headers().frameOptions().disable();
         http.authorizeRequests().antMatchers("/login", "/error").permitAll().antMatchers("/**").authenticated().and()
-                .formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().exceptionHandling().and().logout()    //logout configuration
+                .formLogin().loginPage("/login").defaultSuccessUrl("/home").permitAll().and().logout().permitAll().and().exceptionHandling().and().logout()    //logout configuration
                 .logoutUrl("/logout") 
                 .logoutSuccessUrl("/login").and().exceptionHandling() 
                 .accessDeniedHandler(accessDeniedHandler);
