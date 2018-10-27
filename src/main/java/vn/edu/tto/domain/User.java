@@ -19,6 +19,8 @@ public class User {
     private Boolean isTeamLeader;
     
     private Long roleId;
+    
+    private String role;
 
     public Long getId() {
         return id;
@@ -90,6 +92,14 @@ public class User {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRole() {
+        return "USER";
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

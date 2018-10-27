@@ -1,5 +1,6 @@
 package vn.edu.tto.controller;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ import vn.edu.tto.domain.CheckPointSubmitDto;
 import vn.edu.tto.domain.Question;
 import vn.edu.tto.domain.SelfData;
 import vn.edu.tto.domain.SelfDataDetail;
+import vn.edu.tto.domain.User;
 import vn.edu.tto.domain.Utils.DateUtil;
-import vn.edu.tto.domain.Utils.SessionUtil;
 import vn.edu.tto.domain.constant.TTOConstant;
 import vn.edu.tto.mapper.CheckPointMapper;
 import vn.edu.tto.mapper.QuestionMapper;
@@ -43,11 +44,9 @@ public class SelfCheckPointController {
     @Autowired
     SelfDataMapper selfDataMapper;
     
-    @Autowired
-    SessionUtil sessionUtil;
-
     @GetMapping("/self-check")
-    public String selfCheckGet(Model model) {
+    public String selfCheckGet(Model model, Principal principal) {
+        System.out.println(principal.getName());
         List<Question> questions = questionMapper.findQuestionByRole(3L);
         model.addAttribute("datas", questions);
         model.addAttribute("cheSubmitDto", new CheckPointSubmitDto());
@@ -55,7 +54,8 @@ public class SelfCheckPointController {
     }
 
     @PostMapping("/self-check")
-    public @ResponseBody String selfCheckPost(@ModelAttribute("cheSubmitDto") CheckPointSubmitDto cheSubmitDto) {
+    public @ResponseBody String selfCheckPost(@ModelAttribute("cheSubmitDto") CheckPointSubmitDto cheSubmitDto, Principal principal) {
+        User user = userMapper.findUserByUserName(principal.getName());
         List<CheckPointSubmit> checkPointSubmits = new ArrayList<>();
         Map<Long, Question> questionMap = questionMapper.findQuestionByRoleMap(3L);
         CheckPointSubmit checkPointSubmit;
@@ -70,7 +70,7 @@ public class SelfCheckPointController {
                 } else {
                     totalPoint += getPoint(che.getSelfPoint());
                 }
-                checkPointSubmit.setUserId(sessionUtil.getUserIdFromSession());
+                checkPointSubmit.setUserId(user.getId());
                 checkPointSubmit.setQuestionId(che.getQuestionId());
                 checkPointSubmit.setIssue(che.getIssue());
                 checkPointSubmit.setSelfPoint(String.valueOf(getPoint(che.getSelfPoint())));
@@ -84,7 +84,7 @@ public class SelfCheckPointController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        checkPointResult.setUserId(sessionUtil.getUserIdFromSession());
+        checkPointResult.setUserId(user.getId());
         checkPointResult.setSelfPoint(totalPoint);
         checkPointResult.setResultType(getResultType(totalPoint));
         checkPointResult.setStatus(TTOConstant.CHEStatus.PENDING);
@@ -95,17 +95,19 @@ public class SelfCheckPointController {
     }
 
     @GetMapping("/self-data")
-    public String selfDataGet(Model model) {
-        List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserId(sessionUtil.getUserIdFromSession());
+    public String selfDataGet(Model model, Principal principal) {
+        
+        List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserName(principal.getName());
         model.addAttribute("datas", selfDatas);
         return "self-data";
     }
 
     @GetMapping("/self-data-detail/{id}")
-    public String selfDataDetailGet( @PathVariable("id") Long id, Model model) {
-        CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, sessionUtil.getUserIdFromSession());
+    public String selfDataDetailGet( @PathVariable("id") Long id, Model model, Principal principal) {
+        User user = userMapper.findUserByUserName(principal.getName());
+        CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, user.getId());
         if (checkPointResult != null) {
-            List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(sessionUtil.getUserIdFromSession(), checkPointResult.getMonth());
+            List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(user.getId(), checkPointResult.getMonth());
             model.addAttribute("datas", selfDataDetails);
             model.addAttribute("checkPointResult", checkPointResult);
         }
