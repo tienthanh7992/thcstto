@@ -26,7 +26,7 @@ public class LoginController {
 
 	@PostMapping("/login")
     public String login(@ModelAttribute User user) {
-		User userLogin = userMapper.findByUserName(user.getUserName());
+		User userLogin = userMapper.findUserByUserName(user.getUserName());
 		System.out.println(userLogin.toString());
         return "redirect:/home";
     }

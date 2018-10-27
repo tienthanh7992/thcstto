@@ -14,7 +14,7 @@ import vn.edu.tto.domain.SelfDataDetail;
 @Mapper
 public interface SelfDataMapper {
 
-    @Select("select ches.id as che_result_id, first_name, last_name, \"month\", self_point, principal_point, result_type, status from che_result ches inner join \"user\" u on ches.user_id = u.id and u.id = #{userId} order by updated_at desc")
+    @Select("select ches.id as che_result_id, first_name, last_name, \"month\", self_point, principal_point, result_type, status from che_result ches inner join \"user\" u on ches.user_id = u.id and u.id = #{userId} order by self_created_at desc")
     @Results({
         @Result(property = "cheResultId", column = "che_result_id"),
         @Result(property = "firstName", column = "first_name"),

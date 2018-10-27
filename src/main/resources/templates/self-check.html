@@ -14,8 +14,27 @@
 	rel="stylesheet" media="screen" />
 <link href="../../static/css/table.css" th:href="@{/css/table.css}"
 	rel="stylesheet" media="screen" />
+<script type="text/javascript">
+
+function submitForm() {
+    var form = $("#frm-self-check");
+    var url = form.attr('action');
+
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               if (data == 'SUCCESS') {
+                   window.location.replace("/self-check");
+               }
+           }
+         });
+}
+</script>
 </head>
-<body>
+<body class="self-check">
 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -74,7 +93,7 @@
 		</div>
 
 		<div class="row">
-			<form class="form-horizontal" action="#" th:action="@{/self-check}"
+			<form id="frm-self-check" class="form-horizontal" th:action="@{/self-check}"
 				th:object="${cheSubmitDto}" method="post">
 				<table class="table table-bordered">
 					<thead>
@@ -142,7 +161,7 @@
 							</th:block>
 						</tr>
 						<tr>
-							<td colspan="5"><input type="submit" class="btn btn-info"
+							<td colspan="5"><input onclick="submitForm();" type="button" class="btn btn-info"
 								value="Submit Button"></td>
 						</tr>
 					</tbody>

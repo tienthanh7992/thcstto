@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import vn.edu.tto.domain.CheckPointResult;
 import vn.edu.tto.domain.CheckPointSubmit;
@@ -20,6 +21,7 @@ import vn.edu.tto.domain.Question;
 import vn.edu.tto.domain.SelfData;
 import vn.edu.tto.domain.SelfDataDetail;
 import vn.edu.tto.domain.Utils.DateUtil;
+import vn.edu.tto.domain.Utils.SessionUtil;
 import vn.edu.tto.domain.constant.TTOConstant;
 import vn.edu.tto.mapper.CheckPointMapper;
 import vn.edu.tto.mapper.QuestionMapper;
@@ -40,6 +42,9 @@ public class SelfCheckPointController {
 
     @Autowired
     SelfDataMapper selfDataMapper;
+    
+    @Autowired
+    SessionUtil sessionUtil;
 
     @GetMapping("/self-check")
     public String selfCheckGet(Model model) {
@@ -50,7 +55,7 @@ public class SelfCheckPointController {
     }
 
     @PostMapping("/self-check")
-    public String selfCheckPost(@ModelAttribute("cheSubmitDto") CheckPointSubmitDto cheSubmitDto) {
+    public @ResponseBody String selfCheckPost(@ModelAttribute("cheSubmitDto") CheckPointSubmitDto cheSubmitDto) {
         List<CheckPointSubmit> checkPointSubmits = new ArrayList<>();
         Map<Long, Question> questionMap = questionMapper.findQuestionByRoleMap(3L);
         CheckPointSubmit checkPointSubmit;
@@ -65,7 +70,7 @@ public class SelfCheckPointController {
                 } else {
                     totalPoint += getPoint(che.getSelfPoint());
                 }
-                checkPointSubmit.setUserId(getUserIdFromSession());
+                checkPointSubmit.setUserId(sessionUtil.getUserIdFromSession());
                 checkPointSubmit.setQuestionId(che.getQuestionId());
                 checkPointSubmit.setIssue(che.getIssue());
                 checkPointSubmit.setSelfPoint(String.valueOf(getPoint(che.getSelfPoint())));
@@ -79,28 +84,28 @@ public class SelfCheckPointController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        checkPointResult.setUserId(getUserIdFromSession());
+        checkPointResult.setUserId(sessionUtil.getUserIdFromSession());
         checkPointResult.setSelfPoint(totalPoint);
         checkPointResult.setResultType(getResultType(totalPoint));
         checkPointResult.setStatus(TTOConstant.CHEStatus.PENDING);
         checkPointResult.setMonth(10);
         checkPointMapper.insertCheckPointResult(checkPointResult);
         System.out.println();
-        return "self-check";
+        return "SUCCESS";
     }
 
     @GetMapping("/self-data")
     public String selfDataGet(Model model) {
-        List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserId(getUserIdFromSession());
+        List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserId(sessionUtil.getUserIdFromSession());
         model.addAttribute("datas", selfDatas);
         return "self-data";
     }
 
     @GetMapping("/self-data-detail/{id}")
     public String selfDataDetailGet( @PathVariable("id") Long id, Model model) {
-        CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, getUserIdFromSession());
+        CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, sessionUtil.getUserIdFromSession());
         if (checkPointResult != null) {
-            List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(getUserIdFromSession(), checkPointResult.getMonth());
+            List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(sessionUtil.getUserIdFromSession(), checkPointResult.getMonth());
             model.addAttribute("datas", selfDataDetails);
             model.addAttribute("checkPointResult", checkPointResult);
         }
@@ -115,11 +120,6 @@ public class SelfCheckPointController {
             return 0;
         }
     }
-
-    private Long getUserIdFromSession() {
-        return 1L;
-    }
-
     private String getResultType(int point) {
         if (90 >= point && point <= 100) {
             return "A";
