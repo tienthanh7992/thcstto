@@ -97,8 +97,8 @@
 							<td class="col-sm-1" th:text="${data.team}">1</td>
 							<td class="col-sm-1" th:text="${data.isTeamLeader}">1</td>
 							<td class="col-sm-1" th:text="${data.month}">1</td>
-							<td class="col-sm-2" th:text="${#dates.format(java.text.SimpleDateFormat.SimpleDateFormat('yyyy-MM-dd HH:mm:ss').format(new Date()))}">1</td>
-							<td class="col-sm-2"><a th:href="@{'/approve/' + ${data.cheResultId}}">Chi tiết</a></td>
+							<td class="col-sm-2" th:text="${#dates.format(data.selfCreatedAt, 'yyyy-MM-dd HH:mm:ss')}">1</td>
+							<td class="col-sm-2"><a th:href="@{'/working-detail/' + ${data.cheResultId}}">Chi tiết</a></td>
 						</tr>
 					</tbody>
 				</table>

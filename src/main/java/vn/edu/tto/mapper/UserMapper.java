@@ -30,7 +30,7 @@ public interface UserMapper {
     public User findUserByUserId(@Param("userId") Long userId);
 	
 	
-	@Select("select u.*, r.id as role_id, r.code as roleCode, r.name as roleName from \"user\" u" + 
+	@Select("select u.*, r.id as role_id, r.code as role_code, r.name as role_name from \"user\" u" + 
 	        " inner join \"role\" r on u.role_id = r.id" + 
 	        " where u.user_name = #{userName}")
 	@Results({
