@@ -1,0 +1,6 @@
+insert into role values(1,'PRINCIPAL','Hiệu trưởng');
+insert into role values(2,'VICE_PRINCIPAL','Phó hiệu trưởng');
+insert into role values(3,'TEACHER','Giáo viên');
+insert into role values(4,'EMPLOYEE','Nhân viên');
+insert into role values(5,'DIRECTOR','Sở');
+,
