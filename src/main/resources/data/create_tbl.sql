@@ -17,6 +17,8 @@ CREATE TABLE public.che_result
     principal_comment text COLLATE pg_catalog."default",
     leader_updated_at timestamp without time zone,
     principal_updated_at timestamp without time zone,
+    self_created_at timestamp without time zone,
+    year integer,
     CONSTRAINT che_result_pkey PRIMARY KEY (id),
     CONSTRAINT che_result_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES public."user" (id) MATCH SIMPLE
@@ -30,8 +32,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.che_result
     OWNER to postgres;
-    
-    
     -- Table: public.che_submit
 
 -- DROP TABLE public.che_submit;
@@ -57,6 +57,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.che_submit
     OWNER to postgres;
+    
+    
     
     -- Table: public.question
 
@@ -107,6 +109,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.role
     OWNER to postgres;
+    
     
     -- Table: public."user"
 
