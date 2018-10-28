@@ -8,11 +8,11 @@ public class CheckPointResult {
     
     private Long userId;
     
-    private Integer selfPoint;
+    private Double selfPoint;
     
-    private Integer leaderPoint;
+    private Double leaderPoint;
     
-    private Integer principalPoint;
+    private Double principalPoint;
     
     private String resultType;
     
@@ -58,31 +58,31 @@ public class CheckPointResult {
         this.userId = userId;
     }
 
-    public Integer getSelfPoint() {
-        return selfPoint;
-    }
+    public Double getSelfPoint() {
+		return selfPoint;
+	}
 
-    public void setSelfPoint(Integer selfPoint) {
-        this.selfPoint = selfPoint;
-    }
+	public void setSelfPoint(Double selfPoint) {
+		this.selfPoint = selfPoint;
+	}
 
-    public Integer getLeaderPoint() {
-        return leaderPoint;
-    }
+	public Double getLeaderPoint() {
+		return leaderPoint;
+	}
 
-    public void setLeaderPoint(Integer leaderPoint) {
-        this.leaderPoint = leaderPoint;
-    }
+	public void setLeaderPoint(Double leaderPoint) {
+		this.leaderPoint = leaderPoint;
+	}
 
-    public Integer getPrincipalPoint() {
-        return principalPoint;
-    }
+	public Double getPrincipalPoint() {
+		return principalPoint;
+	}
 
-    public void setPrincipalPoint(Integer principalPoint) {
-        this.principalPoint = principalPoint;
-    }
+	public void setPrincipalPoint(Double principalPoint) {
+		this.principalPoint = principalPoint;
+	}
 
-    public String getResultType() {
+	public String getResultType() {
         return resultType;
     }
 

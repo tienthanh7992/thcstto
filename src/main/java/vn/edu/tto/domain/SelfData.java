@@ -10,9 +10,9 @@ public class SelfData {
     
     private Integer month;
     
-    private Integer selfPoint;
+    private Double selfPoint;
     
-    private Integer principalPoint;
+    private Double principalPoint;
     
     private String resultType;
     
@@ -50,23 +50,23 @@ public class SelfData {
         this.month = month;
     }
 
-    public Integer getSelfPoint() {
-        return selfPoint;
-    }
+    public Double getSelfPoint() {
+		return selfPoint;
+	}
 
-    public void setSelfPoint(Integer selfPoint) {
-        this.selfPoint = selfPoint;
-    }
+	public void setSelfPoint(Double selfPoint) {
+		this.selfPoint = selfPoint;
+	}
 
-    public Integer getPrincipalPoint() {
-        return principalPoint;
-    }
+	public Double getPrincipalPoint() {
+		return principalPoint;
+	}
 
-    public void setPrincipalPoint(Integer principalPoint) {
-        this.principalPoint = principalPoint;
-    }
+	public void setPrincipalPoint(Double principalPoint) {
+		this.principalPoint = principalPoint;
+	}
 
-    public String getResultType() {
+	public String getResultType() {
         return resultType;
     }
 

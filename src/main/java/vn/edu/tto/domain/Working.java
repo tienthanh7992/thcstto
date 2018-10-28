@@ -26,7 +26,7 @@ public class Working {
     
     private Integer year;
     
-    private Integer principalPoint;
+    private Double principalPoint;
     
     private String resultType;
     
@@ -138,11 +138,11 @@ public class Working {
         this.status = status;
     }
 
-	public Integer getPrincipalPoint() {
+	public Double getPrincipalPoint() {
 		return principalPoint;
 	}
 
-	public void setPrincipalPoint(Integer principalPoint) {
+	public void setPrincipalPoint(Double principalPoint) {
 		this.principalPoint = principalPoint;
 	}
 

@@ -32,6 +32,21 @@
 			}
 		});
 	}
+	function count() {
+		var count = 0;
+		$('select').each(function() {
+			 var optionSelected = $("option:selected", this);
+				 if (!isNaN(this.value)) {
+				 count += parseFloat(this.value);
+			 }
+		});
+		return count;
+	}
+	$(document).ready(function() {
+		$('select').on('change', function(e) {
+			$('#total').text(count());
+		});
+	});
 </script>
 </head>
 <body class="self-check">
@@ -104,7 +119,7 @@
 									<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
 									<td class="topic" th:text="${data.content}"></td>
 									<td class="topic" style="position: relative; padding: 0;"
-										th:text="${data.maxPoint}">10</td>
+										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
 									<td class="none"></td>
 									<td class="none"></td>
 								</th:block>
@@ -112,7 +127,7 @@
 									<td class="col-sm-1 sub-topic" th:text="${data.indexStr}">1</td>
 									<td class="sub-topic" th:text="${data.content}"></td>
 									<td class="sub-topic" style="position: relative; padding: 0;"
-										th:text="${data.maxPoint}">10</td>
+										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
 									<td class="none"></td>
 									<td class="none"></td>
 								</th:block>
@@ -120,15 +135,27 @@
 									<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
 									<td class="sub-topic" th:text="${data.content}"></td>
 									<td class="sub-topic" style="position: relative; padding: 0;"
-										th:text="${data.maxPoint}">10</td>
+										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
 									<td class="none"></td>
-									<td class="none"></td>
+									<td style="font-weight: bold;" class="text-center" id="total"></td>
+								</th:block>
+								<th:block th:case="'DECREASE'">
+									<td class="col-sm-1">1</td>
+									<td style="font-style: italic;" th:text="${data.content}"></td>
+									<td></td>
+									<td style="position: relative; padding: 0;"><textarea
+											class="form-control"
+											style="position: absolute; height: 100%;"
+											placeholder="Nhập vào đây..."
+											th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
+											th:field="*{cheSubmit[__${rowStat.index}__].issue}"></textarea></td>
+									<td></td>
 								</th:block>
 								<th:block th:case="*">
-									<td class="col-sm-1" th:text="${data.indexStr}">1</td>
+									<td class="col-sm-1" th:text="${data.indexStr}"></td>
 									<td th:text="${data.content}"></td>
 									<td style="position: relative; padding: 0;"
-										th:text="${data.maxPoint}">10</td>
+										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
 									<td style="position: relative; padding: 0;"><textarea
 											class="form-control"
 											style="position: absolute; height: 100%;"
@@ -140,8 +167,8 @@
 										th:field="*{cheSubmit[__${rowStat.index}__].selfPoint}">
 											<option disabled th:value="'-Chọn-'">-Chọn-</option>
 											<option
-												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
-												th:value="${point}" th:text="${point}"></option>
+												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint * 2)}"
+												th:value="${point} * 0.5" th:text="${point * 0.5}"></option>
 									</select></td>
 								</th:block>
 							</th:block>

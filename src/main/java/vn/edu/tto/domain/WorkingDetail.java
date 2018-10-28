@@ -12,19 +12,19 @@ public class WorkingDetail {
 
 	private String content;
 
-	private Integer startPoint;
+	private Double startPoint;
 
-	private Integer maxPoint;
+	private Double maxPoint;
 
 	private Boolean isIncrease;
 
 	private String questionRole;
 
-	private Integer selfPoint;
+	private Double selfPoint;
 	
-	private Integer leaderPoint;
+	private Double leaderPoint;
 
-	private Integer principalPoint;
+	private Double principalPoint;
 
 	private String issue;
 
@@ -68,19 +68,19 @@ public class WorkingDetail {
 		this.content = content;
 	}
 
-	public Integer getStartPoint() {
+	public Double getStartPoint() {
 		return startPoint;
 	}
 
-	public void setStartPoint(Integer startPoint) {
+	public void setStartPoint(Double startPoint) {
 		this.startPoint = startPoint;
 	}
 
-	public Integer getMaxPoint() {
+	public Double getMaxPoint() {
 		return maxPoint;
 	}
 
-	public void setMaxPoint(Integer maxPoint) {
+	public void setMaxPoint(Double maxPoint) {
 		this.maxPoint = maxPoint;
 	}
 
@@ -100,27 +100,27 @@ public class WorkingDetail {
 		this.questionRole = questionRole;
 	}
 
-	public Integer getSelfPoint() {
+	public Double getSelfPoint() {
 		return selfPoint;
 	}
 
-	public void setSelfPoint(Integer selfPoint) {
+	public void setSelfPoint(Double selfPoint) {
 		this.selfPoint = selfPoint;
 	}
 
-	public Integer getLeaderPoint() {
+	public Double getLeaderPoint() {
 		return leaderPoint;
 	}
 
-	public void setLeaderPoint(Integer leaderPoint) {
+	public void setLeaderPoint(Double leaderPoint) {
 		this.leaderPoint = leaderPoint;
 	}
 
-	public Integer getPrincipalPoint() {
+	public Double getPrincipalPoint() {
 		return principalPoint;
 	}
 
-	public void setPrincipalPoint(Integer principalPoint) {
+	public void setPrincipalPoint(Double principalPoint) {
 		this.principalPoint = principalPoint;
 	}
 

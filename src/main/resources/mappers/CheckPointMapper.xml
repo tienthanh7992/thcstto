@@ -8,10 +8,10 @@
 		parameterType="java.util.List">
 		<foreach collection="list" item="element" index="index">
 			insert into
-			che_submit(user_id,question_id,issue,self_point,leader_point,principal_point,final_point,month,updated_at)
+			che_submit(user_id,question_id,issue,self_point,leader_point,principal_point,final_point,month,year,updated_at)
 			values(#{element.userId},#{element.questionId},#{element.issue},CAST(#{element.selfPoint}
 			AS
-			integer),#{element.leaderPoint},#{element.principalPoint},#{element.finalPoint},#{element.month},CURRENT_TIMESTAMP);
+			integer),#{element.leaderPoint},#{element.principalPoint},#{element.finalPoint},#{element.month},#{element.year},CURRENT_TIMESTAMP);
 		</foreach>
 	</insert>
 

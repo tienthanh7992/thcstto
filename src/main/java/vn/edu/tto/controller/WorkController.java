@@ -115,7 +115,7 @@ public class WorkController {
 			Map<Long, Question> questionMap = questionMapper.findQuestionByRoleMap(3L);
 			CheckPointSubmit checkPointSubmit;
 			CheckPointResult checkPointResult = new CheckPointResult();
-			int totalPoint = 0;
+			double totalPoint = 0;
 			String topic = "";
 			for (CheckPointSubmit ches : cheSubmitDto.getCheSubmit()) {
 				Question question = questionMap.get(ches.getQuestionId());

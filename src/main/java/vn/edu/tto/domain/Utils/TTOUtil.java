@@ -24,7 +24,7 @@ public class TTOUtil {
 		}
 	}
 
-	public String getResultType(int point) {
+	public String getResultType(double point) {
 		if (90 >= point && point <= 100) {
 			return "A";
 		} else if (70 >= point && point < 90) {

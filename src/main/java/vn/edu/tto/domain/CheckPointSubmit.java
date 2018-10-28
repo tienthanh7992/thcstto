@@ -14,13 +14,15 @@ public class CheckPointSubmit {
     
     private String selfPoint;
     
-    private Integer leaderPoint;
+    private Double leaderPoint;
     
-    private Integer principalPoint;
+    private Double principalPoint;
     
-    private Integer finalPoint;
+    private Double finalPoint;
         
     private Integer month;
+    
+    private Integer year;
     
     private String comment;
     
@@ -78,27 +80,28 @@ public class CheckPointSubmit {
 		this.selfPoint = selfPoint;
 	}
 
-	public Integer getLeaderPoint() {
+
+	public Double getLeaderPoint() {
 		return leaderPoint;
 	}
 
-	public void setLeaderPoint(Integer leaderPoint) {
+	public void setLeaderPoint(Double leaderPoint) {
 		this.leaderPoint = leaderPoint;
 	}
 
-	public Integer getPrincipalPoint() {
+	public Double getPrincipalPoint() {
 		return principalPoint;
 	}
 
-	public void setPrincipalPoint(Integer principalPoint) {
+	public void setPrincipalPoint(Double principalPoint) {
 		this.principalPoint = principalPoint;
 	}
 
-	public Integer getFinalPoint() {
+	public Double getFinalPoint() {
 		return finalPoint;
 	}
 
-	public void setFinalPoint(Integer finalPoint) {
+	public void setFinalPoint(Double finalPoint) {
 		this.finalPoint = finalPoint;
 	}
 
@@ -108,6 +111,14 @@ public class CheckPointSubmit {
 
 	public void setMonth(Integer month) {
 		this.month = month;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 	public String getComment() {

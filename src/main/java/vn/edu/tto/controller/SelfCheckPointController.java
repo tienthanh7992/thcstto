@@ -22,6 +22,7 @@ import vn.edu.tto.domain.Question;
 import vn.edu.tto.domain.SelfData;
 import vn.edu.tto.domain.SelfDataDetail;
 import vn.edu.tto.domain.User;
+import vn.edu.tto.domain.Utils.DateUtil;
 import vn.edu.tto.domain.Utils.TTOUtil;
 import vn.edu.tto.domain.constant.TTOConstant;
 import vn.edu.tto.mapper.CheckPointMapper;
@@ -49,7 +50,11 @@ public class SelfCheckPointController {
 
 	@GetMapping("/self-check")
 	public String selfCheckGet(Model model, Principal principal) {
-		System.out.println(principal.getName());
+		User user = userMapper.findUserByUserName(principal.getName());
+		int month = ttoUtil.checkReadyMonth(user);
+		if (month == 0) {
+			return "self-data";
+		}
 		List<Question> questions = questionMapper.findQuestionByRole(3L);
 		model.addAttribute("datas", questions);
 		model.addAttribute("cheSubmitDto", new CheckPointSubmitDto());
@@ -65,11 +70,12 @@ public class SelfCheckPointController {
 			if (month == 0) {
 				return "Bạn đã làm phiếu đánh giá tháng này rồi.";
 			}
+			int year = DateUtil.getCurrentYear();
 			List<CheckPointSubmit> checkPointSubmits = new ArrayList<>();
 			Map<Long, Question> questionMap = questionMapper.findQuestionByRoleMap(3L);
 			CheckPointSubmit checkPointSubmit;
 			CheckPointResult checkPointResult = new CheckPointResult();
-			int totalPoint = 0;
+			double totalPoint = 0;
 			String topic = "";
 			for (CheckPointSubmit che : cheSubmitDto.getCheSubmit()) {
 				Question question = questionMap.get(che.getQuestionId());
@@ -82,17 +88,24 @@ public class SelfCheckPointController {
 					}
 					if (question.getIsIncrease()) {
 						totalPoint += ttoUtil.getPoint(che.getSelfPoint());
-					} else {
-						totalPoint += ttoUtil.getPoint(che.getSelfPoint());
 					}
 					checkPointSubmit.setUserId(user.getId());
 					checkPointSubmit.setQuestionId(che.getQuestionId());
 					checkPointSubmit.setIssue(che.getIssue());
 					checkPointSubmit.setSelfPoint(String.valueOf(ttoUtil.getPoint(che.getSelfPoint())));
 					checkPointSubmit.setMonth(month);
+					checkPointSubmit.setYear(year);
 					checkPointSubmits.add(checkPointSubmit);
 				} else if ("TOPIC".equals(question.getQuestionRole())) {
 					topic = question.getIndexStr();
+				} else if ("DECREASE".equals(question.getQuestionRole())) {
+					checkPointSubmit = new CheckPointSubmit();
+					checkPointSubmit.setUserId(user.getId());
+					checkPointSubmit.setQuestionId(che.getQuestionId());
+					checkPointSubmit.setIssue(che.getIssue());
+					checkPointSubmit.setMonth(month);
+					checkPointSubmit.setYear(year);
+					checkPointSubmits.add(checkPointSubmit);
 				}
 
 			}

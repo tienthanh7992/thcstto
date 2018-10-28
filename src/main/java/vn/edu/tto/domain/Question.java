@@ -10,9 +10,9 @@ public class Question {
     
     private String content;
     
-    private Integer startPoint;
+    private Double startPoint;
     
-    private Integer maxPoint;
+    private Double maxPoint;
     
     private Boolean isIncrease;
     
@@ -54,23 +54,23 @@ public class Question {
         this.content = content;
     }
 
-    public Integer getStartPoint() {
-        return startPoint;
-    }
+    public Double getStartPoint() {
+		return startPoint;
+	}
 
-    public void setStartPoint(Integer startPoint) {
-        this.startPoint = startPoint;
-    }
+	public void setStartPoint(Double startPoint) {
+		this.startPoint = startPoint;
+	}
 
-    public Integer getMaxPoint() {
-        return maxPoint;
-    }
+	public Double getMaxPoint() {
+		return maxPoint;
+	}
 
-    public void setMaxPoint(Integer maxPoint) {
-        this.maxPoint = maxPoint;
-    }
+	public void setMaxPoint(Double maxPoint) {
+		this.maxPoint = maxPoint;
+	}
 
-    public Boolean getIsIncrease() {
+	public Boolean getIsIncrease() {
         return isIncrease;
     }
 

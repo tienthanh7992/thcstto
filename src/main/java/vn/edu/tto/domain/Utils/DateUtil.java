@@ -8,4 +8,8 @@ public class DateUtil {
     public static int getCurrentMonth() {
         return Integer.parseInt(new SimpleDateFormat("MM").format(new Date()));
     }
+    
+    public static int getCurrentYear() {
+        return Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date()));
+    }
 }
