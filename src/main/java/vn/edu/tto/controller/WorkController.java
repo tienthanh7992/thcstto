@@ -9,47 +9,109 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import vn.edu.tto.domain.CheckPointResult;
 import vn.edu.tto.domain.UserInfo;
 import vn.edu.tto.domain.Working;
+import vn.edu.tto.domain.WorkingDetail;
 import vn.edu.tto.domain.constant.TTOConstant;
+import vn.edu.tto.domain.constant.TTOConstant.CHEStatus;
 import vn.edu.tto.domain.constant.TTOConstant.RoleType;
+import vn.edu.tto.mapper.CheckPointMapper;
 import vn.edu.tto.mapper.UserMapper;
 import vn.edu.tto.mapper.WorkMapper;
 
 @Controller
 public class WorkController {
 
-    @Autowired
-    UserMapper userMapper;
+	@Autowired
+	UserMapper userMapper;
 
-    @Autowired
-    WorkMapper workMapper;
+	@Autowired
+	WorkMapper workMapper;
 
-    @GetMapping("working-list/{page}")
-    public String getWorkingList(@PathVariable("page") Integer page, Model model, Principal principal) {
-        UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
-        List<Working> workings = null;
-        if (userInfo != null) {
-            switch (userInfo.getRoleCode()) {
-            case RoleType.PRINCIPAL:
-                    workings = workMapper.findWorkForPrincipal(userInfo.getId(), TTOConstant.PAGE_SIZE, page - 1);
-                break;
-            case RoleType.VICE_PRINCIPAL:
-                workings = workMapper.findWorkForVicePrincipal(userInfo.getId(), TTOConstant.PAGE_SIZE, page - 1);
-                break;
-            default:
-                Boolean isTeamLeader = userInfo.getIsTeamLeader();
-                if (isTeamLeader!= null & isTeamLeader) {
-                    workings = workMapper.findWorkForLeader(userInfo.getId(), userInfo.getRoleCode(), userInfo.getTeam(), TTOConstant.PAGE_SIZE, page - 1);
-                }
-                break;
-            }
-        }
-        if (workings != null) {
-            model.addAttribute("datas", workings);
-            model.addAttribute("userInfo", userInfo);
-            return "working-list";
-        }
-        return "error";
-    }
+	@Autowired
+	CheckPointMapper checkPointMapper;
+
+	@GetMapping("working-list/{page}")
+	public String getWorkingList(@PathVariable("page") Integer page, Model model, Principal principal) {
+		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
+		List<Working> workings = null;
+		if (userInfo != null) {
+			switch (userInfo.getRoleCode()) {
+			case RoleType.PRINCIPAL:
+				workings = workMapper.findWorkForPrincipal(userInfo.getId(), TTOConstant.PAGE_SIZE, page - 1);
+				break;
+			case RoleType.VICE_PRINCIPAL:
+				workings = workMapper.findWorkForVicePrincipal(userInfo.getId(), TTOConstant.PAGE_SIZE, page - 1);
+				break;
+			default:
+				Boolean isTeamLeader = userInfo.getIsTeamLeader();
+				if (isTeamLeader != null & isTeamLeader) {
+					workings = workMapper.findWorkForLeader(userInfo.getId(), userInfo.getRoleCode(),
+							userInfo.getTeam(), TTOConstant.PAGE_SIZE, page - 1);
+				}
+				break;
+			}
+		}
+		if (workings != null) {
+			model.addAttribute("datas", workings);
+			model.addAttribute("userInfo", userInfo);
+			return "working-list";
+		}
+		return "error";
+	}
+
+	@GetMapping("/working-detail/{id}")
+	public String selfDataDetailGet(@PathVariable("id") Long id, Model model, Principal principal) {
+		UserInfo userInfoCurr = userMapper.findUserInfoByUserName(principal.getName());
+		CheckPointResult checkPointResult = checkPointMapper.findCheResultById(id);
+		if (userInfoCurr == null || checkPointResult == null || checkPermission(userInfoCurr, checkPointResult)) {
+			model.addAttribute("msg", "Bạn không có quyền truy cập.");
+			return "error";
+		}
+		List<WorkingDetail> workingDetails = workMapper.findWorkingDetailByUserId(checkPointResult.getUserId(),
+				checkPointResult.getMonth());
+		model.addAttribute("datas", workingDetails);
+		model.addAttribute("checkPointResult", checkPointResult);
+		if (CHEStatus.LEADER_APPROVED.equals(checkPointResult.getStatus())) {
+			return "approve-3";
+		}
+		return "approve-2";
+
+	}
+
+	private boolean checkPermission(UserInfo userInfo, CheckPointResult che) {
+		String cheStatus = che.getStatus();
+		String roleCodeCurrUser = userInfo.getRoleCode();
+		String roleCodeObject = che.getRoleCode();
+		if (userInfo.getId() == che.getUserId() || CHEStatus.PRINCIPAL_APPROVED.equals(cheStatus)) {
+			return false;
+		}
+		switch (roleCodeCurrUser) {
+		case RoleType.PRINCIPAL:
+			if (RoleType.VICE_PRINCIPAL.equals(roleCodeObject)
+					|| (RoleType.TEACHER.equals(roleCodeObject)
+							&& (che.getIsTeamLeader() || CHEStatus.LEADER_APPROVED.equals(cheStatus)))
+					|| (RoleType.EMPLOYEE.equals(roleCodeObject)
+							&& (che.getIsTeamLeader() || CHEStatus.LEADER_APPROVED.equals(cheStatus)))) {
+				return true;
+			}
+			break;
+		case RoleType.VICE_PRINCIPAL:
+			if ((RoleType.TEACHER.equals(roleCodeObject)
+					&& (che.getIsTeamLeader() || CHEStatus.LEADER_APPROVED.equals(cheStatus)))
+					|| (RoleType.EMPLOYEE.equals(roleCodeObject)
+							&& (che.getIsTeamLeader() || CHEStatus.LEADER_APPROVED.equals(cheStatus)))) {
+				return true;
+			}
+			break;
+		default:
+			if (CHEStatus.PENDING.equals(cheStatus) && userInfo.getIsTeamLeader()
+					&& userInfo.getTeam().equals(che.getTeam()) && !che.getIsTeamLeader()) {
+				return true;
+			}
+			break;
+		}
+		return false;
+	}
 }

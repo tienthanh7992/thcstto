@@ -8,7 +8,9 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
+import vn.edu.tto.domain.SelfDataDetail;
 import vn.edu.tto.domain.Working;
+import vn.edu.tto.domain.WorkingDetail;
 
 @Mapper
 public interface WorkMapper {
@@ -91,6 +93,21 @@ public interface WorkMapper {
         @Result(property = "selfCreatedAt", column = "self_created_at"),
         @Result(property = "status", column = "status")
     })
-    public List<Working> findWorkForLeader(@Param("userId") Long userId, @Param("codeRole") String codeRole, @Param("team") String team, @Param("limit") Integer limit, @Param("offset") Integer offset);
+    public List<Working> findWorkForLeader(@Param("userId") Long userId, @Param("roleCode") String codeRole, @Param("team") String team, @Param("limit") Integer limit, @Param("offset") Integer offset);
 
+    @Select("select q.*, ches.self_point, ches.leader_point, ches.principal_point, ches.issue from question q" + 
+            " left join che_submit ches on q.id = ches.question_id and ches.\"month\" = #{month} and ches.user_id = #{userId}" + 
+            " order by q.index asc")
+    @Results({
+        @Result(property = "indexStr", column = "index_str"),
+        @Result(property = "startPoint", column = "start_point"),
+        @Result(property = "maxPoint", column = "max_point"),
+        @Result(property = "isIncrease", column = "is_increase"),
+        @Result(property = "questionRole", column = "question_role"),
+        @Result(property = "selfPoint", column = "self_point"),
+        @Result(property = "leaderPoint", column = "leader_point"),
+        @Result(property = "principalPoint", column = "principal_point"),
+        @Result(property = "issue", column = "issue")
+    })
+    public List<WorkingDetail> findWorkingDetailByUserId(@Param("userId") Long userId, @Param("month") Integer month);
 }

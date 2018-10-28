@@ -20,6 +20,14 @@ public class CheckPointResult {
     
     private Integer month;
     
+    private Boolean isTeamLeader;
+    
+    private String roleCode;
+    
+    private String roleName;
+    
+    private String team;
+    
     private String leaderComment;
     
     private String principalComment;
@@ -94,7 +102,39 @@ public class CheckPointResult {
         this.month = month;
     }
 
-    public String getLeaderComment() {
+    public Boolean getIsTeamLeader() {
+		return isTeamLeader;
+	}
+
+	public void setIsTeamLeader(Boolean isTeamLeader) {
+		this.isTeamLeader = isTeamLeader;
+	}
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team) {
+		this.team = team;
+	}
+
+	public String getLeaderComment() {
         return leaderComment;
     }
 

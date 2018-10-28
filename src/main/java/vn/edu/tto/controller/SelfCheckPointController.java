@@ -55,48 +55,59 @@ public class SelfCheckPointController {
 
     @PostMapping("/self-check")
     public @ResponseBody String selfCheckPost(@ModelAttribute("cheSubmitDto") CheckPointSubmitDto cheSubmitDto, Principal principal) {
-        User user = userMapper.findUserByUserName(principal.getName());
-        List<CheckPointSubmit> checkPointSubmits = new ArrayList<>();
-        Map<Long, Question> questionMap = questionMapper.findQuestionByRoleMap(3L);
-        CheckPointSubmit checkPointSubmit;
-        CheckPointResult checkPointResult = new CheckPointResult();
-        int totalPoint = 0;
-        for (CheckPointSubmit che : cheSubmitDto.getCheSubmit()) {
-            Question question = questionMap.get(che.getQuestionId());
-            if ("QUESTION".equals(question.getQuestionRole())) {
-                checkPointSubmit = new CheckPointSubmit();
-                if (question.getIsIncrease()) {
-                    totalPoint += getPoint(che.getSelfPoint());
-                } else {
-                    totalPoint += getPoint(che.getSelfPoint());
-                }
-                checkPointSubmit.setUserId(user.getId());
-                checkPointSubmit.setQuestionId(che.getQuestionId());
-                checkPointSubmit.setIssue(che.getIssue());
-                checkPointSubmit.setSelfPoint(String.valueOf(getPoint(che.getSelfPoint())));
-                checkPointSubmit.setMonth(10);
-                checkPointSubmits.add(checkPointSubmit);
-            }
-
-        }
         try {
-            checkPointMapper.insertSelfCheckPointList(checkPointSubmits);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        checkPointResult.setUserId(user.getId());
-        checkPointResult.setSelfPoint(totalPoint);
-        checkPointResult.setResultType(getResultType(totalPoint));
-        checkPointResult.setStatus(TTOConstant.CHEStatus.PENDING);
-        checkPointResult.setMonth(10);
-        checkPointMapper.insertCheckPointResult(checkPointResult);
-        System.out.println();
-        return "SUCCESS";
+        	User user = userMapper.findUserByUserName(principal.getName());
+            List<CheckPointSubmit> checkPointSubmits = new ArrayList<>();
+            Map<Long, Question> questionMap = questionMapper.findQuestionByRoleMap(3L);
+            CheckPointSubmit checkPointSubmit;
+            CheckPointResult checkPointResult = new CheckPointResult();
+            int totalPoint = 0;
+            String topic = "";
+            for (CheckPointSubmit che : cheSubmitDto.getCheSubmit()) {
+                Question question = questionMap.get(che.getQuestionId());
+                if ("QUESTION".equals(question.getQuestionRole())) {
+                    checkPointSubmit = new CheckPointSubmit();
+                    int point = getPoint(che.getSelfPoint());;
+                    if (point == -1) {
+                    		return "Bạn chưa nhập dữ liệu ở câu hỏi ở mục " + topic + " số " + question.getIndexStr();
+                    }
+                    if (question.getIsIncrease()) {
+                        totalPoint += getPoint(che.getSelfPoint());
+                    } else {
+                        totalPoint += getPoint(che.getSelfPoint());
+                    }
+                    checkPointSubmit.setUserId(user.getId());
+                    checkPointSubmit.setQuestionId(che.getQuestionId());
+                    checkPointSubmit.setIssue(che.getIssue());
+                    checkPointSubmit.setSelfPoint(String.valueOf(getPoint(che.getSelfPoint())));
+                    checkPointSubmit.setMonth(10);
+                    checkPointSubmits.add(checkPointSubmit);
+                } else if("TOPIC".equals(question.getQuestionRole())) {
+                		topic = question.getIndexStr();
+                }
+
+            }
+            try {
+                checkPointMapper.insertSelfCheckPointList(checkPointSubmits);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            checkPointResult.setUserId(user.getId());
+            checkPointResult.setSelfPoint(totalPoint);
+            checkPointResult.setResultType(getResultType(totalPoint));
+            checkPointResult.setStatus(TTOConstant.CHEStatus.PENDING);
+            checkPointResult.setMonth(10);
+            checkPointMapper.insertCheckPointResult(checkPointResult);
+            System.out.println();
+            return "SUCCESS";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return "ERROR";
     }
 
     @GetMapping("/self-data")
     public String selfDataGet(Model model, Principal principal) {
-        
         List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserName(principal.getName());
         model.addAttribute("datas", selfDatas);
         return "self-data";
@@ -119,7 +130,7 @@ public class SelfCheckPointController {
         try {
             return Integer.parseInt(point);
         } catch (Exception e) {
-            return 0;
+            return -1;
         }
     }
     private String getResultType(int point) {

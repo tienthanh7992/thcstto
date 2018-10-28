@@ -14,29 +14,8 @@
 	rel="stylesheet" media="screen" />
 <link href="../../static/css/table.css" th:href="@{/css/table.css}"
 	rel="stylesheet" media="screen" />
-<script type="text/javascript">
-
-function submitForm() {
-    var form = $("#frm-self-check");
-    var url = form.attr('action');
-
-    $.ajax({
-           type: "POST",
-           url: url,
-           data: form.serialize(), // serializes the form's elements.
-           success: function(data)
-           {
-               if (data == 'SUCCESS') {
-                   window.location.replace("/self-data");
-               } else {
-            	   		alert(data.toString());
-               }
-           }
-         });
-}
-</script>
 </head>
-<body class="self-check">
+<body>
 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -95,31 +74,37 @@ function submitForm() {
 		</div>
 
 		<div class="row">
-			<form id="frm-self-check" class="form-horizontal" th:action="@{/self-check}"
+			<form class="form-horizontal" action="#" th:action="@{/self-check}"
 				th:object="${cheSubmitDto}" method="post">
-				<table class="table table-bordered">
+				<table class="table table-bordered leader-form">
 					<thead>
 						<tr>
 							<th scope="col" rowspan="2">TT</th>
 							<th scope="col" rowspan="2" class="col-sm-4">Nội dung đánh
 								giá</th>
 							<th scope="col" rowspan="2" class="col-sm-1">Điểm tối đa</th>
-							<th scope="col" colspan="2">Kết quả đánh giá</th>
+							<th scope="col" colspan="4">Kết quả đánh giá</th>
 						</tr>
 						<tr>
 							<th scope="col" class="col-sm-4">Tồn tại, hạn chế</th>
 							<th scope="col" class="col-sm-1">Điểm tự chấm</th>
+							<th scope="col" class="col-sm-1">Tổ trưởng chấm</th>
+							<th scope="col" class="col-sm-1">Hiệu trưởng chấm</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="data, rowStat: ${datas}">
-						    <input type="hidden" th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'" th:value="${data.id}">
+							<input type="hidden"
+								th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'"
+								th:value="${data.id}">
 							<th:block th:switch="${data.questionRole}">
 								<th:block th:case="'TOPIC'">
 									<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
 									<td class="topic" th:text="${data.content}"></td>
 									<td class="topic" style="position: relative; padding: 0;"
 										th:text="${data.maxPoint}">10</td>
+									<td class="none"></td>
+									<td class="none"></td>
 									<td class="none"></td>
 									<td class="none"></td>
 								</th:block>
@@ -130,6 +115,8 @@ function submitForm() {
 										th:text="${data.maxPoint}">10</td>
 									<td class="none"></td>
 									<td class="none"></td>
+									<td class="none"></td>
+									<td class="none"></td>
 								</th:block>
 								<th:block th:case="'TOTAL'">
 									<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
@@ -138,32 +125,30 @@ function submitForm() {
 										th:text="${data.maxPoint}">10</td>
 									<td class="none"></td>
 									<td class="none"></td>
+									<td class="none"></td>
+									<td class="none"></td>
 								</th:block>
 								<th:block th:case="*">
 									<td class="col-sm-1" th:text="${data.indexStr}">1</td>
 									<td th:text="${data.content}"></td>
 									<td style="position: relative; padding: 0;"
 										th:text="${data.maxPoint}">10</td>
-									<td style="position: relative; padding: 0;"><textarea
-											class="form-control"
-											style="position: absolute; height: 100%;"
-											placeholder="Nhập vào đây..."
-											th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
-											th:field="*{cheSubmit[__${rowStat.index}__].issue}"
-											></textarea></td>
+									<td>Gương mẫu chấp hành tốt đường lối, chủ trương của Đảng, chính sách pháp luật của nhà nước</td>
+									<td th:text="${data.id}"></td>
+									<td th:text="${data.id}"></td>
 									<td style="position: relative; padding: 0;"><select
 										class="form-control" style="position: absolute; height: 100%;"
 										th:field="*{cheSubmit[__${rowStat.index}__].selfPoint}">
 											<option disabled th:value="'-Chọn-'">-Chọn-</option>
 											<option
-												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
-												th:value="${point}" th:text="${point}"></option>
+												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint * 2)}"
+												th:value="${point * 0.5}" th:text="${point * 0.5}"></option>
 									</select></td>
 								</th:block>
 							</th:block>
 						</tr>
 						<tr>
-							<td colspan="5" class="text-center"><input onclick="submitForm();" type="button" class="btn btn-info"
+							<td colspan="6" class="text-center"><input type="submit" class="btn btn-info"
 								value="Submit Button"></td>
 						</tr>
 					</tbody>

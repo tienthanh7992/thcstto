@@ -1,6 +1,6 @@
 package vn.edu.tto.domain;
 
-public class SelfDataDetail {
+public class WorkingDetail {
 
 	private Long id;
 
@@ -19,6 +19,8 @@ public class SelfDataDetail {
 	private String questionRole;
 
 	private Integer selfPoint;
+	
+	private Integer leaderPoint;
 
 	private Integer principalPoint;
 
@@ -94,6 +96,14 @@ public class SelfDataDetail {
 
 	public void setSelfPoint(Integer selfPoint) {
 		this.selfPoint = selfPoint;
+	}
+
+	public Integer getLeaderPoint() {
+		return leaderPoint;
+	}
+
+	public void setLeaderPoint(Integer leaderPoint) {
+		this.leaderPoint = leaderPoint;
 	}
 
 	public Integer getPrincipalPoint() {

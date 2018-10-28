@@ -4,8 +4,8 @@ public class TTOConstant {
 
     public final class CHEStatus {
         public static final String PENDING = "PENDING";
-        public static final String LEAD_APPROVE = "LEAD_APPROVED";
-        public static final String PRINCIPAL_APPROVE = "PRINCIPAL_APPROVED";
+        public static final String LEADER_APPROVED = "LEADER_APPROVED";
+        public static final String PRINCIPAL_APPROVED = "PRINCIPAL_APPROVED";
     }
     
     public final class RoleType {
