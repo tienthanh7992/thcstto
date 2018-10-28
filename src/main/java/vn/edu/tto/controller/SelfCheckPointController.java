@@ -22,6 +22,7 @@ import vn.edu.tto.domain.Question;
 import vn.edu.tto.domain.SelfData;
 import vn.edu.tto.domain.SelfDataDetail;
 import vn.edu.tto.domain.User;
+import vn.edu.tto.domain.UserInfo;
 import vn.edu.tto.domain.Utils.DateUtil;
 import vn.edu.tto.domain.Utils.TTOUtil;
 import vn.edu.tto.domain.constant.TTOConstant;
@@ -50,13 +51,18 @@ public class SelfCheckPointController {
 
 	@GetMapping("/self-check")
 	public String selfCheckGet(Model model, Principal principal) {
-		User user = userMapper.findUserByUserName(principal.getName());
-		int month = ttoUtil.checkReadyMonth(user);
+		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
+		int month = ttoUtil.checkReadyMonth(userInfo.getId());
 		if (month == 0) {
-			return "self-data";
+			return "redirect:self-data";
 		}
-		List<Question> questions = questionMapper.findQuestionByRole(3L);
+		List<Question> questions = questionMapper.findQuestionByRole(userInfo.getRoleId());
+		if (questions.isEmpty()) {
+			return "redirect:self-data";
+		}
 		model.addAttribute("datas", questions);
+		model.addAttribute("month", month);
+		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("cheSubmitDto", new CheckPointSubmitDto());
 		return "self-check";
 	}
@@ -66,7 +72,7 @@ public class SelfCheckPointController {
 			Principal principal) {
 		try {
 			User user = userMapper.findUserByUserName(principal.getName());
-			int month = ttoUtil.checkReadyMonth(user);
+			int month = ttoUtil.checkReadyMonth(user.getId());
 			if (month == 0) {
 				return "Bạn đã làm phiếu đánh giá tháng này rồi.";
 			}
@@ -130,8 +136,10 @@ public class SelfCheckPointController {
 
 	@GetMapping("/self-data")
 	public String selfDataGet(Model model, Principal principal) {
+		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
 		List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserName(principal.getName());
 		model.addAttribute("datas", selfDatas);
+		model.addAttribute("userInfo", userInfo);
 		return "self-data";
 	}
 

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import vn.edu.tto.domain.CheckPointResult;
-import vn.edu.tto.domain.User;
 import vn.edu.tto.domain.UserInfo;
 import vn.edu.tto.domain.constant.TTOConstant.CHEStatus;
 import vn.edu.tto.domain.constant.TTOConstant.RoleType;
@@ -36,9 +35,9 @@ public class TTOUtil {
 		}
 	}
 
-	public int checkReadyMonth(User user) {
+	public int checkReadyMonth(Long userId) {
 		int currentMonth = DateUtil.getCurrentMonth();
-		CheckPointResult checkPointResult = checkPointMapper.findLastCheResult(user.getId());
+		CheckPointResult checkPointResult = checkPointMapper.findLastCheResult(userId);
 		if (checkPointResult == null) {
 			return currentMonth;
 		}

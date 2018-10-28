@@ -16,6 +16,12 @@
 	rel="stylesheet" media="screen" />
 <script type="text/javascript">
 	function submitForm() {
+		var r = confirm($("#resultType").text() + '\nTổng điểm:'
+				+ $("#total").text()
+				+ '\nBạn có chắc chắn muốn gửi phiếu đánh giá tiêu chí này?');
+		if (r == false) {
+			return;
+		}
 		var form = $("#frm-self-check");
 		var url = form.attr('action');
 
@@ -32,34 +38,49 @@
 			}
 		});
 	}
-	function count() {
+	function getTotalPoint() {
 		var count = 0;
 		$('select').each(function() {
-			 var optionSelected = $("option:selected", this);
-				 if (!isNaN(this.value)) {
-				 count += parseFloat(this.value);
-			 }
+			var optionSelected = $("option:selected", this);
+			if (!isNaN(this.value)) {
+				count += parseFloat(this.value);
+			}
 		});
 		return count;
 	}
 	$(document).ready(function() {
 		$('select').on('change', function(e) {
-			$('#total').text(count());
+			var point = getTotalPoint();
+			$('#total').text(point);
+			setResultType(point)
 		});
 	});
+
+	function setResultType(point) {
+		var type = "";
+		if (90 <= point && point <= 100) {
+			type = "A";
+		} else if (70 <= point && point < 90) {
+			type = "B";
+		} else if (50 <= point && point < 70) {
+			type = "C";
+		} else if (point < 50) {
+			type = "D";
+		}
+		$('#resultType').text("Xếp loại hiện tại: " + type);
+	}
 </script>
 </head>
 <body class="self-check">
 	<div th:replace="fragments/header :: header"></div>
-
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-4 text-center">
+			<div class="col-sm-6 text-center">
 				<h5 class="mt-0 head-font-size">UBND HUYỆN THANH TRÌ</h5>
 				<h5 class="mt-0 head-font-size">TRƯỜNG THCS TẢ THANH OAI</h5>
 				<hr style="width: 200px;">
 			</div>
-			<div class="col-sm-8 text-center">
+			<div class="col-sm-6 text-center">
 				<h5 class="head-font-size">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h5>
 				<h5 class="head-font-size">Độc lập – Tự do – Hạnh phúc</h5>
 				<hr style="width: 200px;">
@@ -69,118 +90,208 @@
 			<div class="col-sm-11 text-right">
 				<h6 style="display: inline"></h6>
 				<h6 style="display: inline" class="bold-font">
-					<em>Tả Thanh Oai, ngày..</em> <em
-						th:text="${#dates.format(#dates.createNow(), 'dd')}"></em> <em>..tháng..</em>
-					<em th:text="${#dates.format(#dates.createNow(), 'MM')}"></em> <em>..năm
+					<em>Tả Thanh Oai, ngày...</em> <em
+						th:text="${#dates.format(#dates.createNow(), 'dd')}"></em> <em>...tháng...</em>
+					<em th:text="${#dates.format(#dates.createNow(), 'MM')}"></em> <em>...năm
 					</em> <em th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></em>
 				</h6>
 			</div>
 		</div>
+		<br>
 		<div class="row text-center">
-			<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI GIÁO VIÊN</h5>
-			<h5 style="display: inline">
-				<span>Tháng:</span> <span
-					th:text="${#dates.format(#dates.createNow(), 'MM')}"></span> <span>/</span>
-				<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
-			</h5>
-		</div>
-		<div class="row text-center">
-			<h6>- Họ và tên: …………............................….Tổ chuyên
-				môn:.........................</h6>
-			<h6>- Vị trí việc làm và nhiệm vụ được phân
-				công..............................................</h6>
-			<h6>.....................................................................................................................</h6>
-		</div>
+			<th:block th:switch="${userInfo.roleCode}">
+				<th:block th:case="'TEACHER'">
+					<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI GIÁO VIÊN</h5>
+					<h5 style="display: inline">
+						<span>Tháng:</span> <span th:text="${month}"></span> <span>/</span>
+						<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+					</h5>
+					<div class="row text-left">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-6">
+							<h6 style="font-weight: bold;">
+								- Họ và tên:...<span
+									th:text="${userInfo.firstName + ' ' + userInfo.lastName}"></span>.......Tổ
+								chuyên môn:...<span th:text="${userInfo.team}"></span>...
+							</h6>
+							<h6 style="font-weight: bold;">- Vị trí việc làm và nhiệm vụ
+								được phân công</h6>
+							<h6 style="font-weight: bold;">
+								&nbsp;&nbsp;<span th:text="${userInfo.position}"></span>
+							</h6>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
 
-		<div class="row">
-			<form id="frm-self-check" class="form-horizontal"
-				th:action="@{/self-check}" th:object="${cheSubmitDto}" method="post">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th scope="col" rowspan="2">TT</th>
-							<th scope="col" rowspan="2" class="col-sm-4">Nội dung đánh
-								giá</th>
-							<th scope="col" rowspan="2" class="col-sm-1">Điểm tối đa</th>
-							<th scope="col" colspan="2">Kết quả đánh giá</th>
-						</tr>
-						<tr>
-							<th scope="col" class="col-sm-4">Tồn tại, hạn chế</th>
-							<th scope="col" class="col-sm-1">Điểm tự chấm</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="data, rowStat: ${datas}">
-							<input type="hidden"
-								th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'"
-								th:value="${data.id}">
-							<th:block th:switch="${data.questionRole}">
-								<th:block th:case="'TOPIC'">
-									<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
-									<td class="topic" th:text="${data.content}"></td>
-									<td class="topic" style="position: relative; padding: 0;"
-										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
-									<td class="none"></td>
-									<td class="none"></td>
-								</th:block>
-								<th:block th:case="'SUB_TOPIC'">
-									<td class="col-sm-1 sub-topic" th:text="${data.indexStr}">1</td>
-									<td class="sub-topic" th:text="${data.content}"></td>
-									<td class="sub-topic" style="position: relative; padding: 0;"
-										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
-									<td class="none"></td>
-									<td class="none"></td>
-								</th:block>
-								<th:block th:case="'TOTAL'">
-									<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
-									<td class="sub-topic" th:text="${data.content}"></td>
-									<td class="sub-topic" style="position: relative; padding: 0;"
-										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
-									<td class="none"></td>
-									<td style="font-weight: bold;" class="text-center" id="total"></td>
-								</th:block>
-								<th:block th:case="'DECREASE'">
-									<td class="col-sm-1">1</td>
-									<td style="font-style: italic;" th:text="${data.content}"></td>
-									<td></td>
-									<td style="position: relative; padding: 0;"><textarea
+				</th:block>
+				<th:block th:case="'EMPLOYEE'">
+					<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI NHÂN VIÊN</h5>
+					<h5 style="display: inline">
+						<span>Tháng:</span> <span th:text="${month}"></span> <span>/</span>
+						<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+					</h5>
+					<div class="row text-left">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-6">
+							<h6 style="font-weight: bold;">
+								- Họ và tên:...<span
+									th:text="${userInfo.firstName + ' ' + userInfo.lastName}"></span>.......Tổ
+								chuyên môn:...<span th:text="${userInfo.team}"></span>...
+							</h6>
+							<h6 style="font-weight: bold;">- Vị trí việc làm và nhiệm vụ
+								được phân công</h6>
+							<h6 style="font-weight: bold;">
+								&nbsp;&nbsp;<span th:text="${userInfo.position}"></span>
+							</h6>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+				</th:block>
+				<th:block th:case="'VICE_PRINCIPAL'">
+					<h5 class="head-font-size">PHIẾU TỰ ĐÁNH GIÁ, XẾP LOẠI PHÓ
+						HIỆU TRƯỞNG</h5>
+					<h5 style="display: inline">
+						<span>Tháng:</span> <span th:text="${month}"></span> <span>/</span>
+						<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+					</h5>
+					<div class="row text-left">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-6">
+							<h6 style="font-weight: bold;">
+								- Họ và tên:...<span
+									th:text="${userInfo.firstName + ' ' + userInfo.lastName}"></span>
+							</h6>
+							<h6 style="font-weight: bold;">- Vị trí việc làm và nhiệm vụ
+								được phân công</h6>
+							<h6 style="font-weight: bold;">
+								&nbsp;&nbsp;<span th:text="${userInfo.position}"></span>
+							</h6>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+				</th:block>
+				<th:block th:case="'PRINCIPAL'">
+					<h5 class="head-font-size">PHIẾU TỰ ĐÁNH GIÁ, XẾP LOẠI HIỆU
+						TRƯỞNG</h5>
+					<h5 style="display: inline">
+						<span>Tháng:</span> <span th:text="${month}"></span> <span>/</span>
+						<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+					</h5>
+					<div class="row text-left">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-6">
+							<h6 style="font-weight: bold;">
+								- Họ và tên:...<span
+									th:text="${userInfo.firstName + ' ' + userInfo.lastName}"></span>
+							</h6>
+							<h6 style="font-weight: bold;">- Vị trí việc làm và nhiệm vụ
+								được phân công</h6>
+							<h6 style="font-weight: bold;">
+								&nbsp;&nbsp;<span th:text="${userInfo.position}"></span>
+							</h6>
+						</div>
+						<div class="col-sm-2"></div>
+					</div>
+				</th:block>
+			</th:block>
+
+			<br>
+			<div class="row">
+				<form id="frm-self-check" class="form-horizontal"
+					th:action="@{/self-check}" th:object="${cheSubmitDto}"
+					method="post">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th scope="col" rowspan="2">TT</th>
+								<th scope="col" rowspan="2" class="col-sm-4">Nội dung đánh
+									giá</th>
+								<th scope="col" rowspan="2" class="col-sm-1">Điểm tối đa</th>
+								<th scope="col" colspan="2">Kết quả đánh giá</th>
+							</tr>
+							<tr>
+								<th scope="col" class="col-sm-4">Tồn tại, hạn chế</th>
+								<th scope="col" class="col-sm-1">Điểm tự chấm</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="data, rowStat: ${datas}">
+								<input type="hidden"
+									th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'"
+									th:value="${data.id}">
+								<th:block th:switch="${data.questionRole}">
+									<th:block th:case="'TOPIC'">
+										<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
+										<td class="topic" th:text="${data.content}"></td>
+										<td class="topic" style="position: relative; padding: 0;"
+											th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
+										<td class="none"></td>
+										<td class="none"></td>
+									</th:block>
+									<th:block th:case="'SUB_TOPIC'">
+										<td class="col-sm-1 sub-topic" th:text="${data.indexStr}">1</td>
+										<td class="sub-topic" th:text="${data.content}"></td>
+										<td class="sub-topic" style="position: relative; padding: 0;"
+											th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
+										<td class="none"></td>
+										<td class="none"></td>
+									</th:block>
+									<th:block th:case="'TOTAL'">
+										<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
+										<td class="sub-topic" th:text="${data.content}"></td>
+										<td class="sub-topic" style="position: relative; padding: 0;"
+											th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
+										<td style="font-weight: bold;" class="text-center"
+											id="resultType"></td>
+										<td style="font-weight: bold;" class="text-center" id="total"></td>
+									</th:block>
+									<th:block th:case="'DECREASE'">
+										<td class="col-sm-1">1</td>
+										<td style="font-style: italic;" th:text="${data.content}"></td>
+										<td></td>
+										<td style="position: relative; padding: 0;"><textarea
+												class="form-control"
+												style="position: absolute; height: 100%;"
+												placeholder="Nhập vào đây..."
+												th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
+												th:field="*{cheSubmit[__${rowStat.index}__].issue}"></textarea></td>
+										<td></td>
+									</th:block>
+									<th:block th:case="*">
+										<td class="col-sm-1" th:text="${data.indexStr}"></td>
+										<td th:text="${data.content}"></td>
+										<td style="position: relative; padding: 0;"
+											th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
+										<td style="position: relative; padding: 0;"><textarea
+												class="form-control"
+												style="position: absolute; height: 100%;"
+												placeholder="Nhập vào đây..."
+												th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
+												th:field="*{cheSubmit[__${rowStat.index}__].issue}"></textarea></td>
+										<td style="position: relative; padding: 0;"><select
 											class="form-control"
 											style="position: absolute; height: 100%;"
-											placeholder="Nhập vào đây..."
-											th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
-											th:field="*{cheSubmit[__${rowStat.index}__].issue}"></textarea></td>
-									<td></td>
+											th:field="*{cheSubmit[__${rowStat.index}__].selfPoint}">
+												<option disabled th:value="'-Chọn-'">-Chọn-</option>
+												<option
+													th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint * 2)}"
+													th:value="${point} * 0.5" th:text="${point * 0.5}"></option>
+										</select></td>
+									</th:block>
 								</th:block>
-								<th:block th:case="*">
-									<td class="col-sm-1" th:text="${data.indexStr}"></td>
-									<td th:text="${data.content}"></td>
-									<td style="position: relative; padding: 0;"
-										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
-									<td style="position: relative; padding: 0;"><textarea
-											class="form-control"
-											style="position: absolute; height: 100%;"
-											placeholder="Nhập vào đây..."
-											th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
-											th:field="*{cheSubmit[__${rowStat.index}__].issue}"></textarea></td>
-									<td style="position: relative; padding: 0;"><select
-										class="form-control" style="position: absolute; height: 100%;"
-										th:field="*{cheSubmit[__${rowStat.index}__].selfPoint}">
-											<option disabled th:value="'-Chọn-'">-Chọn-</option>
-											<option
-												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint * 2)}"
-												th:value="${point} * 0.5" th:text="${point * 0.5}"></option>
-									</select></td>
-								</th:block>
-							</th:block>
-						</tr>
-						<tr>
-							<td colspan="5" class="text-center"><input
-								onclick="submitForm();" type="button" class="btn btn-info"
-								value="Gửi"></td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
+							</tr>
+						</tbody>
+					</table>
+					<div class="row text-center">
+						<input onclick="submitForm();" type="button" class="btn btn-info"
+							th:value="${'Gửi phiếu đánh giá tiêu chí tháng ' + month}">
+					</div>
+					<br>
+					<br>
+					<br>
+					<br>
+				</form>
+			</div>
 		</div>
 	</div>
 </body>

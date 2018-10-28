@@ -8,6 +8,11 @@ th {
     vertical-align: middle !important;
 }
 
+.self-check td:nth-child(3) {
+    text-align: left !important;
+    vertical-align: middle !important;
+}
+
 .self-data-detail td:nth-child(1), .self-data-detail td:nth-child(3), .self-data-detail td:nth-child(5), .self-data-detail td:nth-child(6) {
     text-align: center !important;
     vertical-align: middle !important;
