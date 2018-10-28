@@ -37,6 +37,10 @@ public class CheckPointResult {
     private Timestamp leaderUpdatedAt;
     
     private Timestamp principalUpdateAt;
+    
+    private Long leaderId;
+    
+    private Long principalId;
 
     public Long getId() {
         return id;
@@ -173,5 +177,21 @@ public class CheckPointResult {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+	public Long getLeaderId() {
+		return leaderId;
+	}
+
+	public void setLeaderId(Long leaderId) {
+		this.leaderId = leaderId;
+	}
+
+	public Long getPrincipalId() {
+		return principalId;
+	}
+
+	public void setPrincipalId(Long principalId) {
+		this.principalId = principalId;
+	}
 
 }

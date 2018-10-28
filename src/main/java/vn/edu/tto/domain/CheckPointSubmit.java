@@ -118,6 +118,7 @@ public class CheckPointSubmit {
 		this.comment = comment;
 	}
 
+
 	public String getPoint() {
 		return point;
 	}

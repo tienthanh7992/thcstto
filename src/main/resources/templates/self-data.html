@@ -79,26 +79,26 @@
 				<table class="table-responsive table-bordered">
 					<thead>
 						<tr>
-							<th>STT</th>
-							<th>HỌ TÊN</th>
-							<th>THÁNG ĐÁNH GIÁ</th>
-							<th>ĐIỂM TỰ ĐÁNH GIÁ</th>
-							<th>HIỆU TRƯỞNG ĐÁNH GIÁ</th>
-							<th>XẾP LOẠI</th>
-							<th>TRẠNG THÁI</th>
-							<th>Chi tiết</th>
+							<th class="col-sm-1" >STT</th>
+							<th class="col-sm-2" >HỌ TÊN</th>
+							<th class="col-sm-2" >THÁNG ĐÁNH GIÁ</th>
+							<th class="col-sm-1" >ĐIỂM TỰ ĐÁNH GIÁ</th>
+							<th class="col-sm-1" >HIỆU TRƯỞNG ĐÁNH GIÁ</th>
+							<th class="col-sm-1" >XẾP LOẠI</th>
+							<th class="col-sm-2" >TRẠNG THÁI</th>
+							<th class="col-sm-2" >Chi tiết</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="data, rowStat: ${datas}" class="text-center">
-							<td class="col-sm-1" th:text="${rowStat.index + 1}">1</td>
-							<td class="col-sm-2" th:text="${data.firstName + ' ' + data.lastName}"></td>
-							<td class="col-sm-2" th:text="${'Tháng ' + data.month}">10</td>
-							<td class="col-sm-1" th:text="${data.selfPoint}">1</td>
-							<td class="col-sm-1" th:text="${data.principalPoint}">1</td>
-							<td class="col-sm-1" th:text="${data.resultType}">1</td>
-							<td class="col-sm-2" th:text="${data.status}">1</td>
-							<td class="col-sm-2"><a th:href="@{'/self-data-detail/' + ${data.cheResultId}}">Chi tiết</a></td>
+							<td th:text="${rowStat.index + 1}">1</td>
+							<td th:text="${data.firstName + ' ' + data.lastName}"></td>
+							<td th:text="${'Tháng ' + data.month}">10</td>
+							<td th:text="${data.selfPoint}">1</td>
+							<td th:text="${data.principalPoint}">1</td>
+							<td th:text="${data.resultType}">1</td>
+							<td th:text="${data.status}">1</td>
+							<td><a th:href="@{'/self-data-detail/' + ${data.cheResultId}}">Chi tiết</a></td>
 						</tr>
 					</tbody>
 				</table>

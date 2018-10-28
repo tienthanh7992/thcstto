@@ -22,17 +22,33 @@
 		values(#{userId},#{selfPoint},#{resultType},#{status},#{month},CURRENT_TIMESTAMP);
 	</insert>
 	
-	<update id="updateCheckPointListLeader"
+	<update id="updateCheckPointSubmitLeader"
 		parameterType="java.util.List">
 		<foreach collection="list" item="element" index="index">
-			update che_submit set leader_point = #{leader_point} where id = #{leaderPoint};
+			update che_submit set leader_point = cast(#{element.point} as integer),
+			updated_at = CURRENT_TIMESTAMP where id = #{element.chesId} and user_id = #{element.userId};
 		</foreach>
 	</update>
 
 	<update id="updateCheckPointResultLeader"
 		parameterType="vn.edu.tto.domain.CheckPointResult">
-		update che_submit set leader_point = #{leader_point}, leader_comment = #{leaderComment},
-		leader_update_at = #{leaderUpdateAt}, result_type = #{resultType}, status = #{status}
-		where id = #{id};
+		update che_result set leader_point = cast(#{leaderPoint} as integer), leader_comment = #{leaderComment},
+		leader_updated_at = CURRENT_TIMESTAMP, result_type = #{resultType}, status = #{status}, leader_id = #{leaderId}
+		where id = #{id} and user_id = #{userId};
+	</update>
+	
+	<update id="updateCheckPointSubmitPrincipal"
+		parameterType="java.util.List">
+		<foreach collection="list" item="element" index="index">
+			update che_submit set principal_point = cast(#{element.point} as integer),
+			updated_at = CURRENT_TIMESTAMP where id = #{element.chesId} and user_id = #{element.userId};
+		</foreach>
+	</update>
+
+	<update id="updateCheckPointResultPrincipal"
+		parameterType="vn.edu.tto.domain.CheckPointResult">
+		update che_result set principal_point = cast(#{principalPoint} as integer), principal_comment = #{principalComment},
+		principal_updated_at = CURRENT_TIMESTAMP, result_type = #{resultType}, status = #{status}, principal_id = #{principalId}
+		where id = #{id} and user_id = #{userId};
 	</update>
 </mapper>

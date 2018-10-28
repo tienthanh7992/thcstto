@@ -3,6 +3,8 @@ package vn.edu.tto.domain;
 public class WorkingDetail {
 
 	private Long id;
+	
+	private Long questionId;
 
 	private Integer index;
 
@@ -32,6 +34,14 @@ public class WorkingDetail {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
 	}
 
 	public Integer getIndex() {

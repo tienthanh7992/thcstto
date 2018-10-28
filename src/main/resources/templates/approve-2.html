@@ -14,6 +14,25 @@
 	rel="stylesheet" media="screen" />
 <link href="../../static/css/table.css" th:href="@{/css/table.css}"
 	rel="stylesheet" media="screen" />
+<script type="text/javascript">
+	function submitForm() {
+		var form = $("#approve-2");
+		var url = form.attr('action');
+
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : form.serialize(), // serializes the form's elements.
+			success : function(data) {
+				if (data == 'SUCCESS') {
+					window.location.replace("/working-list/1");
+				} else {
+					alert(data.toString());
+				}
+			}
+		});
+	}
+</script>
 </head>
 <body>
 
@@ -75,9 +94,9 @@
 
 		<div class="row">
 			<form class="form-horizontal" action="#" th:action="@{/approve}"
-				th:object="${cheSubmitDto}" method="post">
-				<input type="hidden" th:value="${objId}" name="objId" />
-				<input type="hidden" th:value="${cherId}" name="cherId" />
+				th:object="${cheSubmitDto}" method="post" id="approve-2">
+				<input type="hidden" th:value="${objId}" name="objId" /> <input
+					type="hidden" th:value="${cherId}" name="cherId" />
 				<table class="table table-bordered leader-form">
 					<thead>
 						<tr>
@@ -95,6 +114,9 @@
 					</thead>
 					<tbody>
 						<tr th:each="data, rowStat: ${datas}">
+							<input type="hidden"
+								th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'"
+								th:value="${data.questionId}">
 							<input type="hidden"
 								th:attr="name='cheSubmit[__${rowStat.index}__].chesId', id='cheSubmit[__${rowStat.index}__].chesId'"
 								th:value="${data.id}">
@@ -145,8 +167,12 @@
 							</th:block>
 						</tr>
 						<tr>
-							<td colspan="6" class="text-center"><input type="submit" class="btn btn-info"
-								value="Submit Button"></td>
+							<td colspan="6" class="text-center"><textarea name="comment"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6" class="text-center"><input onclick="submitForm();" type="button" class="btn btn-info"
+								value="Duyệt"></td>
 						</tr>
 					</tbody>
 				</table>

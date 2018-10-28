@@ -76,6 +76,7 @@ public interface WorkMapper {
 			+ " order by q.index asc")
 	@Results({
 			@Result(property = "id", column = "ches_id"),
+			@Result(property = "questionId", column = "id"),
 			@Result(property = "indexStr", column = "index_str"),
 			@Result(property = "startPoint", column = "start_point"),
 			@Result(property = "maxPoint", column = "max_point"),

@@ -79,26 +79,26 @@
 				<table class="table-responsive table-bordered">
 					<thead>
 						<tr>
-							<th>STT</th>
-							<th>HỌ TÊN</th>
-							<th>VỊ TRÍ CÔNG TÁC</th>
-							<th>TỔ</th>
-							<th>LÀ TỔ TRƯỞNG</th>
-							<th>THÁNG ĐÁNH GIÁ</th>
-							<th>NGÀY TẠO</th>
-							<th>DUYỆT</th>
+							<th class="col-sm-1" >STT</th>
+							<th class="col-sm-2" >HỌ TÊN</th>
+							<th class="col-sm-3" >VỊ TRÍ CÔNG TÁC</th>
+							<th class="col-sm-1" >TỔ</th>
+							<th class="col-sm-1" >LÀ TỔ TRƯỞNG</th>
+							<th class="col-sm-1" >THÁNG ĐÁNH GIÁ</th>
+							<th class="col-sm-2" >NGÀY TẠO</th>
+							<th class="col-sm-2" >DUYỆT</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="data, rowStat: ${datas}" class="text-center">
-							<td class="col-sm-1" th:text="${rowStat.index + 1}">1</td>
-							<td class="col-sm-2" th:text="${data.firstName + ' ' + data.lastName}"></td>
-							<td class="col-sm-2" th:text="${data.roleCode}">10</td>
-							<td class="col-sm-1" th:text="${data.team}">1</td>
-							<td class="col-sm-1" th:text="${data.isTeamLeader}">1</td>
-							<td class="col-sm-1" th:text="${data.month}">1</td>
-							<td class="col-sm-2" th:text="${#dates.format(data.selfCreatedAt, 'yyyy-MM-dd HH:mm:ss')}">1</td>
-							<td class="col-sm-2"><a th:href="@{'/working-detail/' + ${data.cheResultId}}">Chi tiết</a></td>
+							<td th:text="${rowStat.index + 1}">1</td>
+							<td th:text="${data.firstName + ' ' + data.lastName}"></td>
+							<td th:text="${data.roleCode}">10</td>
+							<td th:text="${data.team}">1</td>
+							<td th:text="${data.isTeamLeader}">1</td>
+							<td th:text="${data.month}">1</td>
+							<td th:text="${#dates.format(data.selfCreatedAt, 'yyyy-MM-dd HH:mm:ss')}">1</td>
+							<td><a th:href="@{'/working-detail/' + ${data.cheResultId}}">Chi tiết</a></td>
 						</tr>
 					</tbody>
 				</table>
