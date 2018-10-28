@@ -68,6 +68,7 @@ public class CHEController {
 		if (workings != null) {
 			model.addAttribute("datas", workings);
 			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("isDetail", false);
 			return "che-list";
 		}
 		return "error";
@@ -89,6 +90,8 @@ public class CHEController {
 		model.addAttribute("cheSubmitDto", new CheckPointSubmitDto());
 		model.addAttribute("objId", checkPointResult.getUserId());
 		model.addAttribute("cherId", checkPointResult.getId());
+		model.addAttribute("userInfo", userInfoCurr);
+		model.addAttribute("isDetail", true);
 		if (checkPermissionAndTypeResult == 3) {
 			return "che-view-3";
 		}

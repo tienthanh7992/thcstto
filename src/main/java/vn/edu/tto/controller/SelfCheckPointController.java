@@ -54,13 +54,14 @@ public class SelfCheckPointController {
 		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
 		int month = ttoUtil.checkReadyMonth(userInfo.getId());
 		if (month == 0) {
-			return "redirect:self-data";
+			return "redirect:self-data/1";
 		}
-		List<Question> questions = questionMapper.findQuestionByRole(userInfo.getRoleId());
+		List<Question> questions = questionMapper.findQuestionByRole(3L);
 		if (questions.isEmpty()) {
-			return "redirect:self-data";
+			return "redirect:self-data/1";
 		}
 		model.addAttribute("datas", questions);
+		model.addAttribute("isDetail", false);
 		model.addAttribute("month", month);
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("cheSubmitDto", new CheckPointSubmitDto());
@@ -88,7 +89,6 @@ public class SelfCheckPointController {
 				if ("QUESTION".equals(question.getQuestionRole())) {
 					checkPointSubmit = new CheckPointSubmit();
 					int point = ttoUtil.getPoint(che.getSelfPoint());
-					;
 					if (point == -1) {
 						return "Bạn chưa nhập dữ liệu ở câu hỏi ở mục " + topic + "\n" + question.getContent();
 					}
@@ -134,27 +134,31 @@ public class SelfCheckPointController {
 		}
 	}
 
-	@GetMapping("/self-data")
-	public String selfDataGet(Model model, Principal principal) {
+	@GetMapping("/self-data/{page}")
+	public String selfDataGet(@PathVariable("page") Integer page, Model model, Principal principal) {
 		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
-		List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserName(principal.getName());
+		List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserName(principal.getName(), TTOConstant.PAGE_SIZE, page - 1);
 		model.addAttribute("datas", selfDatas);
 		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("isDetail", false);
 		return "self-data";
 	}
 
 	@GetMapping("/self-data-detail/{id}")
 	public String selfDataDetailGet(@PathVariable("id") Long id, Model model, Principal principal) {
-		User user = userMapper.findUserByUserName(principal.getName());
-		CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, user.getId());
+		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
+		CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, userInfo.getId());
 		if (checkPointResult != null) {
-			List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(user.getId(),
+			List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(userInfo.getId(),
 					checkPointResult.getMonth());
 			model.addAttribute("datas", selfDataDetails);
+			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("isDetail", true);
 			model.addAttribute("checkPointResult", checkPointResult);
+			return "self-data-detail";
 		}
-
-		return "self-data-detail";
+		return "error";
+		
 	}
 
 }

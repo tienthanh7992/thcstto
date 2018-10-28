@@ -72,6 +72,7 @@ public class WorkController {
 		if (workings != null) {
 			model.addAttribute("datas", workings);
 			model.addAttribute("userInfo", userInfo);
+			model.addAttribute("isDetail", false);
 			return "working-list";
 		}
 		return "error";
@@ -93,6 +94,8 @@ public class WorkController {
 		model.addAttribute("cheSubmitDto", new CheckPointSubmitDto());
 		model.addAttribute("objId", checkPointResult.getUserId());
 		model.addAttribute("cherId", checkPointResult.getId());
+		model.addAttribute("userInfo", userInfoCurr);
+		model.addAttribute("isDetail", true);
 		if (checkPermissionAndTypeResult == 3) {
 			return "approve-3";
 		}

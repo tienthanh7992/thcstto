@@ -2,48 +2,93 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen" />
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/js/bootstrap.min.js"
-          th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"
-          rel="stylesheet" media="screen" />
-    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
-            th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.7/js/bootstrap.min.js"
+	th:href="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"
+	rel="stylesheet" media="screen" />
+<script src="http://cdn.jsdelivr.net/webjars/jquery/3.2.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
 </head>
 <body>
-		<nav class="navbar navbar-default" th:fragment="header">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">HOME</a>
-				</div>
-				<ul class="nav navbar-nav navbar-center">
-					<li><a href="#" style="font-size: 24px;">TRƯỜNG TRUNG HỌC
-							CƠ SỞ TẢ THANH OAI</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-							Đăng xuất</a></li>
-				</ul>
+	<nav class="navbar navbar-default" th:fragment="header">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">TRƯỜNG THCS TẢ THANH OAI</a>
 			</div>
-		</nav>
-
-<!-- <div class="navbar navbar-default navbar-fixed-top" th:fragment="header"> -->
-<!--     <div class="container"> -->
-<!--         <div class="navbar-header"> -->
-<!--             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse"> -->
-<!--                 <span class="icon-bar"></span> -->
-<!--                 <span class="icon-bar"></span> -->
-<!--                 <span class="icon-bar"></span> -->
-<!--             </button> -->
-<!--             <a class="navbar-brand" href="#">My project</a> -->
-<!--         </div> -->
-<!--         <div class="navbar-collapse collapse"> -->
-<!--             <ul class="nav navbar-nav"> -->
-<!--                 <li><a href="#" th:href="@{/}">Home</a></li> -->
-<!--             </ul> -->
-<!--         </div> -->
-<!--     </div> -->
-<!-- </div> -->
+			<th:block th:switch="${userInfo.roleCode}">
+				<th:block th:case="'TEACHER'">
+					<ul class="nav navbar-nav">
+						<th:block th:if="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+							<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isDetail} == true">
+								<li><a href="#">Chi tiết</a></li>
+							</th:block>
+						</th:block>
+						<th:block th:unless="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isDetail} == true">
+								<li><a href="#">Chi tiết</a></li>
+							</th:block>
+						</th:block>
+					</ul>
+					
+				</th:block>
+				<th:block th:case="'EMPLOYEE'">
+					<ul class="nav navbar-nav">
+						<th:block th:if="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+							<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isDetail} == true">
+								<li><a href="#">Chi tiết</a></li>
+							</th:block>
+						</th:block>
+						<th:block th:unless="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isDetail} == true">
+								<li><a href="#">Chi tiết</a></li>
+							</th:block>
+						</th:block>
+					</ul>
+				</th:block>
+				<th:block th:case="'VICE_PRINCIPAL'">
+					<ul class="nav navbar-nav">
+						<li class="active"><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+						<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<th:block th:if="${isDetail} == true">
+							<li><a href="#">Chi tiết</a></li>
+						</th:block>
+					</ul>
+				</th:block>
+				<th:block th:case="'PRINCIPAL'">
+					<ul class="nav navbar-nav">
+						<li class="active"><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+						<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<th:block th:if="${isDetail} == true">
+							<li><a href="#">Chi tiết</a></li>
+						</th:block>
+					</ul>
+				</th:block>
+			</th:block>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a th:href="@{'/logout'}"><span
+						class="glyphicon glyphicon-log-in"></span> Đăng xuất</a></li>
+			</ul>
+		</div>
+	</nav>
 </body>
 </html>

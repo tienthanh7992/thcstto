@@ -164,4 +164,18 @@ public class TTOUtil {
 		}
 		return -1;
 	}
+
+	public String getHomePage(UserInfo userInfo) {
+		switch (userInfo.getRoleCode()) {
+		case RoleType.PRINCIPAL:
+			return "working-list/1";
+		case RoleType.VICE_PRINCIPAL:
+			return "working-list/1";
+		default:
+			if (userInfo.getIsTeamLeader()) {
+				return "working-list/1";
+			}
+			return "self-data/1";
+		}
+	}
 }

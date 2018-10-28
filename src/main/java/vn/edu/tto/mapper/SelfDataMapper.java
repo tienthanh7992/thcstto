@@ -14,7 +14,7 @@ import vn.edu.tto.domain.SelfDataDetail;
 @Mapper
 public interface SelfDataMapper {
 
-    @Select("select ches.id as che_result_id, first_name, last_name, \"month\", self_point, principal_point, result_type, status from che_result ches inner join \"user\" u on ches.user_id = u.id and u.user_name = #{userName} order by self_created_at desc")
+    @Select("select ches.id as che_result_id, first_name, last_name, \"month\", self_point, principal_point, result_type, status from che_result ches inner join \"user\" u on ches.user_id = u.id and u.user_name = #{userName} order by self_created_at desc limit #{limit} offset #{offset}")
     @Results({
         @Result(property = "cheResultId", column = "che_result_id"),
         @Result(property = "firstName", column = "first_name"),
@@ -25,7 +25,7 @@ public interface SelfDataMapper {
         @Result(property = "resultType", column = "result_type"),
         @Result(property = "status", column = "status")
     })
-    public List<SelfData> findSelfDataByUserName(@Param("userName") String userName);
+    public List<SelfData> findSelfDataByUserName(@Param("userName") String userName, @Param("limit") Integer limit, @Param("offset") Integer offset);
     
     
     @Select("select q.*, ches.self_point as self_point, ches.principal_point as principal_point, ches.issue from question q" + 

@@ -21,7 +21,9 @@ public class Question {
     private String group;
     
     private Long roleId;
-
+    
+    private String roleCode;
+    
     public Long getId() {
         return id;
     }
@@ -102,7 +104,15 @@ public class Question {
         this.roleId = roleId;
     }
 
-    @Override
+    public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
+	}
+
+	@Override
     public String toString() {
         return "Question [id=" + id + ", index=" + index + ", indexStr=" + indexStr + ", content=" + content
                 + ", startPoint=" + startPoint + ", maxPoint=" + maxPoint + ", isIncrease=" + isIncrease
