@@ -17,7 +17,18 @@ th {
     text-align: center !important;
     vertical-align: middle !important;
 }
+
 .leader-form td:nth-child(6) {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+#approve-2 td:nth-child(3), #approve-2 td:nth-child(5),#approve-2 td:nth-child(7)   {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+#approve-3 td:nth-child(3), #approve-3 td:nth-child(5),#approve-3 td:nth-child(7),#approve-3 td:nth-child(8) {
     text-align: center !important;
     vertical-align: middle !important;
 }

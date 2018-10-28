@@ -32,6 +32,44 @@
 			}
 		});
 	}
+	function getTotalPoint() {
+		var count = 0;
+		$('select').each(function() {
+			var optionSelected = $("option:selected", this);
+			if (!isNaN(this.value)) {
+				count += parseFloat(this.value);
+			}
+		});
+		return count;
+	}
+
+	$(document).ready(function() {
+		$('select').each(function() {
+			$(this).prop('selectedIndex', 0);
+		});
+	});
+	
+	$(document).ready(function() {
+		$('select').on('change', function(e) {
+			var point = getTotalPoint();
+			$('#total').text(point);
+			setResultType(point)
+		});
+	});
+
+	function setResultType(point) {
+		var type = "";
+		if (90 <= point && point <= 100) {
+			type = "A";
+		} else if (70 <= point && point < 90) {
+			type = "B";
+		} else if (50 <= point && point < 70) {
+			type = "C";
+		} else if (point < 50) {
+			type = "D";
+		}
+		$('#resultType').text("Xếp loại hiện tại: " + type);
+	}
 </script>
 </head>
 <body>
@@ -131,11 +169,12 @@
 									<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
 									<td class="sub-topic" th:text="${data.content}"></td>
 									<td class="sub-topic" style="position: relative; padding: 0;"
-										th:text="${data.maxPoint}">10</td>
+										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
+									<td style="font-weight: bold;" class="text-center"
+											id="resultType"></td>
 									<td class="none"></td>
 									<td class="none"></td>
-									<td class="none"></td>
-									<td class="none"></td>
+									<td style="font-weight: bold;" class="text-center" id="total"></td>
 								</th:block>
 								<th:block th:case="*">
 									<td class="col-sm-1" th:text="${data.indexStr}">1</td>
