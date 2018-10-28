@@ -32,7 +32,7 @@
 			}
 		});
 	}
-	
+
 	function getTotalPoint() {
 		var count = 0;
 		$('select').each(function() {
@@ -49,7 +49,7 @@
 			$(this).prop('selectedIndex', 0);
 		});
 	});
-	
+
 	$(document).ready(function() {
 		$('select').on('change', function(e) {
 			var point = getTotalPoint();
@@ -93,11 +93,11 @@
 				<h6 style="display: inline"></h6>
 				<h6 style="display: inline" class="bold-font">
 					<em>Tả Thanh Oai, ngày..</em> <em
-						th:text="${#dates.format(checkPointResult.selfCreatedAt, 'dd')}"></em> 
-						<em>..tháng..</em>
-					<em th:text="${#dates.format(checkPointResult.selfCreatedAt, 'MM')}"></em>
-					<em>..năm
-					</em> <em th:text="${#dates.format(checkPointResult.selfCreatedAt, 'yyyy')}"></em>
+						th:text="${#dates.format(checkPointResult.selfCreatedAt, 'dd')}"></em>
+					<em>..tháng..</em> <em
+						th:text="${#dates.format(checkPointResult.selfCreatedAt, 'MM')}"></em>
+					<em>..năm </em> <em
+						th:text="${#dates.format(checkPointResult.selfCreatedAt, 'yyyy')}"></em>
 				</h6>
 			</div>
 		</div>
@@ -106,8 +106,8 @@
 				<th:block th:case="'TEACHER'">
 					<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI GIÁO VIÊN</h5>
 					<h5 style="display: inline">
-						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span> <span>/</span>
-						<span th:text="${checkPointResult.year}"></span>
+						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span>
+						<span>/</span> <span th:text="${checkPointResult.year}"></span>
 					</h5>
 					<div class="row text-left">
 						<div class="col-sm-4"></div>
@@ -130,8 +130,8 @@
 				<th:block th:case="'EMPLOYEE'">
 					<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI NHÂN VIÊN</h5>
 					<h5 style="display: inline">
-						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span> <span>/</span>
-						<span th:text="${checkPointResult.year}"></span>
+						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span>
+						<span>/</span> <span th:text="${checkPointResult.year}"></span>
 					</h5>
 					<div class="row text-left">
 						<div class="col-sm-4"></div>
@@ -154,8 +154,8 @@
 					<h5 class="head-font-size">PHIẾU TỰ ĐÁNH GIÁ, XẾP LOẠI PHÓ
 						HIỆU TRƯỞNG</h5>
 					<h5 style="display: inline">
-						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span> <span>/</span>
-						<span th:text="${checkPointResult.year}"></span>
+						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span>
+						<span>/</span> <span th:text="${checkPointResult.year}"></span>
 					</h5>
 					<div class="row text-left">
 						<div class="col-sm-4"></div>
@@ -177,8 +177,8 @@
 					<h5 class="head-font-size">PHIẾU TỰ ĐÁNH GIÁ, XẾP LOẠI HIỆU
 						TRƯỞNG</h5>
 					<h5 style="display: inline">
-						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span> <span>/</span>
-						<span th:text="${checkPointResult.year}"></span>
+						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span>
+						<span>/</span> <span th:text="${checkPointResult.year}"></span>
 					</h5>
 					<div class="row text-left">
 						<div class="col-sm-4"></div>
@@ -252,7 +252,7 @@
 									<td class="sub-topic" style="position: relative; padding: 0;"
 										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
 									<td style="font-weight: bold;" class="text-center"
-											id="resultType"></td>
+										id="resultType"></td>
 									<td th:text="${checkPointResult.selfPoint}"></td>
 									<td style="font-weight: bold;" class="text-center" id="total"></td>
 								</th:block>
@@ -282,16 +282,33 @@
 								</th:block>
 							</th:block>
 						</tr>
-						<tr>
-							<td colspan="6" class="text-center"><textarea name="comment"></textarea>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="6" class="text-center"><input onclick="submitForm();" type="button" class="btn btn-info"
-								value="Duyệt"></td>
-						</tr>
 					</tbody>
 				</table>
+
+				<div class="row text-left">
+					<div class="col-sm-12">
+						<h5>NHẬN XÉT, ĐÁNH GIÁ</h5>
+						<textarea class="form-control" rows="10" placeholder="Nhập vào đây..."></textarea>
+						<h5>Kết luận: Xếp loại: <span id="resultTypeApproved"></span></h5>
+					</div>
+					
+				</div>
+				
+				<div class="row text-right">
+					<div class="col-sm-12">
+						<h6>Ngày...<em></em>...tháng...<em></em>...năm...<em>.</em>..</h6>
+						<h6>TRƯỞNG ĐƠN VỊ</h6>
+						<h6>(Ký tên, đóng dấu)<h6>
+					</div>
+					
+				</div>
+				
+				<br><br>
+				<div class="row text-center">
+					<input onclick="submitForm();" type="button" class="btn btn-info"
+						th:value="${'Duyệt phiếu đánh giá tiêu chí'}">
+				</div>
+				<br> <br> <br> <br>
 			</form>
 		</div>
 	</div>
