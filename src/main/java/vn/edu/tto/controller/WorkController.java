@@ -2,7 +2,6 @@ package vn.edu.tto.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,24 +56,27 @@ public class WorkController {
 		if (userInfo != null) {
 			switch (userInfo.getRoleCode()) {
 			case RoleType.PRINCIPAL:
-				workings = workMapper.findWorkForPrincipal(userInfo.getId(), TTOConstant.PAGE_SIZE, page - 1);
+				workings = workMapper.findWorkForPrincipal(userInfo.getId(), TTOConstant.PAGE_SIZE, (page - 1) * TTOConstant.PAGE_SIZE);
 				break;
 			case RoleType.VICE_PRINCIPAL:
-				workings = workMapper.findWorkForVicePrincipal(userInfo.getId(), TTOConstant.PAGE_SIZE, page - 1);
+				workings = workMapper.findWorkForVicePrincipal(userInfo.getId(), TTOConstant.PAGE_SIZE, (page - 1) * TTOConstant.PAGE_SIZE);
 				break;
 			default:
 				Boolean isTeamLeader = userInfo.getIsTeamLeader();
 				if (isTeamLeader != null & isTeamLeader) {
 					workings = workMapper.findWorkForLeader(userInfo.getId(), userInfo.getRoleCode(),
-							userInfo.getTeam(), TTOConstant.PAGE_SIZE, page - 1);
+							userInfo.getTeam(), TTOConstant.PAGE_SIZE, (page - 1) * TTOConstant.PAGE_SIZE);
 				}
 				break;
 			}
 		}
 		if (workings != null) {
+			model.addAttribute("pre", page - 1 < 1 ? 1 : page - 1);
+			model.addAttribute("next", workings.isEmpty() ? (page - 1 < 1 ? 1 : page -1) : workings.size() == TTOConstant.PAGE_SIZE ? page + 1 : page);
 			model.addAttribute("datas", workings);
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("isDetail", false);
+			model.addAttribute("isSelfCheckReady", ttoUtil.checkReadyMonth(userInfo.getId()) != 0);
 			return "working-list";
 		}
 		return "error";
@@ -98,6 +100,7 @@ public class WorkController {
 		model.addAttribute("cherId", checkPointResult.getId());
 		model.addAttribute("userInfo", userInfoCurr);
 		model.addAttribute("isDetail", true);
+		model.addAttribute("isSelfCheckReady", ttoUtil.checkReadyMonth(userInfoCurr.getId()) != 0);
 		if (checkPermissionAndTypeResult == 3) {
 			User leaderInfo = userMapper.findUserByUserId(checkPointResult.getLeaderId());
 			model.addAttribute("leaderInfo", leaderInfo);

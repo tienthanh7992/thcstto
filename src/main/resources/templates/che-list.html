@@ -16,7 +16,7 @@
 	rel="stylesheet" media="screen" />
 </head>
 <body>
-	<nav class="navbar navbar-default" th:fragment="header">
+	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">TRƯỜNG THCS TẢ THANH OAI</a>
@@ -28,14 +28,18 @@
 							<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
 							<li class="active"><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
 							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 							<th:block th:if="${isDetail} == true">
 								<li><a href="#">Chi tiết</a></li>
 							</th:block>
 						</th:block>
 						<th:block th:unless="${userInfo.isTeamLeader} == true">
 							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-							<li class="active"><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 							<th:block th:if="${isDetail} == true">
 								<li><a href="#">Chi tiết</a></li>
 							</th:block>
@@ -49,14 +53,18 @@
 							<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
 							<li class="active"><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
 							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 							<th:block th:if="${isDetail} == true">
 								<li><a href="#">Chi tiết</a></li>
 							</th:block>
 						</th:block>
 						<th:block th:unless="${userInfo.isTeamLeader} == true">
 							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-							<li class="active"><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 							<th:block th:if="${isDetail} == true">
 								<li><a href="#">Chi tiết</a></li>
 							</th:block>
@@ -68,7 +76,9 @@
 						<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
 						<li class="active"><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
 						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 						<th:block th:if="${isDetail} == true">
 							<li><a href="#">Chi tiết</a></li>
 						</th:block>
@@ -79,7 +89,9 @@
 						<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
 						<li class="active"><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
 						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 						<th:block th:if="${isDetail} == true">
 							<li><a href="#">Chi tiết</a></li>
 						</th:block>
@@ -162,6 +174,11 @@
 					</tbody>
 				</table>
 			</form>
+			<div class="row text-center">
+				<br>
+				<a th:href="@{'/che-list/' + ${pre}}"><button type="button" class="btn btn-success">Trang trước</button></a>
+				<a th:href="@{'/che-list/' + ${next}}"><button type="button" class="btn btn-success">Trang sau</button></a>
+			</div>
 		</div>
 	</div>
 </body>

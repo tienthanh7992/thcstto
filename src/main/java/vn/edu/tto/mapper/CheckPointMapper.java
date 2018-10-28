@@ -87,6 +87,7 @@ public interface CheckPointMapper {
 			@Result(property = "selfPoint", column = "self_point"),
 			@Result(property = "resultType", column = "result_type"), @Result(property = "status", column = "status"),
 			@Result(property = "month", column = "month"),
+			@Result(property = "year", column = "year"),
 			@Result(property = "isTeamLeader", column = "is_team_leader"), @Result(property = "team", column = "team"),
 			@Result(property = "roleCode", column = "role_code"), @Result(property = "roleName", column = "role_name"),
 			@Result(property = "leaderPoint", column = "leader_point"),

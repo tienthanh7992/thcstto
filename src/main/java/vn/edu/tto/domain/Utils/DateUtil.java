@@ -5,6 +5,10 @@ import java.util.Date;
 
 public class DateUtil {
 
+	public static int getCurrentDay() {
+        return Integer.parseInt(new SimpleDateFormat("DD").format(new Date()));
+    }
+	
     public static int getCurrentMonth() {
         return Integer.parseInt(new SimpleDateFormat("MM").format(new Date()));
     }

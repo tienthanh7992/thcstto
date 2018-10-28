@@ -124,7 +124,8 @@ public class SelfCheckPointController {
 			checkPointResult.setSelfPoint(totalPoint);
 			checkPointResult.setResultType(ttoUtil.getResultType(totalPoint));
 			checkPointResult.setStatus(TTOConstant.CHEStatus.PENDING);
-			checkPointResult.setMonth(10);
+			checkPointResult.setMonth(month);
+			checkPointResult.setYear(year);
 			checkPointMapper.insertCheckPointResult(checkPointResult);
 			return "SUCCESS";
 		} catch (Exception e) {
@@ -136,10 +137,13 @@ public class SelfCheckPointController {
 	@GetMapping("/self-data/{page}")
 	public String selfDataGet(@PathVariable("page") Integer page, Model model, Principal principal) {
 		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
-		List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserName(principal.getName(), TTOConstant.PAGE_SIZE, page - 1);
+		List<SelfData> selfDatas = selfDataMapper.findSelfDataByUserName(principal.getName(), TTOConstant.PAGE_SIZE, (page - 1) * TTOConstant.PAGE_SIZE);
 		model.addAttribute("datas", selfDatas);
+		model.addAttribute("pre", page - 1 < 1 ? 1 : page - 1);
+		model.addAttribute("next", selfDatas.isEmpty() ? (page - 1 < 1 ? 1 : page -1) : selfDatas.size() == TTOConstant.PAGE_SIZE ? page + 1 : page);
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("isDetail", false);
+		model.addAttribute("isSelfCheckReady", ttoUtil.checkReadyMonth(userInfo.getId()) != 0);
 		return "self-data";
 	}
 
@@ -153,6 +157,7 @@ public class SelfCheckPointController {
 			model.addAttribute("datas", selfDataDetails);
 			model.addAttribute("userInfo", userInfo);
 			model.addAttribute("isDetail", true);
+			model.addAttribute("isSelfCheckReady", ttoUtil.checkReadyMonth(userInfo.getId()) != 0);
 			model.addAttribute("checkPointResult", checkPointResult);
 			return "self-data-detail";
 		}

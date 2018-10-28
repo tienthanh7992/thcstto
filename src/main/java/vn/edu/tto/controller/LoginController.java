@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import vn.edu.tto.domain.User;
 import vn.edu.tto.domain.UserInfo;
+import vn.edu.tto.domain.Utils.DateUtil;
 import vn.edu.tto.domain.Utils.TTOUtil;
 import vn.edu.tto.mapper.UserMapper;
 
@@ -19,7 +20,7 @@ public class LoginController {
 
 	@Autowired
 	UserMapper userMapper;
-	
+
 	@Autowired
 	TTOUtil ttoUtil;
 
@@ -32,6 +33,11 @@ public class LoginController {
 	@GetMapping("/home")
 	public String home(Model model, Principal principal) {
 		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
+		if (ttoUtil.checkReadyMonth(userInfo.getId()) != 0) {
+			if (DateUtil.getCurrentDay() > 20) {
+				return "redirect:self-check";
+			}
+		}
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("isDetail", false);
 		return "redirect:" + ttoUtil.getHomePage(userInfo);

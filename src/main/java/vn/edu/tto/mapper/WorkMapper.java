@@ -19,8 +19,8 @@ public interface WorkMapper {
 			+ " cher.status from \"user\" u" + " inner join \"role\" r on u.role_id = r.id"
 			+ " inner join che_result cher on u.id = cher.user_id" + " where u.id <> #{userId}"
 			+ " and ((r.code = 'VICE_PRINCIPAL' and cher.status = 'PENDING')"
-			+ "     or (r.code = 'TEACHER' and (u.is_team_leader or cher.status = 'LEADER_APPROVED'))"
-			+ "     or (r.code = 'EMPLOYEE' and (u.is_team_leader or cher.status = 'LEADER_APPROVED'))" + "    )"
+			+ "     or (r.code = 'TEACHER' and ((u.is_team_leader and cher.status = 'PENDING') or cher.status = 'LEADER_APPROVED'))"
+			+ "     or (r.code = 'EMPLOYEE' and ((u.is_team_leader and cher.status = 'PENDING') or cher.status = 'LEADER_APPROVED'))" + "    )"
 			+ " order by cher.self_created_at asc" + " limit #{limit} offset #{offset}")
 	@Results({ @Result(property = "cheResultId", column = "che_result_id"),
 			@Result(property = "userId", column = "user_id"), @Result(property = "firstName", column = "first_name"),

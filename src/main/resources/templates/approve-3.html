@@ -74,7 +74,7 @@
 </script>
 </head>
 <body>
-	<nav class="navbar navbar-default" th:fragment="header">
+	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">TRƯỜNG THCS TẢ THANH OAI</a>
@@ -86,12 +86,16 @@
 							<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
 							<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
 							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 							<li class="active"><a href="#">Chi tiết</a></li>
 						</th:block>
 						<th:block th:unless="${userInfo.isTeamLeader} == true">
 							<li class="active"><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 							<li class="active"><a href="#">Chi tiết</a></li>
 						</th:block>
 					</ul>
@@ -103,12 +107,16 @@
 							<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
 							<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
 							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 							<li class="active"><a href="#">Chi tiết</a></li>
 						</th:block>
 						<th:block th:unless="${userInfo.isTeamLeader} == true">
 							<li class="active"><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 							<li class="active"><a href="#">Chi tiết</a></li>
 						</th:block>
 					</ul>
@@ -118,7 +126,9 @@
 						<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
 						<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
 						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 						<li class="active"><a href="#">Chi tiết</a></li>
 					</ul>
 				</th:block>
@@ -127,7 +137,9 @@
 						<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
 						<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
 						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
-						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<th:block th:if="${isSelfCheckReady} == true">
+								<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							</th:block>
 						<li class="active"><a href="#">Chi tiết</a></li>
 					</ul>
 				</th:block>
@@ -347,8 +359,8 @@
 										th:field="*{cheSubmit[__${rowStat.index}__].point}">
 											<option disabled th:value="'-Chọn-'">-Chọn-</option>
 											<option
-												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
-												th:value="${point}" th:text="${point}"></option>
+												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint * 2)}"
+												th:value="${point * 0.5}" th:text="${point * 0.5}"></option>
 									</select></td>
 								</th:block>
 							</th:block>

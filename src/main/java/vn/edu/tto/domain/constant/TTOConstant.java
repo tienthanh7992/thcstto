@@ -16,5 +16,5 @@ public class TTOConstant {
         public static final String DIRECTOR = "DIRECTOR";
     }
     
-    public static final int PAGE_SIZE = 10;
+    public static final int PAGE_SIZE = 20;
 }

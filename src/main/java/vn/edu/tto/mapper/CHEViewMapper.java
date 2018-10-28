@@ -38,7 +38,7 @@ public interface CHEViewMapper {
 			+ " cher.status, cher.principal_point, cher.result_type from \"user\" u" + " inner join \"role\" r on u.role_id = r.id"
 			+ " inner join che_result cher on u.id = cher.user_id" + " where u.id <> #{userId}"
 			+ " and (r.code = 'TEACHER' and cher.status = 'PRINCIPAL_APPROVED')"
-			+ "     or (r.code = 'EMPLOYEE' cher.status = 'PRINCIPAL_APPROVED')"
+			+ "     or (r.code = 'EMPLOYEE' and cher.status = 'PRINCIPAL_APPROVED')"
 			+ " limit #{limit} offset #{offset}")
 	@Results({ @Result(property = "cheResultId", column = "che_result_id"),
 			@Result(property = "userId", column = "user_id"), @Result(property = "firstName", column = "first_name"),
@@ -48,7 +48,8 @@ public interface CHEViewMapper {
 			@Result(property = "resultType", column = "result_type"),
 			@Result(property = "isTeamLeader", column = "is_team_leader"),
 			@Result(property = "roleCode", column = "role_code"), @Result(property = "roleName", column = "role_name"),
-			@Result(property = "month", column = "month"), @Result(property = "year", column = "year"),
+			@Result(property = "month", column = "month"),
+			@Result(property = "year", column = "year"),
 			@Result(property = "selfCreatedAt", column = "self_created_at"),
 			@Result(property = "status", column = "status") })
 	public List<Working> findWorkForVicePrincipal(@Param("userId") Long userId, @Param("limit") Integer limit,
