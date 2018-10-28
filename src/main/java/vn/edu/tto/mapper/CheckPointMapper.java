@@ -53,13 +53,18 @@ public interface CheckPointMapper {
 			@Result(property = "updateAt", column = "update_at") })
 	public CheckPointResult findCheResultByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
 
-	@Select("select cher.*, u.is_team_leader, u.team, r.code as role_code, r.name as role_name from che_result cher"
+	@Select("select cher.*, u.first_name, u.last_name, u.is_team_leader, u.team, u.position, r.code as role_code, r.name as role_name from che_result cher"
 			+ " inner join \"user\" u on cher.user_id = u.id" + " inner join \"role\" r on u.role_id = r.id"
 			+ " where cher.id = #{id}")
 	@Results({ @Result(property = "id", column = "id"), @Result(property = "userId", column = "user_id"),
 			@Result(property = "selfPoint", column = "self_point"),
 			@Result(property = "resultType", column = "result_type"), @Result(property = "status", column = "status"),
 			@Result(property = "month", column = "month"),
+			@Result(property = "team", column = "team"),
+			@Result(property = "position", column = "position"),
+			@Result(property = "year", column = "year"),
+			@Result(property = "firstName", column = "first_name"),
+			@Result(property = "lastName", column = "last_name"),
 			@Result(property = "isTeamLeader", column = "is_team_leader"), @Result(property = "team", column = "team"),
 			@Result(property = "roleCode", column = "role_code"), @Result(property = "roleName", column = "role_name"),
 			@Result(property = "leaderPoint", column = "leader_point"),
@@ -68,7 +73,7 @@ public interface CheckPointMapper {
 			@Result(property = "principalComment", column = "principal_comment"),
 			@Result(property = "leaderUpdateAt", column = "leader_update_at"),
 			@Result(property = "principalUpdateAt", column = "principal_update_at"),
-			@Result(property = "updateAt", column = "update_at") })
+			@Result(property = "selfCreatedAt", column = "self_created_at") })
 	public CheckPointResult findCheResultById(@Param("id") Long id);
 	
 	@Select("select cher.*, u.is_team_leader, u.team, r.code as role_code, r.name as role_name from che_result cher"

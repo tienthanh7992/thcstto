@@ -3,6 +3,11 @@ th {
     vertical-align: middle !important;
 }
 
+.tbl-center td{
+	text-align: center !important;
+    vertical-align: middle !important;
+}
+
 .self-check td:nth-child(2), .self-check td:nth-child(4) {
     text-align: center !important;
     vertical-align: middle !important;
@@ -32,3 +37,8 @@ th {
     text-align: center !important;
     vertical-align: middle !important;
 }
+
+/* .che-view-2 td:nth-child(4),.che-view-2 td:nth-child(1),.che-view-2 td:nth-child(2) { */
+/*     text-align: center !important; */
+/*     vertical-align: middle !important; */
+/* } */

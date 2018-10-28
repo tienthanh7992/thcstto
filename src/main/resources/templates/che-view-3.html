@@ -79,7 +79,7 @@
 		</div>
 
 		<div class="row">
-			<table class="table table-bordered leader-form">
+			<table class="table table-bordered leader-form tbl-center">
 				<thead>
 					<tr>
 						<th scope="col" rowspan="2">TT</th>
@@ -100,9 +100,8 @@
 						<th:block th:switch="${data.questionRole}">
 							<th:block th:case="'TOPIC'">
 								<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
-								<td class="topic" th:text="${data.content}"></td>
-								<td class="topic" style="position: relative; padding: 0;"
-									th:text="${data.maxPoint}">10</td>
+								<td class="topic" style="text-align: left !important;" th:text="${data.content}"></td>
+								<td class="topic" th:text="${data.maxPoint}">10</td>
 								<td class="none"></td>
 								<td class="none"></td>
 								<td class="none"></td>
@@ -110,9 +109,8 @@
 							</th:block>
 							<th:block th:case="'SUB_TOPIC'">
 								<td class="col-sm-1 sub-topic" th:text="${data.indexStr}">1</td>
-								<td class="sub-topic" th:text="${data.content}"></td>
-								<td class="sub-topic" style="position: relative; padding: 0;"
-									th:text="${data.maxPoint}">10</td>
+								<td class="sub-topic" style="text-align: left !important;" th:text="${data.content}"></td>
+								<td class="sub-topic" th:text="${data.maxPoint}">10</td>
 								<td class="none"></td>
 								<td class="none"></td>
 								<td class="none"></td>
@@ -120,19 +118,17 @@
 							</th:block>
 							<th:block th:case="'TOTAL'">
 								<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
-								<td class="sub-topic" th:text="${data.content}"></td>
-								<td class="sub-topic" style="position: relative; padding: 0;"
-									th:text="${data.maxPoint}">10</td>
-								<td class="none"></td>
-								<td class="none"></td>
-								<td class="none"></td>
-								<td class="none"></td>
+								<td class="sub-topic" style="text-align: left !important;" th:text="${data.content}"></td>
+								<td class="sub-topic" th:text="${data.maxPoint}">10</td>
+								<td class="bold-font" th:text="${'Xếp loại: ' + checkPointResult.resultType}"></td>
+								<td class="bold-font" th:text="${checkPointResult.selfPoint}"></td>
+								<td class="bold-font" th:text="${checkPointResult.leaderPoint}"></td>
+								<td class="bold-font" th:text="${checkPointResult.principalPoint}"></td>
 							</th:block>
 							<th:block th:case="*">
 								<td class="col-sm-1" th:text="${data.indexStr}">1</td>
-								<td th:text="${data.content}"></td>
-								<td style="position: relative; padding: 0;"
-									th:text="${data.maxPoint}">10</td>
+								<td style="text-align: left !important;" th:text="${data.content}"></td>
+								<td th:text="${data.maxPoint}">10</td>
 								<td th:text="${data.issue}"></td>
 								<td th:text="${data.selfPoint}"></td>
 								<td th:text="${data.leaderPoint}"></td>

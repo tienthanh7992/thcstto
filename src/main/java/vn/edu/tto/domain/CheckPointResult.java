@@ -36,6 +36,8 @@ public class CheckPointResult {
     
     private Timestamp updatedAt;
     
+    private Timestamp selfCreatedAt;
+    
     private Timestamp leaderUpdatedAt;
     
     private Timestamp principalUpdateAt;
@@ -43,7 +45,13 @@ public class CheckPointResult {
     private Long leaderId;
     
     private Long principalId;
-
+    
+    private String position;
+    
+    private String firstName;
+    
+    private String lastName;
+    
     public Long getId() {
         return id;
     }
@@ -204,4 +212,35 @@ public class CheckPointResult {
 		this.year = year;
 	}
 
+	public Timestamp getSelfCreatedAt() {
+		return selfCreatedAt;
+	}
+
+	public void setSelfCreatedAt(Timestamp selfCreatedAt) {
+		this.selfCreatedAt = selfCreatedAt;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 }
