@@ -2,6 +2,7 @@ package vn.edu.tto.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import vn.edu.tto.domain.CheckPointResult;
 import vn.edu.tto.domain.CheckPointSubmit;
 import vn.edu.tto.domain.CheckPointSubmitDto;
 import vn.edu.tto.domain.Question;
+import vn.edu.tto.domain.User;
 import vn.edu.tto.domain.UserInfo;
 import vn.edu.tto.domain.Working;
 import vn.edu.tto.domain.WorkingDetail;
@@ -97,6 +99,8 @@ public class WorkController {
 		model.addAttribute("userInfo", userInfoCurr);
 		model.addAttribute("isDetail", true);
 		if (checkPermissionAndTypeResult == 3) {
+			User leaderInfo = userMapper.findUserByUserId(checkPointResult.getLeaderId());
+			model.addAttribute("leaderInfo", leaderInfo);
 			return "approve-3";
 		}
 		return "approve-2";
@@ -119,26 +123,31 @@ public class WorkController {
 			CheckPointSubmit checkPointSubmit;
 			CheckPointResult checkPointResult = new CheckPointResult();
 			double totalPoint = 0;
-			String topic = "";
+			Map<Long, CheckPointSubmit> chesMap = checkPointMapper.
+					findCheckPointSubmitByUserIdAndMonthYear(checkPointResultObj.getUserId(), checkPointResultObj.getMonth(), checkPointResultObj.getYear());
 			for (CheckPointSubmit ches : cheSubmitDto.getCheSubmit()) {
 				Question question = questionMap.get(ches.getQuestionId());
 				if ("QUESTION".equals(question.getQuestionRole())) {
+					CheckPointSubmit cSubmit = chesMap.get(ches.getChesId());
+					if (cSubmit == null) {
+						continue;
+					}
 					checkPointSubmit = new CheckPointSubmit();
 					Double point = ttoUtil.getPoint(ches.getPoint());
 					if (Double.compare(point, -1.0) == 0) {
-						return "Bạn chưa nhập dữ liệu ở câu hỏi ở mục " + topic + "\n" + question.getContent();
+						if (checkPermissionAndTypeResult == 3) {
+							point = Double.valueOf(cSubmit.getLeaderPoint());
+						} else {
+							point = Double.valueOf(cSubmit.getSelfPoint());
+						}
 					}
 					if (question.getIsIncrease()) {
-						totalPoint += ttoUtil.getPoint(ches.getSelfPoint());
-					} else {
-						totalPoint -= ttoUtil.getPoint(ches.getSelfPoint());
+						totalPoint += point;
 					}
 					checkPointSubmit.setChesId(ches.getChesId());
 					checkPointSubmit.setUserId(checkPointResultObj.getUserId());
-					checkPointSubmit.setPoint(String.valueOf(ttoUtil.getPoint(ches.getPoint())));
+					checkPointSubmit.setPoint(String.valueOf(point));
 					checkPointSubmits.add(checkPointSubmit);
-				} else if ("TOPIC".equals(question.getQuestionRole())) {
-					topic = question.getIndexStr();
 				}
 			}
 			if (checkPermissionAndTypeResult == 2) {

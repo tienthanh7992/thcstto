@@ -27,6 +27,17 @@ public interface UserMapper {
 	public User findUserByUserName(@Param("userName") String userName);
 	
 	@Select("select * from \"user\" where id = #{userId}")
+	 @Results({
+         @Result(property = "id", column = "id"),
+         @Result(property = "userName", column = "user_name"),
+         @Result(property = "password", column = "password"),
+         @Result(property = "firstName", column = "first_name"),
+         @Result(property = "lastName", column = "last_name"),
+         @Result(property = "team", column = "team"),
+         @Result(property = "position", column = "position"),
+         @Result(property = "isTeamLeader", column = "is_team_leader"),
+         @Result(property = "roleId", column = "role_id"),
+     })
     public User findUserByUserId(@Param("userId") Long userId);
 	
 	

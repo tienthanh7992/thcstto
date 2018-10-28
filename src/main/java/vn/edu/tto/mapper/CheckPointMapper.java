@@ -2,7 +2,9 @@ package vn.edu.tto.mapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -71,6 +73,8 @@ public interface CheckPointMapper {
 			@Result(property = "principalPoint", column = "principal_point"),
 			@Result(property = "leaderComment", column = "leader_comment"),
 			@Result(property = "principalComment", column = "principal_comment"),
+			@Result(property = "leaderId", column = "leader_id"),
+			@Result(property = "principalId", column = "principal_id"),
 			@Result(property = "leaderUpdateAt", column = "leader_update_at"),
 			@Result(property = "principalUpdateAt", column = "principal_update_at"),
 			@Result(property = "selfCreatedAt", column = "self_created_at") })
@@ -93,6 +97,16 @@ public interface CheckPointMapper {
 			@Result(property = "principalUpdateAt", column = "principal_update_at"),
 			@Result(property = "updateAt", column = "update_at") })
 	public CheckPointResult findCheResultByIdAndUserIdMoreInfo(@Param("id") Long id, @Param("userId") Long userId);
+	
+	@Select("select * from che_submit where user_id = #{userId} and month = #{month} and year = #{year}")
+    @Results({
+        @Result(property = "id", column = "id"),
+        @Result(property = "selfPoint", column = "selfPoint"),
+        @Result(property = "leaderPoint", column = "leader_point"),
+        @Result(property = "principal_point", column = "principal_point"),
+    })
+    @MapKey("id") 
+    public Map<Long,CheckPointSubmit> findCheckPointSubmitByUserIdAndMonthYear(@Param("userId") Long userId, @Param("month") Integer month, @Param("year") Integer year);
 	
 	
 }

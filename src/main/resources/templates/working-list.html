@@ -17,7 +17,82 @@
 </head>
 <body>
 
-	<div th:replace="fragments/header :: header"></div>
+	<nav class="navbar navbar-default" th:fragment="header">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">TRƯỜNG THCS TẢ THANH OAI</a>
+			</div>
+			<th:block th:switch="${userInfo.roleCode}">
+				<th:block th:case="'TEACHER'">
+					<ul class="nav navbar-nav">
+						<th:block th:if="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+							<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isDetail} == true">
+								<li><a href="#">Chi tiết</a></li>
+							</th:block>
+						</th:block>
+						<th:block th:unless="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isDetail} == true">
+								<li><a href="#">Chi tiết</a></li>
+							</th:block>
+						</th:block>
+					</ul>
+					
+				</th:block>
+				<th:block th:case="'EMPLOYEE'">
+					<ul class="nav navbar-nav">
+						<th:block th:if="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+							<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isDetail} == true">
+								<li><a href="#">Chi tiết</a></li>
+							</th:block>
+						</th:block>
+						<th:block th:unless="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<th:block th:if="${isDetail} == true">
+								<li><a href="#">Chi tiết</a></li>
+							</th:block>
+						</th:block>
+					</ul>
+				</th:block>
+				<th:block th:case="'VICE_PRINCIPAL'">
+					<ul class="nav navbar-nav">
+						<li class="active"><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+						<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<th:block th:if="${isDetail} == true">
+							<li><a href="#">Chi tiết</a></li>
+						</th:block>
+					</ul>
+				</th:block>
+				<th:block th:case="'PRINCIPAL'">
+					<ul class="nav navbar-nav">
+						<li class="active"><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+						<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<th:block th:if="${isDetail} == true">
+							<li><a href="#">Chi tiết</a></li>
+						</th:block>
+					</ul>
+				</th:block>
+			</th:block>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a th:href="@{'/logout'}"><span
+						class="glyphicon glyphicon-log-in"></span> Đăng xuất</a></li>
+			</ul>
+		</div>
+	</nav>
 
 	<div class="container">
 		<div class="row">

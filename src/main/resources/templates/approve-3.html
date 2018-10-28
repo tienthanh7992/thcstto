@@ -48,7 +48,7 @@
 			$(this).prop('selectedIndex', 0);
 		});
 	});
-	
+
 	$(document).ready(function() {
 		$('select').on('change', function(e) {
 			var point = getTotalPoint();
@@ -68,13 +68,76 @@
 		} else if (point < 50) {
 			type = "D";
 		}
-		$('#resultType').text("Xếp loại hiện tại: " + type);
+// 		$('#resultType').text("Xếp loại hiện tại: " + type);
+		$('#resultTypeApproved').text(type);
 	}
 </script>
 </head>
 <body>
-	<div th:replace="fragments/header :: header"></div>
-
+	<nav class="navbar navbar-default" th:fragment="header">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">TRƯỜNG THCS TẢ THANH OAI</a>
+			</div>
+			<th:block th:switch="${userInfo.roleCode}">
+				<th:block th:case="'TEACHER'">
+					<ul class="nav navbar-nav">
+						<th:block th:if="${userInfo.isTeamLeader} == true">
+							<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+							<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<li class="active"><a href="#">Chi tiết</a></li>
+						</th:block>
+						<th:block th:unless="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<li class="active"><a href="#">Chi tiết</a></li>
+						</th:block>
+					</ul>
+					
+				</th:block>
+				<th:block th:case="'EMPLOYEE'">
+					<ul class="nav navbar-nav">
+						<th:block th:if="${userInfo.isTeamLeader} == true">
+							<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+							<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+							<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<li class="active"><a href="#">Chi tiết</a></li>
+						</th:block>
+						<th:block th:unless="${userInfo.isTeamLeader} == true">
+							<li class="active"><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+							<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+							<li class="active"><a href="#">Chi tiết</a></li>
+						</th:block>
+					</ul>
+				</th:block>
+				<th:block th:case="'VICE_PRINCIPAL'">
+					<ul class="nav navbar-nav">
+						<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+						<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<li class="active"><a href="#">Chi tiết</a></li>
+					</ul>
+				</th:block>
+				<th:block th:case="'PRINCIPAL'">
+					<ul class="nav navbar-nav">
+						<li><a th:href="@{'/working-list/1'}">Công việc đang mở</a></li>
+						<li><a th:href="@{'/che-list/1'}">Phiếu đã đánh giá</a></li>
+						<li><a th:href="@{'/self-data/1'}">Phiếu đánh giá của tôi</a></li>
+						<li><a th:href="@{'/self-check'}">Tạo đánh giá tháng <span th:text="${#dates.format(#dates.createNow(), 'MM')}"></span></a></li>
+						<li class="active"><a href="#">Chi tiết</a></li>
+					</ul>
+				</th:block>
+			</th:block>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a th:href="@{'/logout'}"><span
+						class="glyphicon glyphicon-log-in"></span> Đăng xuất</a></li>
+			</ul>
+		</div>
+	</nav>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4 text-center">
@@ -93,11 +156,11 @@
 				<h6 style="display: inline"></h6>
 				<h6 style="display: inline" class="bold-font">
 					<em>Tả Thanh Oai, ngày..</em> <em
-						th:text="${#dates.format(checkPointResult.selfCreatedAt, 'dd')}"></em> 
-						<em>..tháng..</em>
-					<em th:text="${#dates.format(checkPointResult.selfCreatedAt, 'MM')}"></em>
-					<em>..năm
-					</em> <em th:text="${#dates.format(checkPointResult.selfCreatedAt, 'yyyy')}"></em>
+						th:text="${#dates.format(checkPointResult.selfCreatedAt, 'dd')}"></em>
+					<em>..tháng..</em> <em
+						th:text="${#dates.format(checkPointResult.selfCreatedAt, 'MM')}"></em>
+					<em>..năm </em> <em
+						th:text="${#dates.format(checkPointResult.selfCreatedAt, 'yyyy')}"></em>
 				</h6>
 			</div>
 		</div>
@@ -106,8 +169,8 @@
 				<th:block th:case="'TEACHER'">
 					<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI GIÁO VIÊN</h5>
 					<h5 style="display: inline">
-						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span> <span>/</span>
-						<span th:text="${checkPointResult.year}"></span>
+						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span>
+						<span>/</span> <span th:text="${checkPointResult.year}"></span>
 					</h5>
 					<div class="row text-left">
 						<div class="col-sm-4"></div>
@@ -130,8 +193,8 @@
 				<th:block th:case="'EMPLOYEE'">
 					<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI NHÂN VIÊN</h5>
 					<h5 style="display: inline">
-						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span> <span>/</span>
-						<span th:text="${checkPointResult.year}"></span>
+						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span>
+						<span>/</span> <span th:text="${checkPointResult.year}"></span>
 					</h5>
 					<div class="row text-left">
 						<div class="col-sm-4"></div>
@@ -154,8 +217,8 @@
 					<h5 class="head-font-size">PHIẾU TỰ ĐÁNH GIÁ, XẾP LOẠI PHÓ
 						HIỆU TRƯỞNG</h5>
 					<h5 style="display: inline">
-						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span> <span>/</span>
-						<span th:text="${checkPointResult.year}"></span>
+						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span>
+						<span>/</span> <span th:text="${checkPointResult.year}"></span>
 					</h5>
 					<div class="row text-left">
 						<div class="col-sm-4"></div>
@@ -177,8 +240,8 @@
 					<h5 class="head-font-size">PHIẾU TỰ ĐÁNH GIÁ, XẾP LOẠI HIỆU
 						TRƯỞNG</h5>
 					<h5 style="display: inline">
-						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span> <span>/</span>
-						<span th:text="${checkPointResult.year}"></span>
+						<span>Tháng:</span> <span th:text="${checkPointResult.month}"></span>
+						<span>/</span> <span th:text="${checkPointResult.year}"></span>
 					</h5>
 					<div class="row text-left">
 						<div class="col-sm-4"></div>
@@ -254,10 +317,12 @@
 									<td class="sub-topic" th:text="${data.content}"></td>
 									<td class="sub-topic" style="position: relative; padding: 0;"
 										th:text="${#numbers.formatInteger(data.maxPoint, 0,'COMMA')}">10</td>
-									<td style="font-weight: bold;" class="text-center"
-											id="resultType"></td>
-									<td th:text="${checkPointResult.selfPoint}"></td>
-									<td th:text="${checkPointResult.leaderPoint}"></td>
+									<td style="font-weight: bold;"
+										th:text="${'Xếp loại hiện tại: ' + checkPointResult.resultType}"></td>
+									<td style="font-weight: bold;"
+										th:text="${checkPointResult.selfPoint}"></td>
+									<td style="font-weight: bold;"
+										th:text="${checkPointResult.leaderPoint}"></td>
 									<td style="font-weight: bold;" class="text-center" id="total"></td>
 								</th:block>
 								<th:block th:case="'DECREASE'">
@@ -288,16 +353,67 @@
 								</th:block>
 							</th:block>
 						</tr>
-						<tr>
-							<td colspan="6" class="text-center"><textarea name="comment"></textarea>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="6" class="text-center"><input onclick="submitForm();" type="button" class="btn btn-info"
-								value="Duyệt"></td>
-						</tr>
 					</tbody>
 				</table>
+				<div class="row">
+					<div class="col-sm-6">
+						<h5 class="bold-font">Ý kiến của người trực tiếp phụ trách</h5>
+						<textarea readonly class="form-control" rows="5"
+							th:text="${checkPointResult.leaderComment}"></textarea>
+						<h6 class="bold-font text-center">(Ký tên, ghi rõ họ tên)</h6>
+						<h6 class="bold-font text-center"
+							th:text="${leaderInfo.firstName + ' ' + leaderInfo.lastName}"></h6>
+					</div>
+					<div class="col-sm-6">
+						<br>
+						<h6 class="text-center">
+							Ngày...<span th:text="${#dates.format(checkPointResult.selfCreatedAt, 'dd')}"></span>
+							...tháng...<span
+								th:text="${#dates.format(checkPointResult.selfCreatedAt, 'MM')}"> </span>...năm...<span
+								th:text="${#dates.format(checkPointResult.selfCreatedAt, 'yyyy')}">.</span>..
+						</h6>
+						<h6 class="bold-font text-center">Người tự đánh giá</h6>
+						<h6 class="bold-font text-center">(Ký, ghi rõ họ tên)</h6>
+						<h6 class="bold-font text-center"
+							th:text="${checkPointResult.firstName + ' ' + checkPointResult.lastName}"></h6>
+					</div>
+
+				</div>
+				<br>
+				<div class="row text-left">
+					<div class="col-sm-12">
+						<h5>* KẾT QUẢ ĐÁNH GIÁ, XẾP LOẠI CỦA HIỆU TRƯỞNG</h5>
+						<textarea class="form-control" rows="10" name="comment"
+							placeholder="Nhập vào đây..."></textarea>
+						<h5>
+							<em class="bold-font">Kết luận:</em> Xếp loại: <span
+								id="resultTypeApproved"></span>
+						</h5>
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="col-sm-8"></div>
+					<div class="col-sm-4 text-center">
+						<h6>
+							Tả Thanh Oai, ngày...<span th:text="${#dates.format(#dates.createNow(), 'dd')}"></span>
+							...tháng...<span
+								th:text="${#dates.format(#dates.createNow(), 'MM')}"> </span>...năm...<span
+								th:text="${#dates.format(#dates.createNow(), 'yyyy')}">.</span>..
+						</h6>
+						<h6 class="bold-font">TRƯỞNG ĐƠN VỊ</h6>
+						<h6 class="bold-font">(Ký tên, đóng dấu)</h6>
+						<h6 class="bold-font"
+							th:text="${userInfo.firstName + ' ' + userInfo.lastName}"></h6>
+					</div>
+				</div>
+				<br> <br>
+				<div class="row text-center">
+					<input onclick="submitForm();" type="button" class="btn btn-info"
+						th:value="${'Duyệt phiếu đánh giá tiêu chí'}">
+				</div>
+				<br> <br> <br> <br>
 			</form>
 		</div>
 	</div>
