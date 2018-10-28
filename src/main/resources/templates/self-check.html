@@ -31,7 +31,7 @@
 			data : form.serialize(), // serializes the form's elements.
 			success : function(data) {
 				if (data == 'SUCCESS') {
-					window.location.replace("/self-data");
+					window.location.replace("/self-data/1");
 				} else {
 					alert(data.toString());
 				}
@@ -48,6 +48,13 @@
 		});
 		return count;
 	}
+
+	$(document).ready(function() {
+		$('select').each(function() {
+			$(this).prop('selectedIndex', 0);
+		});
+	});
+	
 	$(document).ready(function() {
 		$('select').on('change', function(e) {
 			var point = getTotalPoint();
@@ -286,10 +293,7 @@
 						<input onclick="submitForm();" type="button" class="btn btn-info"
 							th:value="${'Gửi phiếu đánh giá tiêu chí tháng ' + month}">
 					</div>
-					<br>
-					<br>
-					<br>
-					<br>
+					<br> <br> <br> <br>
 				</form>
 			</div>
 		</div>

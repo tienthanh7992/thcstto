@@ -29,7 +29,6 @@ public class CheckPointSubmit {
     private String point;
 
     public CheckPointSubmit() {
-		setSelfPoint("-Chọn-");
 	}
 
 	public Long getId() {

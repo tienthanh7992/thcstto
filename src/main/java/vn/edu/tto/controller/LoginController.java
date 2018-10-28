@@ -34,7 +34,7 @@ public class LoginController {
 		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("isDetail", false);
-		return ttoUtil.getHomePage(userInfo);
+		return "redirect:" + ttoUtil.getHomePage(userInfo);
 	}
 
 	@GetMapping("/error")

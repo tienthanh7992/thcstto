@@ -124,8 +124,8 @@ public class WorkController {
 				Question question = questionMap.get(ches.getQuestionId());
 				if ("QUESTION".equals(question.getQuestionRole())) {
 					checkPointSubmit = new CheckPointSubmit();
-					int point = ttoUtil.getPoint(ches.getPoint());
-					if (point == -1) {
+					Double point = ttoUtil.getPoint(ches.getPoint());
+					if (Double.compare(point, -1.0) == 0) {
 						return "Bạn chưa nhập dữ liệu ở câu hỏi ở mục " + topic + "\n" + question.getContent();
 					}
 					if (question.getIsIncrease()) {
@@ -140,7 +140,6 @@ public class WorkController {
 				} else if ("TOPIC".equals(question.getQuestionRole())) {
 					topic = question.getIndexStr();
 				}
-
 			}
 			if (checkPermissionAndTypeResult == 2) {
 				checkPointMapper.updateCheckPointSubmitLeader(checkPointSubmits);

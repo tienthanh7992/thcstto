@@ -88,8 +88,8 @@ public class SelfCheckPointController {
 				Question question = questionMap.get(che.getQuestionId());
 				if ("QUESTION".equals(question.getQuestionRole())) {
 					checkPointSubmit = new CheckPointSubmit();
-					int point = ttoUtil.getPoint(che.getSelfPoint());
-					if (point == -1) {
+					Double point = ttoUtil.getPoint(che.getSelfPoint());
+					if (Double.compare(point, -1) == 0) {
 						return "Bạn chưa nhập dữ liệu ở câu hỏi ở mục " + topic + "\n" + question.getContent();
 					}
 					if (question.getIsIncrease()) {
@@ -126,7 +126,6 @@ public class SelfCheckPointController {
 			checkPointResult.setStatus(TTOConstant.CHEStatus.PENDING);
 			checkPointResult.setMonth(10);
 			checkPointMapper.insertCheckPointResult(checkPointResult);
-			System.out.println();
 			return "SUCCESS";
 		} catch (Exception e) {
 			e.printStackTrace();

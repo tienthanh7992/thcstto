@@ -14,113 +14,11 @@
 	rel="stylesheet" media="screen" />
 <link href="../../static/css/table.css" th:href="@{/css/table.css}"
 	rel="stylesheet" media="screen" />
+<script type="text/javascript">
+	window.location.replace("/login");
+</script>
 </head>
 
 <body th:with="zindex=${100}">
 
-	<!-- 	<nav class="navbar navbar-default"> -->
-	<!-- 		<div class="container-fluid"> -->
-	<!-- 			<div class="navbar-header"> -->
-	<!-- 				<a class="navbar-brand" href="#">WebSiteName</a> -->
-	<!-- 			</div> -->
-	<!-- 			<ul class="nav navbar-nav"> -->
-	<!-- 				<li class="active"><a href="#">Home</a></li> -->
-	<!-- 				<li><a href="#">Page 1</a></li> -->
-	<!-- 				<li><a href="#">Page 2</a></li> -->
-	<!-- 			</ul> -->
-	<!-- 			<ul class="nav navbar-nav navbar-right"> -->
-	<!-- 				<li><a href="#"><span class="glyphicon glyphicon-user"></span> -->
-	<!-- 						Sign Up</a></li> -->
-	<!-- 				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> -->
-	<!-- 						Login</a></li> -->
-	<!-- 			</ul> -->
-	<!-- 		</div> -->
-	<!-- 	</nav> -->
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-4 text-center">
-				<h5 class="mt-0">UBND HUYỆN THANH TRÌ</h5>
-				<h5 class="mt-0">TRƯỜNG THCS TẢ THANH OAI</h5>
-				<hr style="width: 200px;">
-			</div>
-			<div class="col-sm-8 text-center">
-				<h5>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h5>
-				<h5>Độc lập – Tự do – Hạnh phúc</h5>
-				<hr style="width: 200px;">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-11 text-right">
-				<h6 style="display: inline"></h6>
-				<h6 style="display: inline">
-					<em>Tả Thanh Oai, ngày..</em> <em
-						th:text="${#dates.format(#dates.createNow(), 'dd')}"></em> <em>..tháng..</em>
-					<em th:text="${#dates.format(#dates.createNow(), 'MM')}"></em> <em>..năm
-					</em> <em th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></em>
-				</h6>
-			</div>
-		</div>
-		<div class="row text-center">
-			<h5>
-				<b>PHIẾU ĐÁNH GIÁ, XẾP LOẠI GIÁO VIÊN</b>
-			</h5>
-			<h5 style="display: inline">
-				<span>Tháng:</span> <span
-					th:text="${#dates.format(#dates.createNow(), 'MM')}"></span> <span>/</span>
-				<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
-			</h5>
-		</div>
-		<div class="row text-center">
-			<h6>- Họ và tên: …………............................….Tổ chuyên
-				môn:.........................</h6>
-			<h6>- Vị trí việc làm và nhiệm vụ được phân
-				công..............................................</h6>
-			<h6>.....................................................................................................................</h6>
-		</div>
-
-		<div class="row">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th scope="col" rowspan="2">TT</th>
-						<th scope="col" rowspan="2" class="col-sm-4">Nội dung đánh
-							giá</th>
-						<th scope="col" rowspan="2" class="col-sm-1">Điểm tối đa</th>
-						<th scope="col" colspan="3">Kết quả đánh giá</th>
-					</tr>
-					<tr>
-						<th scope="col" class="col-sm-4">Tồn tại, hạn chế</th>
-						<th scope="col" class="col-sm-1">Điểm tự chấm</th>
-						<th scope="col" class="col-sm-1">Hiệu trưởng chấm</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="data, rowStat: ${datas}">
-						<td class="col-sm-1" th:text="${data.indexStr}">1</td>
-						<td th:text="${data.content}"></td>
-						<td style="position: relative; padding: 0;"
-							th:text="${data.maxPoint}">10</td>
-						<td style="position: relative; padding: 0;"><textarea
-								class="form-control" style="position: absolute; height: 100%;"
-								placeholder="Nhập vào đây..."
-								th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"></textarea></td>
-						<td style="position: relative; padding: 0;"><select
-							class="form-control" style="position: absolute; height: 100%;">
-								<option value="" disabled selected>-Chọn-</option>
-								<option
-									th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
-									th:value="${point}" th:text="${point}"></option>
-						</select></td>
-						<td style="position: relative; padding: 0;"><select
-							class="form-control" style="position: absolute; height: 100%;">
-								<option value="" disabled selected>-Chọn-</option>
-								<option
-									th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
-									th:value="${point}" th:text="${point}"></option>
-						</select></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
 </body>

@@ -11,7 +11,7 @@
 			che_submit(user_id,question_id,issue,self_point,leader_point,principal_point,final_point,month,year,updated_at)
 			values(#{element.userId},#{element.questionId},#{element.issue},CAST(#{element.selfPoint}
 			AS
-			integer),#{element.leaderPoint},#{element.principalPoint},#{element.finalPoint},#{element.month},#{element.year},CURRENT_TIMESTAMP);
+			double precision),#{element.leaderPoint},#{element.principalPoint},#{element.finalPoint},#{element.month},#{element.year},CURRENT_TIMESTAMP);
 		</foreach>
 	</insert>
 
@@ -25,14 +25,14 @@
 	<update id="updateCheckPointSubmitLeader"
 		parameterType="java.util.List">
 		<foreach collection="list" item="element" index="index">
-			update che_submit set leader_point = cast(#{element.point} as integer),
+			update che_submit set leader_point = cast(#{element.point} as double precision),
 			updated_at = CURRENT_TIMESTAMP where id = #{element.chesId} and user_id = #{element.userId};
 		</foreach>
 	</update>
 
 	<update id="updateCheckPointResultLeader"
 		parameterType="vn.edu.tto.domain.CheckPointResult">
-		update che_result set leader_point = cast(#{leaderPoint} as integer), leader_comment = #{leaderComment},
+		update che_result set leader_point = cast(#{leaderPoint} as double precision), leader_comment = #{leaderComment},
 		leader_updated_at = CURRENT_TIMESTAMP, result_type = #{resultType}, status = #{status}, leader_id = #{leaderId}
 		where id = #{id} and user_id = #{userId};
 	</update>
@@ -40,14 +40,14 @@
 	<update id="updateCheckPointSubmitPrincipal"
 		parameterType="java.util.List">
 		<foreach collection="list" item="element" index="index">
-			update che_submit set principal_point = cast(#{element.point} as integer),
+			update che_submit set principal_point = cast(#{element.point} as double precision),
 			updated_at = CURRENT_TIMESTAMP where id = #{element.chesId} and user_id = #{element.userId};
 		</foreach>
 	</update>
 
 	<update id="updateCheckPointResultPrincipal"
 		parameterType="vn.edu.tto.domain.CheckPointResult">
-		update che_result set principal_point = cast(#{principalPoint} as integer), principal_comment = #{principalComment},
+		update che_result set principal_point = cast(#{principalPoint} as double precision), principal_comment = #{principalComment},
 		principal_updated_at = CURRENT_TIMESTAMP, result_type = #{resultType}, status = #{status}, principal_id = #{principalId}
 		where id = #{id} and user_id = #{userId};
 	</update>

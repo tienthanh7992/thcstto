@@ -15,20 +15,20 @@ public class TTOUtil {
 	@Autowired
 	CheckPointMapper checkPointMapper;
 
-	public int getPoint(String point) {
+	public Double getPoint(String point) {
 		try {
-			return Integer.parseInt(point);
+			return Double.parseDouble(point);
 		} catch (Exception e) {
-			return -1;
+			return -1.0;
 		}
 	}
 
 	public String getResultType(double point) {
-		if (90 >= point && point <= 100) {
+		if (Double.compare(point, 89) > 0 && Double.compare(point, 101) < 1) {
 			return "A";
-		} else if (70 >= point && point < 90) {
+		} else if (Double.compare(point, 69) > 0 && Double.compare(point, 90) < 1) {
 			return "B";
-		} else if (50 >= point && point < 70) {
+		} else if (Double.compare(point, 49) > 0 && Double.compare(point, 70) < 1) {
 			return "C";
 		} else {
 			return "D";

@@ -20,6 +20,8 @@ public class CheckPointResult {
     
     private Integer month;
     
+    private Integer year;
+    
     private Boolean isTeamLeader;
     
     private String roleCode;
@@ -192,6 +194,14 @@ public class CheckPointResult {
 
 	public void setPrincipalId(Long principalId) {
 		this.principalId = principalId;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 }
