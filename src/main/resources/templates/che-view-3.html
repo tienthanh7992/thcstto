@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Trường trung học cơ sở tả thanh oai</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="../../static/css/core.css" th:href="@{/css/core.css}"
+	rel="stylesheet" media="screen" />
+<link href="../../static/css/table.css" th:href="@{/css/table.css}"
+	rel="stylesheet" media="screen" />
+<script type="text/javascript">
+	function submitForm() {
+		var form = $("#approve-3");
+		var url = form.attr('action');
+
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : form.serialize(), // serializes the form's elements.
+			success : function(data) {
+				if (data == 'SUCCESS') {
+					window.location.replace("/working-list/1");
+				} else {
+					alert(data.toString());
+				}
+			}
+		});
+	}
+</script>
+</head>
+<body>
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">HOME</a>
+			</div>
+			<ul class="nav navbar-nav navbar-center">
+				<li><a href="#" style="font-size: 24px;">TRƯỜNG TRUNG HỌC
+						CƠ SỞ TẢ THANH OAI</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+						Đăng xuất</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 text-center">
+				<h5 class="mt-0 head-font-size">UBND HUYỆN THANH TRÌ</h5>
+				<h5 class="mt-0 head-font-size">TRƯỜNG THCS TẢ THANH OAI</h5>
+				<hr style="width: 200px;">
+			</div>
+			<div class="col-sm-8 text-center">
+				<h5 class="head-font-size">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h5>
+				<h5 class="head-font-size">Độc lập – Tự do – Hạnh phúc</h5>
+				<hr style="width: 200px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-11 text-right">
+				<h6 style="display: inline"></h6>
+				<h6 style="display: inline" class="bold-font">
+					<em>Tả Thanh Oai, ngày..</em> <em
+						th:text="${#dates.format(#dates.createNow(), 'dd')}"></em> <em>..tháng..</em>
+					<em th:text="${#dates.format(#dates.createNow(), 'MM')}"></em> <em>..năm
+					</em> <em th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></em>
+				</h6>
+			</div>
+		</div>
+		<div class="row text-center">
+			<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI GIÁO VIÊN</h5>
+			<h5 style="display: inline">
+				<span>Tháng:</span> <span
+					th:text="${#dates.format(#dates.createNow(), 'MM')}"></span> <span>/</span>
+				<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+			</h5>
+		</div>
+		<div class="row text-center">
+			<h6>- Họ và tên: …………............................….Tổ chuyên
+				môn:.........................</h6>
+			<h6>- Vị trí việc làm và nhiệm vụ được phân
+				công..............................................</h6>
+			<h6>.....................................................................................................................</h6>
+		</div>
+
+		<div class="row">
+			<table class="table table-bordered leader-form">
+				<thead>
+					<tr>
+						<th scope="col" rowspan="2">TT</th>
+						<th scope="col" rowspan="2" class="col-sm-4">Nội dung đánh
+							giá</th>
+						<th scope="col" rowspan="2" class="col-sm-1">Điểm tối đa</th>
+						<th scope="col" colspan="4">Kết quả đánh giá</th>
+					</tr>
+					<tr>
+						<th scope="col" class="col-sm-4">Tồn tại, hạn chế</th>
+						<th scope="col" class="col-sm-1">Điểm tự chấm</th>
+						<th scope="col" class="col-sm-1">Tổ trưởng chấm</th>
+						<th scope="col" class="col-sm-1">Hiệu trưởng chấm</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="data, rowStat: ${datas}">
+						<th:block th:switch="${data.questionRole}">
+							<th:block th:case="'TOPIC'">
+								<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
+								<td class="topic" th:text="${data.content}"></td>
+								<td class="topic" style="position: relative; padding: 0;"
+									th:text="${data.maxPoint}">10</td>
+								<td class="none"></td>
+								<td class="none"></td>
+								<td class="none"></td>
+								<td class="none"></td>
+							</th:block>
+							<th:block th:case="'SUB_TOPIC'">
+								<td class="col-sm-1 sub-topic" th:text="${data.indexStr}">1</td>
+								<td class="sub-topic" th:text="${data.content}"></td>
+								<td class="sub-topic" style="position: relative; padding: 0;"
+									th:text="${data.maxPoint}">10</td>
+								<td class="none"></td>
+								<td class="none"></td>
+								<td class="none"></td>
+								<td class="none"></td>
+							</th:block>
+							<th:block th:case="'TOTAL'">
+								<td class="col-sm-1 total" th:text="${data.indexStr}">1</td>
+								<td class="sub-topic" th:text="${data.content}"></td>
+								<td class="sub-topic" style="position: relative; padding: 0;"
+									th:text="${data.maxPoint}">10</td>
+								<td class="none"></td>
+								<td class="none"></td>
+								<td class="none"></td>
+								<td class="none"></td>
+							</th:block>
+							<th:block th:case="*">
+								<td class="col-sm-1" th:text="${data.indexStr}">1</td>
+								<td th:text="${data.content}"></td>
+								<td style="position: relative; padding: 0;"
+									th:text="${data.maxPoint}">10</td>
+								<td th:text="${data.issue}"></td>
+								<td th:text="${data.selfPoint}"></td>
+								<td th:text="${data.leaderPoint}"></td>
+								<td th:text="${data.principalPoint}"></td>
+							</th:block>
+						</th:block>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>

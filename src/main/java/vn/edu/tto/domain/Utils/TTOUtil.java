@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import vn.edu.tto.domain.CheckPointResult;
+import vn.edu.tto.domain.User;
 import vn.edu.tto.domain.UserInfo;
 import vn.edu.tto.domain.constant.TTOConstant.CHEStatus;
 import vn.edu.tto.domain.constant.TTOConstant.RoleType;
@@ -35,9 +36,9 @@ public class TTOUtil {
 		}
 	}
 
-	public int checkReadyMonth() {
+	public int checkReadyMonth(User user) {
 		int currentMonth = DateUtil.getCurrentMonth();
-		CheckPointResult checkPointResult = checkPointMapper.findLastCheResult();
+		CheckPointResult checkPointResult = checkPointMapper.findLastCheResult(user.getId());
 		if (checkPointResult == null) {
 			return currentMonth;
 		}
@@ -50,7 +51,7 @@ public class TTOUtil {
 		}
 		return 0;
 	}
-	
+
 	public boolean checkPermission(UserInfo userInfo, CheckPointResult che) {
 		String cheStatus = che.getStatus();
 		String roleCodeCurrUser = userInfo.getRoleCode();
@@ -120,6 +121,44 @@ public class TTOUtil {
 		default:
 			if (CHEStatus.PENDING.equals(cheStatus) && userInfo.getIsTeamLeader()
 					&& userInfo.getTeam().equals(che.getTeam()) && !che.getIsTeamLeader()) {
+				return 2;
+			}
+			break;
+		}
+		return -1;
+	}
+
+	public int checkPermissionAndTypePrincipalApproved(UserInfo userInfo, CheckPointResult che) {
+		String cheStatus = che.getStatus();
+		String roleCodeCurrUser = userInfo.getRoleCode();
+		String roleCodeObject = che.getRoleCode();
+		if (!CHEStatus.PRINCIPAL_APPROVED.equals(cheStatus)) {
+			return -1;
+		}
+		switch (roleCodeCurrUser) {
+		case RoleType.PRINCIPAL:
+			if (RoleType.VICE_PRINCIPAL.equals(roleCodeObject)
+					|| (RoleType.TEACHER.equals(roleCodeObject) && che.getIsTeamLeader())
+					|| (RoleType.EMPLOYEE.equals(roleCodeObject) && che.getIsTeamLeader())) {
+				return 1;
+			}
+
+			if (RoleType.TEACHER.equals(roleCodeObject) || RoleType.EMPLOYEE.equals(roleCodeObject)) {
+				return 3;
+			}
+			break;
+		case RoleType.VICE_PRINCIPAL:
+			if ((RoleType.TEACHER.equals(roleCodeObject) && che.getIsTeamLeader())
+					|| (RoleType.EMPLOYEE.equals(roleCodeObject) && che.getIsTeamLeader())) {
+				return 1;
+			}
+
+			if (RoleType.TEACHER.equals(roleCodeObject) || RoleType.EMPLOYEE.equals(roleCodeObject)) {
+				return 3;
+			}
+			break;
+		default:
+			if (userInfo.getIsTeamLeader() && userInfo.getTeam().equals(che.getTeam()) && !che.getIsTeamLeader()) {
 				return 2;
 			}
 			break;

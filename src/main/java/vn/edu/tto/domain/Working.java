@@ -26,6 +26,10 @@ public class Working {
     
     private Integer year;
     
+    private Integer principalPoint;
+    
+    private String resultType;
+    
     private Timestamp selfCreatedAt;
     
     private String status;
@@ -133,4 +137,20 @@ public class Working {
     public void setStatus(String status) {
         this.status = status;
     }
+
+	public Integer getPrincipalPoint() {
+		return principalPoint;
+	}
+
+	public void setPrincipalPoint(Integer principalPoint) {
+		this.principalPoint = principalPoint;
+	}
+
+	public String getResultType() {
+		return resultType;
+	}
+
+	public void setResultType(String resultType) {
+		this.resultType = resultType;
+	}
 }

@@ -15,44 +15,27 @@
 <link href="../../static/css/table.css" th:href="@{/css/table.css}"
 	rel="stylesheet" media="screen" />
 <script type="text/javascript">
+	function submitForm() {
+		var form = $("#frm-self-check");
+		var url = form.attr('action');
 
-function submitForm() {
-    var form = $("#frm-self-check");
-    var url = form.attr('action');
-
-    $.ajax({
-           type: "POST",
-           url: url,
-           data: form.serialize(), // serializes the form's elements.
-           success: function(data)
-           {
-               if (data == 'SUCCESS') {
-                   window.location.replace("/self-data");
-               } else {
-            	   		alert(data.toString());
-               }
-           }
-         });
-}
+		$.ajax({
+			type : "POST",
+			url : url,
+			data : form.serialize(), // serializes the form's elements.
+			success : function(data) {
+				if (data == 'SUCCESS') {
+					window.location.replace("/self-data");
+				} else {
+					alert(data.toString());
+				}
+			}
+		});
+	}
 </script>
 </head>
 <body class="self-check">
-
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">HOME</a>
-			</div>
-			<ul class="nav navbar-nav navbar-center">
-				<li><a href="#" style="font-size: 24px;">TRƯỜNG TRUNG HỌC
-						CƠ SỞ TẢ THANH OAI</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Đăng xuất</a></li>
-			</ul>
-		</div>
-	</nav>
+	<div th:replace="fragments/header :: header"></div>
 
 	<div class="container">
 		<div class="row">
@@ -95,8 +78,8 @@ function submitForm() {
 		</div>
 
 		<div class="row">
-			<form id="frm-self-check" class="form-horizontal" th:action="@{/self-check}"
-				th:object="${cheSubmitDto}" method="post">
+			<form id="frm-self-check" class="form-horizontal"
+				th:action="@{/self-check}" th:object="${cheSubmitDto}" method="post">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -113,7 +96,9 @@ function submitForm() {
 					</thead>
 					<tbody>
 						<tr th:each="data, rowStat: ${datas}">
-						    <input type="hidden" th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'" th:value="${data.id}">
+							<input type="hidden"
+								th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'"
+								th:value="${data.id}">
 							<th:block th:switch="${data.questionRole}">
 								<th:block th:case="'TOPIC'">
 									<td class="col-sm-1 topic" th:text="${data.indexStr}">1</td>
@@ -149,8 +134,7 @@ function submitForm() {
 											style="position: absolute; height: 100%;"
 											placeholder="Nhập vào đây..."
 											th:style="'position: absolute; height: 100%; z-index:' + ${1000 - rowStat.index} + ';'"
-											th:field="*{cheSubmit[__${rowStat.index}__].issue}"
-											></textarea></td>
+											th:field="*{cheSubmit[__${rowStat.index}__].issue}"></textarea></td>
 									<td style="position: relative; padding: 0;"><select
 										class="form-control" style="position: absolute; height: 100%;"
 										th:field="*{cheSubmit[__${rowStat.index}__].selfPoint}">
@@ -163,7 +147,8 @@ function submitForm() {
 							</th:block>
 						</tr>
 						<tr>
-							<td colspan="5" class="text-center"><input onclick="submitForm();" type="button" class="btn btn-info"
+							<td colspan="5" class="text-center"><input
+								onclick="submitForm();" type="button" class="btn btn-info"
 								value="Gửi"></td>
 						</tr>
 					</tbody>

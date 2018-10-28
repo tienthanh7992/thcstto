@@ -18,8 +18,8 @@
 	<insert id="insertCheckPointResult"
 		parameterType="vn.edu.tto.domain.CheckPointResult">
 		insert into
-		che_result(user_id,self_point,result_type,status,month,self_created_at)
-		values(#{userId},#{selfPoint},#{resultType},#{status},#{month},CURRENT_TIMESTAMP);
+		che_result(user_id,self_point,result_type,status,month,year,self_created_at)
+		values(#{userId},#{selfPoint},#{resultType},#{status},#{month},#{year},CURRENT_TIMESTAMP);
 	</insert>
 	
 	<update id="updateCheckPointSubmitLeader"

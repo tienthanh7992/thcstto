@@ -27,7 +27,7 @@ public interface CheckPointMapper {
 
 	public Integer updateCheckPointResultPrincipal(CheckPointResult checkPointResult);
 
-	@Select("select * from che_result order by updated_at desc limit 1")
+	@Select("select * from che_result where user_id = #{userId} order by updated_at desc limit 1")
 	@Results({ @Result(property = "id", column = "id"), @Result(property = "userId", column = "user_id"),
 			@Result(property = "selfPoint", column = "self_point"),
 			@Result(property = "resultType", column = "result_type"), @Result(property = "status", column = "status"),
@@ -38,7 +38,7 @@ public interface CheckPointMapper {
 			@Result(property = "leaderUpdateAt", column = "leader_update_at"),
 			@Result(property = "principalUpdateAt", column = "principal_update_at"),
 			@Result(property = "updateAt", column = "update_at") })
-	public CheckPointResult findLastCheResult();
+	public CheckPointResult findLastCheResult(@Param("userId") Long userId);
 
 	@Select("select * from che_result where id = #{id} and user_id = #{userId}")
 	@Results({ @Result(property = "id", column = "id"), @Result(property = "userId", column = "user_id"),

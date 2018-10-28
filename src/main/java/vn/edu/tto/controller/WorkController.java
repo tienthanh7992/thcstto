@@ -156,7 +156,7 @@ public class WorkController {
 				checkPointResult.setPrincipalPoint(totalPoint);
 				checkPointResult.setPrincipalComment(comment);
 				checkPointResult.setResultType(ttoUtil.getResultType(totalPoint));
-				checkPointResult.setStatus(TTOConstant.CHEStatus.LEADER_APPROVED);
+				checkPointResult.setStatus(TTOConstant.CHEStatus.PRINCIPAL_APPROVED);
 				checkPointResult.setPrincipalId(userInfoCurr.getId());
 				checkPointMapper.updateCheckPointResultPrincipal(checkPointResult);
 			}

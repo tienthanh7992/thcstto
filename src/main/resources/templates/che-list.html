@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Trường trung học cơ sở tả thanh oai</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="../../static/css/core.css" th:href="@{/css/core.css}"
+	rel="stylesheet" media="screen" />
+<link href="../../static/css/table.css" th:href="@{/css/table.css}"
+	rel="stylesheet" media="screen" />
+</head>
+<body>
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">HOME</a>
+			</div>
+			<ul class="nav navbar-nav navbar-center">
+				<li><a href="#" style="font-size: 24px;">TRƯỜNG TRUNG HỌC
+						CƠ SỞ TẢ THANH OAI</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+						Đăng xuất</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 text-center">
+				<h5 class="mt-0 head-font-size">UBND HUYỆN THANH TRÌ</h5>
+				<h5 class="mt-0 head-font-size">TRƯỜNG THCS TẢ THANH OAI</h5>
+				<hr style="width: 200px;">
+			</div>
+			<div class="col-sm-8 text-center">
+				<h5 class="head-font-size">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h5>
+				<h5 class="head-font-size">Độc lập – Tự do – Hạnh phúc</h5>
+				<hr style="width: 200px;">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-11 text-right">
+				<h6 style="display: inline"></h6>
+				<h6 style="display: inline" class="bold-font">
+					<em>Tả Thanh Oai, ngày..</em> <em
+						th:text="${#dates.format(#dates.createNow(), 'dd')}"></em> <em>..tháng..</em>
+					<em th:text="${#dates.format(#dates.createNow(), 'MM')}"></em> <em>..năm
+					</em> <em th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></em>
+				</h6>
+			</div>
+		</div>
+		<div class="row text-center">
+			<h5 class="head-font-size">PHIẾU ĐÁNH GIÁ, XẾP LOẠI THEO THÁNG</h5>
+			<h5 style="display: inline">
+				<span>Tháng:</span> <span
+					th:text="${#dates.format(#dates.createNow(), 'MM')}"></span> <span>/</span>
+				<span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+			</h5>
+		</div>
+		<div class="row text-center">
+			<h6>- Họ và tên: …………............................….Tổ chuyên
+				môn:.........................</h6>
+			<h6>- Vị trí việc làm và nhiệm vụ được phân
+				công..............................................</h6>
+			<h6>.....................................................................................................................</h6>
+		</div>
+
+		<div class="row">
+			<form class="form-horizontal" action="#" th:action="@{/self-check}"
+				method="post">
+				<table class="table-responsive table-bordered">
+					<thead>
+						<tr>
+							<th class="col-sm-1" >STT</th>
+							<th class="col-sm-3" >HỌ TÊN</th>
+							<th class="col-sm-2" >VỊ TRÍ CÔNG TÁC</th>
+							<th class="col-sm-1" >TỔ</th>
+							<th class="col-sm-2" >THÁNG/NĂM ĐÁNH GIÁ</th>
+							<th class="col-sm-1" >TỔNG ĐIỂM</th>
+							<th class="col-sm-1" >XẾP LOẠI</th>
+							<th class="col-sm-1" >Chi tiết</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="data, rowStat: ${datas}" class="text-center">
+							<td th:text="${rowStat.index + 1}">1</td>
+							<td th:text="${data.firstName + ' ' + data.lastName}"></td>
+							<td th:text="${data.roleCode}">10</td>
+							<td th:text="${data.team}">1</td>
+							<td th:text="${data.month + '/' + data.year}">1</td>
+							<td th:text="${data.principalPoint}">1</td>
+							<td th:text="${data.resultType}">1</td>
+							<td><a th:href="@{'/che-detail/' + ${data.cheResultId}}">Chi tiết</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+	</div>
+</body>
