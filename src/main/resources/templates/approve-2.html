@@ -74,8 +74,10 @@
 		</div>
 
 		<div class="row">
-			<form class="form-horizontal" action="#" th:action="@{/self-check}"
+			<form class="form-horizontal" action="#" th:action="@{/approve}"
 				th:object="${cheSubmitDto}" method="post">
+				<input type="hidden" th:value="${objId}" name="objId" />
+				<input type="hidden" th:value="${cherId}" name="cherId" />
 				<table class="table table-bordered leader-form">
 					<thead>
 						<tr>
@@ -94,7 +96,7 @@
 					<tbody>
 						<tr th:each="data, rowStat: ${datas}">
 							<input type="hidden"
-								th:attr="name='cheSubmit[__${rowStat.index}__].questionId', id='cheSubmit[__${rowStat.index}__].questionId'"
+								th:attr="name='cheSubmit[__${rowStat.index}__].chesId', id='cheSubmit[__${rowStat.index}__].chesId'"
 								th:value="${data.id}">
 							<th:block th:switch="${data.questionRole}">
 								<th:block th:case="'TOPIC'">
@@ -129,15 +131,15 @@
 									<td th:text="${data.content}"></td>
 									<td style="position: relative; padding: 0;"
 										th:text="${data.maxPoint}">10</td>
-									<td>Gương mẫu chấp hành tốt đường lối, chủ trương của Đảng, chính sách pháp luật của nhà nước</td>
-									<td th:text="${data.id}"></td>
+									<td th:text="${data.issue}"></td>
+									<td th:text="${data.selfPoint}"></td>
 									<td style="position: relative; padding: 0;"><select
 										class="form-control" style="position: absolute; height: 100%;"
-										th:field="*{cheSubmit[__${rowStat.index}__].selfPoint}">
+										th:field="*{cheSubmit[__${rowStat.index}__].point}">
 											<option disabled th:value="'-Chọn-'">-Chọn-</option>
 											<option
-												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint * 2)}"
-												th:value="${point * 0.5}" th:text="${point * 0.5}"></option>
+												th:each="point : ${#numbers.sequence(data.startPoint, data.maxPoint)}"
+												th:value="${point}" th:text="${point}"></option>
 									</select></td>
 								</th:block>
 							</th:block>

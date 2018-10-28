@@ -105,22 +105,5 @@ public class LeaderCheckPointController {
             return "D";
         }
     }
-
-    private int checkReadyMonth() {
-        int currentMonth = DateUtil.getCurrentMonth();
-        CheckPointResult checkPointResult = checkPointMapper.findLastCheResult();
-        if (checkPointResult == null) {
-            return currentMonth;
-        }
-        int month = checkPointResult.getMonth();
-        if (month == currentMonth) {
-            return 0;
-        }
-        if (month < currentMonth) {
-            return month++;
-        }
-        return 0;
-    }
-
     
 }

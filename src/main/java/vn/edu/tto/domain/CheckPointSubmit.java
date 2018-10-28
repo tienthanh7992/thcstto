@@ -4,6 +4,8 @@ public class CheckPointSubmit {
 
     private Long id;
     
+    private Long chesId;
+    
     private Long userId;
     
     private Long questionId;
@@ -12,13 +14,17 @@ public class CheckPointSubmit {
     
     private String selfPoint;
     
-    private Integer leadPoint;
+    private Integer leaderPoint;
     
     private Integer principalPoint;
     
     private Integer finalPoint;
         
     private Integer month;
+    
+    private String comment;
+    
+    private String point;
 
     public CheckPointSubmit() {
 		setSelfPoint("-Chọn-");
@@ -30,6 +36,14 @@ public class CheckPointSubmit {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getChesId() {
+		return chesId;
+	}
+
+	public void setChesId(Long chesId) {
+		this.chesId = chesId;
 	}
 
 	public Long getUserId() {
@@ -64,12 +78,12 @@ public class CheckPointSubmit {
 		this.selfPoint = selfPoint;
 	}
 
-	public Integer getLeadPoint() {
-		return leadPoint;
+	public Integer getLeaderPoint() {
+		return leaderPoint;
 	}
 
-	public void setLeadPoint(Integer leadPoint) {
-		this.leadPoint = leadPoint;
+	public void setLeaderPoint(Integer leaderPoint) {
+		this.leaderPoint = leaderPoint;
 	}
 
 	public Integer getPrincipalPoint() {
@@ -96,10 +110,26 @@ public class CheckPointSubmit {
 		this.month = month;
 	}
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getPoint() {
+		return point;
+	}
+
+	public void setPoint(String point) {
+		this.point = point;
+	}
+
 	@Override
 	public String toString() {
 		return "CheckPointSubmit [id=" + id + ", userId=" + userId + ", questionId=" + questionId + ", issue=" + issue
-				+ ", selfPoint=" + selfPoint + ", leadPoint=" + leadPoint + ", principalPoint=" + principalPoint
+				+ ", selfPoint=" + selfPoint + ", leaderPoint=" + leaderPoint + ", principalPoint=" + principalPoint
 				+ ", finalPoint=" + finalPoint + ", month=" + month + "]";
 	}
 }

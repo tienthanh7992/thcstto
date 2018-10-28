@@ -8,10 +8,10 @@
 		parameterType="java.util.List">
 		<foreach collection="list" item="element" index="index">
 			insert into
-			che_submit(user_id,question_id,issue,self_point,lead_point,principal_point,final_point,month,updated_at)
+			che_submit(user_id,question_id,issue,self_point,leader_point,principal_point,final_point,month,updated_at)
 			values(#{element.userId},#{element.questionId},#{element.issue},CAST(#{element.selfPoint}
 			AS
-			integer),#{element.leadPoint},#{element.principalPoint},#{element.finalPoint},#{element.month},CURRENT_TIMESTAMP);
+			integer),#{element.leaderPoint},#{element.principalPoint},#{element.finalPoint},#{element.month},CURRENT_TIMESTAMP);
 		</foreach>
 	</insert>
 
@@ -21,4 +21,18 @@
 		che_result(user_id,self_point,result_type,status,month,self_created_at)
 		values(#{userId},#{selfPoint},#{resultType},#{status},#{month},CURRENT_TIMESTAMP);
 	</insert>
+	
+	<update id="updateCheckPointListLeader"
+		parameterType="java.util.List">
+		<foreach collection="list" item="element" index="index">
+			update che_submit set leader_point = #{leader_point} where id = #{leaderPoint};
+		</foreach>
+	</update>
+
+	<update id="updateCheckPointResultLeader"
+		parameterType="vn.edu.tto.domain.CheckPointResult">
+		update che_submit set leader_point = #{leader_point}, leader_comment = #{leaderComment},
+		leader_update_at = #{leaderUpdateAt}, result_type = #{resultType}, status = #{status}
+		where id = #{id};
+	</update>
 </mapper>

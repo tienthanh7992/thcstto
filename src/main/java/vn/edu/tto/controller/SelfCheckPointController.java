@@ -22,7 +22,7 @@ import vn.edu.tto.domain.Question;
 import vn.edu.tto.domain.SelfData;
 import vn.edu.tto.domain.SelfDataDetail;
 import vn.edu.tto.domain.User;
-import vn.edu.tto.domain.Utils.DateUtil;
+import vn.edu.tto.domain.Utils.TTOUtil;
 import vn.edu.tto.domain.constant.TTOConstant;
 import vn.edu.tto.mapper.CheckPointMapper;
 import vn.edu.tto.mapper.QuestionMapper;
@@ -43,6 +43,9 @@ public class SelfCheckPointController {
 
     @Autowired
     SelfDataMapper selfDataMapper;
+    
+    @Autowired
+    TTOUtil ttoUtil;
     
     @GetMapping("/self-check")
     public String selfCheckGet(Model model, Principal principal) {
@@ -67,19 +70,19 @@ public class SelfCheckPointController {
                 Question question = questionMap.get(che.getQuestionId());
                 if ("QUESTION".equals(question.getQuestionRole())) {
                     checkPointSubmit = new CheckPointSubmit();
-                    int point = getPoint(che.getSelfPoint());;
+                    int point = ttoUtil.getPoint(che.getSelfPoint());;
                     if (point == -1) {
-                    		return "Bạn chưa nhập dữ liệu ở câu hỏi ở mục " + topic + " số " + question.getIndexStr();
+                    		return "Bạn chưa nhập dữ liệu ở câu hỏi ở mục " + topic + "\n" + question.getContent();
                     }
                     if (question.getIsIncrease()) {
-                        totalPoint += getPoint(che.getSelfPoint());
+                        totalPoint += ttoUtil.getPoint(che.getSelfPoint());
                     } else {
-                        totalPoint += getPoint(che.getSelfPoint());
+                        totalPoint += ttoUtil.getPoint(che.getSelfPoint());
                     }
                     checkPointSubmit.setUserId(user.getId());
                     checkPointSubmit.setQuestionId(che.getQuestionId());
                     checkPointSubmit.setIssue(che.getIssue());
-                    checkPointSubmit.setSelfPoint(String.valueOf(getPoint(che.getSelfPoint())));
+                    checkPointSubmit.setSelfPoint(String.valueOf(ttoUtil.getPoint(che.getSelfPoint())));
                     checkPointSubmit.setMonth(10);
                     checkPointSubmits.add(checkPointSubmit);
                 } else if("TOPIC".equals(question.getQuestionRole())) {
@@ -94,7 +97,7 @@ public class SelfCheckPointController {
             }
             checkPointResult.setUserId(user.getId());
             checkPointResult.setSelfPoint(totalPoint);
-            checkPointResult.setResultType(getResultType(totalPoint));
+            checkPointResult.setResultType(ttoUtil.getResultType(totalPoint));
             checkPointResult.setStatus(TTOConstant.CHEStatus.PENDING);
             checkPointResult.setMonth(10);
             checkPointMapper.insertCheckPointResult(checkPointResult);
@@ -102,8 +105,8 @@ public class SelfCheckPointController {
             return "SUCCESS";
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "Có một lỗi hệ thống, xin lỗi vì sự bất tiện này!";
 		}
-        return "ERROR";
     }
 
     @GetMapping("/self-data")
@@ -126,39 +129,5 @@ public class SelfCheckPointController {
         return "self-data-detail";
     }
 
-    private int getPoint(String point) {
-        try {
-            return Integer.parseInt(point);
-        } catch (Exception e) {
-            return -1;
-        }
-    }
-    private String getResultType(int point) {
-        if (90 >= point && point <= 100) {
-            return "A";
-        } else if (70 >= point && point < 90) {
-            return "B";
-        } else if (50 >= point && point < 70) {
-            return "C";
-        } else {
-            return "D";
-        }
-    }
-
-    private int checkReadyMonth() {
-        int currentMonth = DateUtil.getCurrentMonth();
-        CheckPointResult checkPointResult = checkPointMapper.findLastCheResult();
-        if (checkPointResult == null) {
-            return currentMonth;
-        }
-        int month = checkPointResult.getMonth();
-        if (month == currentMonth) {
-            return 0;
-        }
-        if (month < currentMonth) {
-            return month++;
-        }
-        return 0;
-    }
 
 }

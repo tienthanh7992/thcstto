@@ -15,70 +15,55 @@ import vn.edu.tto.domain.CheckPointSubmit;
 @Mapper
 public interface CheckPointMapper {
 
-    public Integer insertSelfCheckPointList(List<CheckPointSubmit> checkPointSubmits) throws SQLException;
-    
-    public Integer insertCheckPointResult(CheckPointResult checkPointResult);
-    
-    
-    @Select("select * from che_result order by updated_at desc limit 1")
-    @Results({
-        @Result(property = "id", column = "id"),
-        @Result(property = "userId", column = "user_id"),
-        @Result(property = "selfPoint", column = "self_point"),
-        @Result(property = "resultType", column = "result_type"),
-        @Result(property = "status", column = "status"),
-        @Result(property = "month", column = "month"),
-        @Result(property = "leaderPoint", column = "leader_point"),
-        @Result(property = "principalPoint", column = "principal_point"),
-        @Result(property = "leaderComment", column = "leader_comment"),
-        @Result(property = "principalComment", column = "principal_comment"),
-        @Result(property = "leaderUpdateAt", column = "leader_update_at"),
-        @Result(property = "principalUpdateAt", column = "principal_update_at"),
-        @Result(property = "updateAt", column = "update_at")
-    })
-    public CheckPointResult findLastCheResult();
-    
-    
-    @Select("select * from che_result where id = #{id} and user_id = #{userId}")
-    @Results({
-        @Result(property = "id", column = "id"),
-        @Result(property = "userId", column = "user_id"),
-        @Result(property = "selfPoint", column = "self_point"),
-        @Result(property = "resultType", column = "result_type"),
-        @Result(property = "status", column = "status"),
-        @Result(property = "month", column = "month"),
-        @Result(property = "leaderPoint", column = "leader_point"),
-        @Result(property = "principalPoint", column = "principal_point"),
-        @Result(property = "leaderComment", column = "leader_comment"),
-        @Result(property = "principalComment", column = "principal_comment"),
-        @Result(property = "leaderUpdateAt", column = "leader_update_at"),
-        @Result(property = "principalUpdateAt", column = "principal_update_at"),
-        @Result(property = "updateAt", column = "update_at")
-    })
-    public CheckPointResult findCheResultByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
-    
-    @Select("select cher.*, u.is_team_leader, u.team, r.code as roleCode, r.name as roleName from che_result cher" + 
-    		" inner join \"user\" u on cher.user_id = u.id" + 
-    		" inner join \"role\" r on u.role_id = r.id" + 
-    		" where cher.id = #{id}")
-    @Results({
-        @Result(property = "id", column = "id"),
-        @Result(property = "userId", column = "user_id"),
-        @Result(property = "selfPoint", column = "self_point"),
-        @Result(property = "resultType", column = "result_type"),
-        @Result(property = "status", column = "status"),
-        @Result(property = "month", column = "month"),
-        @Result(property = "isTeamLeader", column = "is_team_leader"),
-        @Result(property = "team", column = "team"),
-        @Result(property = "roleCode", column = "role_code"),
-        @Result(property = "roleName", column = "role_name"),
-        @Result(property = "leaderPoint", column = "leader_point"),
-        @Result(property = "principalPoint", column = "principal_point"),
-        @Result(property = "leaderComment", column = "leader_comment"),
-        @Result(property = "principalComment", column = "principal_comment"),
-        @Result(property = "leaderUpdateAt", column = "leader_update_at"),
-        @Result(property = "principalUpdateAt", column = "principal_update_at"),
-        @Result(property = "updateAt", column = "update_at")
-    })
-    public CheckPointResult findCheResultById(@Param("id") Long id);
+	public Integer insertSelfCheckPointList(List<CheckPointSubmit> checkPointSubmits) throws SQLException;
+
+	public Integer insertCheckPointResult(CheckPointResult checkPointResult);
+
+	public Integer updateCheckPointList(List<CheckPointSubmit> checkPointSubmits) throws SQLException;
+
+	public Integer updatePointResult(CheckPointResult checkPointResult);
+
+	@Select("select * from che_result order by updated_at desc limit 1")
+	@Results({ @Result(property = "id", column = "id"), @Result(property = "userId", column = "user_id"),
+			@Result(property = "selfPoint", column = "self_point"),
+			@Result(property = "resultType", column = "result_type"), @Result(property = "status", column = "status"),
+			@Result(property = "month", column = "month"), @Result(property = "leaderPoint", column = "leader_point"),
+			@Result(property = "principalPoint", column = "principal_point"),
+			@Result(property = "leaderComment", column = "leader_comment"),
+			@Result(property = "principalComment", column = "principal_comment"),
+			@Result(property = "leaderUpdateAt", column = "leader_update_at"),
+			@Result(property = "principalUpdateAt", column = "principal_update_at"),
+			@Result(property = "updateAt", column = "update_at") })
+	public CheckPointResult findLastCheResult();
+
+	@Select("select * from che_result where id = #{id} and user_id = #{userId}")
+	@Results({ @Result(property = "id", column = "id"), @Result(property = "userId", column = "user_id"),
+			@Result(property = "selfPoint", column = "self_point"),
+			@Result(property = "resultType", column = "result_type"), @Result(property = "status", column = "status"),
+			@Result(property = "month", column = "month"), @Result(property = "leaderPoint", column = "leader_point"),
+			@Result(property = "principalPoint", column = "principal_point"),
+			@Result(property = "leaderComment", column = "leader_comment"),
+			@Result(property = "principalComment", column = "principal_comment"),
+			@Result(property = "leaderUpdateAt", column = "leader_update_at"),
+			@Result(property = "principalUpdateAt", column = "principal_update_at"),
+			@Result(property = "updateAt", column = "update_at") })
+	public CheckPointResult findCheResultByIdAndUserId(@Param("id") Long id, @Param("userId") Long userId);
+
+	@Select("select cher.*, u.is_team_leader, u.team, r.code as role_code, r.name as role_name from che_result cher"
+			+ " inner join \"user\" u on cher.user_id = u.id" + " inner join \"role\" r on u.role_id = r.id"
+			+ " where cher.id = #{id}")
+	@Results({ @Result(property = "id", column = "id"), @Result(property = "userId", column = "user_id"),
+			@Result(property = "selfPoint", column = "self_point"),
+			@Result(property = "resultType", column = "result_type"), @Result(property = "status", column = "status"),
+			@Result(property = "month", column = "month"),
+			@Result(property = "isTeamLeader", column = "is_team_leader"), @Result(property = "team", column = "team"),
+			@Result(property = "roleCode", column = "role_code"), @Result(property = "roleName", column = "role_name"),
+			@Result(property = "leaderPoint", column = "leader_point"),
+			@Result(property = "principalPoint", column = "principal_point"),
+			@Result(property = "leaderComment", column = "leader_comment"),
+			@Result(property = "principalComment", column = "principal_comment"),
+			@Result(property = "leaderUpdateAt", column = "leader_update_at"),
+			@Result(property = "principalUpdateAt", column = "principal_update_at"),
+			@Result(property = "updateAt", column = "update_at") })
+	public CheckPointResult findCheResultById(@Param("id") Long id);
 }
