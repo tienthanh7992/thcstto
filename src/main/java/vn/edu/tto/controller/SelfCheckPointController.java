@@ -20,16 +20,18 @@ import vn.edu.tto.domain.CheckPointSubmit;
 import vn.edu.tto.domain.CheckPointSubmitDto;
 import vn.edu.tto.domain.Question;
 import vn.edu.tto.domain.SelfData;
-import vn.edu.tto.domain.SelfDataDetail;
 import vn.edu.tto.domain.User;
 import vn.edu.tto.domain.UserInfo;
+import vn.edu.tto.domain.WorkingDetail;
 import vn.edu.tto.domain.Utils.DateUtil;
 import vn.edu.tto.domain.Utils.TTOUtil;
 import vn.edu.tto.domain.constant.TTOConstant;
+import vn.edu.tto.domain.constant.TTOConstant.CHEStatus;
 import vn.edu.tto.mapper.CheckPointMapper;
 import vn.edu.tto.mapper.QuestionMapper;
 import vn.edu.tto.mapper.SelfDataMapper;
 import vn.edu.tto.mapper.UserMapper;
+import vn.edu.tto.mapper.WorkMapper;
 
 @Controller
 public class SelfCheckPointController {
@@ -45,6 +47,9 @@ public class SelfCheckPointController {
 
 	@Autowired
 	SelfDataMapper selfDataMapper;
+	
+	@Autowired
+	WorkMapper workMapper;
 
 	@Autowired
 	TTOUtil ttoUtil;
@@ -149,20 +154,46 @@ public class SelfCheckPointController {
 
 	@GetMapping("/self-data-detail/{id}")
 	public String selfDataDetailGet(@PathVariable("id") Long id, Model model, Principal principal) {
-		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
-		CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, userInfo.getId());
-		if (checkPointResult != null) {
-			List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(userInfo.getId(),
-					checkPointResult.getMonth());
-			model.addAttribute("datas", selfDataDetails);
-			model.addAttribute("userInfo", userInfo);
-			model.addAttribute("isDetail", true);
-			model.addAttribute("isSelfCheckReady", ttoUtil.checkReadyMonth(userInfo.getId()) != 0);
-			model.addAttribute("checkPointResult", checkPointResult);
+		UserInfo userInfoCurr = userMapper.findUserInfoByUserName(principal.getName());
+		CheckPointResult checkPointResult = checkPointMapper.findCheResultById(id);
+		List<WorkingDetail> workingDetails = workMapper.findWorkingDetailByUserId(checkPointResult.getUserId(),
+				checkPointResult.getMonth());
+		model.addAttribute("datas", workingDetails);
+		model.addAttribute("checkPointResult", checkPointResult);
+		model.addAttribute("cheSubmitDto", new CheckPointSubmitDto());
+		model.addAttribute("objId", checkPointResult.getUserId());
+		model.addAttribute("cherId", checkPointResult.getId());
+		model.addAttribute("userInfo", userInfoCurr);
+		model.addAttribute("isDetail", true);
+		User principalInfo = userMapper.findUserByUserId(checkPointResult.getPrincipalId());
+		model.addAttribute("principalInfo", principalInfo);
+		model.addAttribute("isSelfCheckReady", ttoUtil.checkReadyMonth(userInfoCurr.getId()) != 0);
+		if (!CHEStatus.PRINCIPAL_APPROVED.equals(checkPointResult.getStatus())) {
 			return "self-data-detail";
 		}
-		return "error";
+		if (!userInfoCurr.getIsTeamLeader()) {
+			User leaderInfo = userMapper.findUserByUserId(checkPointResult.getLeaderId());
+			model.addAttribute("leaderInfo", leaderInfo);
+			return "self-che-view-3";
+		}
+		return "self-che-view-2";
 		
 	}
+		
+//		UserInfo userInfo = userMapper.findUserInfoByUserName(principal.getName());
+//		CheckPointResult checkPointResult = checkPointMapper.findCheResultByIdAndUserId(id, userInfo.getId());
+//		if (checkPointResult != null) {
+//			List<SelfDataDetail> selfDataDetails = selfDataMapper.findSelfDataDetailByUserId(userInfo.getId(),
+//					checkPointResult.getMonth());
+//			model.addAttribute("datas", selfDataDetails);
+//			model.addAttribute("userInfo", userInfo);
+//			model.addAttribute("isDetail", true);
+//			model.addAttribute("isSelfCheckReady", ttoUtil.checkReadyMonth(userInfo.getId()) != 0);
+//			model.addAttribute("checkPointResult", checkPointResult);
+//			return "self-data-detail";
+//		}
+//		return "error";
+		
+//	}
 
 }
