@@ -76,7 +76,7 @@ public interface CheckPointMapper {
 			@Result(property = "leaderId", column = "leader_id"),
 			@Result(property = "principalId", column = "principal_id"),
 			@Result(property = "leaderUpdateAt", column = "leader_update_at"),
-			@Result(property = "principalUpdateAt", column = "principal_update_at"),
+			@Result(property = "principalUpdatedAt", column = "principal_updated_at"),
 			@Result(property = "selfCreatedAt", column = "self_created_at") })
 	public CheckPointResult findCheResultById(@Param("id") Long id);
 	

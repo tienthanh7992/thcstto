@@ -40,7 +40,7 @@ public class CheckPointResult {
     
     private Timestamp leaderUpdatedAt;
     
-    private Timestamp principalUpdateAt;
+    private Timestamp principalUpdatedAt;
     
     private Long leaderId;
     
@@ -172,15 +172,16 @@ public class CheckPointResult {
         this.leaderUpdatedAt = leaderUpdatedAt;
     }
 
-    public Timestamp getPrincipalUpdateAt() {
-        return principalUpdateAt;
-    }
 
-    public void setPrincipalUpdateAt(Timestamp principalUpdateAt) {
-        this.principalUpdateAt = principalUpdateAt;
-    }
+    public Timestamp getPrincipalUpdatedAt() {
+		return principalUpdatedAt;
+	}
 
-    public Timestamp getUpdatedAt() {
+	public void setPrincipalUpdatedAt(Timestamp principalUpdatedAt) {
+		this.principalUpdatedAt = principalUpdatedAt;
+	}
+
+	public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 

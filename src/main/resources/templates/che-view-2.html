@@ -293,6 +293,34 @@
 					</tr>
 				</tbody>
 			</table>
+			<div class="row text-left">
+					<div class="col-sm-12">
+						<h5>NHẬN XÉT, ĐÁNH GIÁ CỦA HIỆU TRƯỞNG</h5>
+						<textarea readonly class="form-control" rows="5"
+							th:text="${checkPointResult.principalComment}"></textarea>
+						<h5>
+							<em class="bold-font">Kết luận:</em> Xếp loại: <span th:text="${checkPointResult.resultType}"></span>
+						</h5>
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="col-sm-8"></div>
+					<div class="col-sm-4 text-center">
+						<h6>
+							Ngày...<span th:text="${#dates.format(checkPointResult.principalUpdatedAt, 'dd')}"></span>
+							...tháng...<span
+								th:text="${#dates.format(checkPointResult.principalUpdatedAt, 'MM')}"> </span>...năm...<span
+								th:text="${#dates.format(checkPointResult.principalUpdatedAt, 'yyyy')}">.</span>..
+						</h6>
+						<h6 class="bold-font">TRƯỞNG ĐƠN VỊ</h6>
+						<h6 class="bold-font">(Ký tên, đóng dấu)</h6>
+						<h6 class="bold-font"
+							th:text="${principalInfo.firstName + ' ' + principalInfo.lastName}"></h6>
+					</div>
+				</div>
+				<br> <br> <br> <br>
 		</div>
 	</div>
 </body>

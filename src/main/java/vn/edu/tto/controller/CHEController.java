@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.edu.tto.domain.CheckPointResult;
 import vn.edu.tto.domain.CheckPointSubmitDto;
+import vn.edu.tto.domain.User;
 import vn.edu.tto.domain.UserInfo;
 import vn.edu.tto.domain.Working;
 import vn.edu.tto.domain.WorkingDetail;
@@ -95,8 +96,12 @@ public class CHEController {
 		model.addAttribute("cherId", checkPointResult.getId());
 		model.addAttribute("userInfo", userInfoCurr);
 		model.addAttribute("isDetail", true);
+		User principalInfo = userMapper.findUserByUserId(checkPointResult.getPrincipalId());
+		model.addAttribute("principalInfo", principalInfo);
 		model.addAttribute("isSelfCheckReady", ttoUtil.checkReadyMonth(userInfoCurr.getId()) != 0);
 		if (checkPermissionAndTypeResult == 3) {
+			User leaderInfo = userMapper.findUserByUserId(checkPointResult.getLeaderId());
+			model.addAttribute("leaderInfo", leaderInfo);
 			return "che-view-3";
 		}
 		return "che-view-2";
