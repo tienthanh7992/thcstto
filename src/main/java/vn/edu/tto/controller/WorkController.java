@@ -141,6 +141,9 @@ public class WorkController {
 						if (checkPermissionAndTypeResult == 3) {
 							point = Double.valueOf(cSubmit.getLeaderPoint());
 						} else {
+							if (cSubmit.getSelfPoint() == null) {
+								System.out.println(question.toString());
+							}
 							point = Double.valueOf(cSubmit.getSelfPoint());
 						}
 					}

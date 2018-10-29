@@ -102,7 +102,7 @@ public interface CheckPointMapper {
 	@Select("select * from che_submit where user_id = #{userId} and month = #{month} and year = #{year}")
     @Results({
         @Result(property = "id", column = "id"),
-        @Result(property = "selfPoint", column = "selfPoint"),
+        @Result(property = "selfPoint", column = "self_point"),
         @Result(property = "leaderPoint", column = "leader_point"),
         @Result(property = "principal_point", column = "principal_point"),
     })
